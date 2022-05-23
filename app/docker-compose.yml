@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  trembao-db:
+    container_name: trembao-db
+    image: mysql:5.7
+    env_file:
+      - ./.env
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER --explicit_defaults_for_timestamp
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+      - MYSQL_DATABASE=$DB_NAME
+    ports:
+      - 3308:3306
+    volumes:
+      - db:/var/lib/mysql
+  backend:
+    container_name: trembao-backend
+    depends_on:
+      - trembao-db
+    build: ./backend
+    networks:
+      - backend
+    env_file:
+      - ./.env
+    environment:
+      - PORT=$PORT
+      - DB_USER=$DB_USER
+      - DB_HOSTNAME=trembao-db
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_DIALECT=$DB_DIALECT
+      - DB_NAME=$DB_NAME
+      - JWT_SECRET=$JWT_SECRET
+    ports:
+      - 4000:4000
+    stdin_open: true
+    tty: true
+  frontend:
+    container_name: trembao-frontend
+    depends_on:
+      - backend
+    build: ./frontend
+    env_file:
+      - ./.env
+    # environment:
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+volumes: 
+  db:
+  ## Volumes backs up data from containers
+networks:
+  backend:
