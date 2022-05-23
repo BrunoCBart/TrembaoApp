@@ -1,3 +1,4 @@
 node_modules
 .env
 tsconfig.example.json
+.nyc_output

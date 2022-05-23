@@ -3,16 +3,16 @@ import React, { useCallback, useEffect, useState } from 'react'
 import axios from '../api/axios'
 import trembaoAppContext from './TrembaoAppContext'
 
-// const INITIAL_FOOD_TYPES = [
-//   { foods: [], name: 'Arroz' },
-//   { foods: [], name: 'Feijão' },
-//   { foods: [], name: 'Misturas' },
-//   { foods: [], name: 'Guarnições' },
-//   { foods: [], name: 'Saladas' },
-//   { foods: [], name: 'Bebidas' }
-// ]
+const INITIAL_FOOD_TYPES = [
+  { foods: [], name: 'Arroz' },
+  { foods: [], name: 'Feijão' },
+  { foods: [], name: 'Misturas' },
+  { foods: [], name: 'Guarnições' },
+  { foods: [], name: 'Saladas' },
+  { foods: [], name: 'Bebidas' }
+]
 function TrembaoAppProvider ({ children }) {
-  const [foodOptions, setFoodOptions] = useState([])
+  const [foodOptions, setFoodOptions] = useState(INITIAL_FOOD_TYPES)
 
   // const getFoodOptions = async () => {
   //   try {
