@@ -1,0 +1,21 @@
+.food-option {
+  cursor: pointer;
+  transform: scale(1.5)
+}
+
+.food-option-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+}
+
+.food-option-text {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.form-group {
+  padding: 0.2rem;
+}

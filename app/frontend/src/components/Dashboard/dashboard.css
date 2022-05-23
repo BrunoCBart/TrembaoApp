@@ -1,0 +1,106 @@
+.dashboard {
+  color: var(--white);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.7rem;
+}
+
+.dashboard-options {
+  margin-top: 0.5rem;
+}
+
+.dashboard-options__btn {
+  border: none;
+  background-color: var(--orange);
+  color: var(--white);
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.dashboard-options__btn:hover {
+  transform: scale(1.1);
+}
+
+.dashboard__orders {
+  width: 100%;
+}
+/* Same code as foodOptionsForm  maybe refactor later*/
+.order-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  color: var(--black);
+  cursor: pointer;
+  text-align: start;
+}
+
+.order-container:hover {
+  color: var(--white);
+  background-color: var(--orange);
+}
+
+.order {
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
+.order--active {
+  max-height: 800px;
+}
+
+
+.food-types::-webkit-scrollbar {
+  display: none;
+}
+
+.food-types {
+  display: grid;
+  grid-auto-flow: column; 
+  max-width: 100%;
+  padding: 1rem 0;
+  overflow-x: scroll;
+  color: var(--red)
+}
+
+.food-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100%;
+  background-color: rgb(255, 229, 199);
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+  cursor: pointer;
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.food-type h2 {
+  width: 96px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
