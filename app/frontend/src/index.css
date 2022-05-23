@@ -1,0 +1,74 @@
+
+@font-face {
+  font-family: 'dm_sansbold';
+  src: url('./fonts/dmsans-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dm_sansregular';
+  src: url('./fonts/dmsans-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'libre_baskervilleregular';
+  src: url('./fonts/librebaskerville-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'libre_baskervillebold';
+  src: url('./fonts/librebaskerville-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--red-light);
+  font-size: 1.1rem;
+  font-family: 'dm_sansregular';
+}
+
+:root {
+  --white: #fff;
+  --black: #000;
+  --gray: #5F5F5F;
+  --gray-light: #E4E4E4;
+  --crimson: #AD1111;
+  --red: #941717;
+  --red-light: #b33131;
+  --yellow-light: #fbfd74;
+  --orange: #fa9a1c;
+  --yellow: #ffd900;
+  --green: #22d478;
+}
+
+.btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--yellow);
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  font-family: 'libre_baskervillebold';
+  color: var(--black);
+  border-radius: 0.5rem;
+}
+
+.btn-green {
+  background-color: var(--green);
+}
+
