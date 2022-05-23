@@ -1,0 +1,24 @@
+.loginForm {
+  background-color: var(--red);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  color: var(--white);
+  border-radius: 1rem;
+}
+
+.loginForm__login-title {
+  text-align: center;
+}
+
+.loginForm input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.loginForm label {
+  font-size: 1.2rem;
+}
