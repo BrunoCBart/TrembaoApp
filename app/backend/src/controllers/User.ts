@@ -26,7 +26,7 @@ class UserController {
     try {
       const { username, password } = req.body
 
-      // if (!username || !password) return res.status(400).json({error: })
+      if (!username || !password) return res.status(400).json({ error: 'Campo username e password são obrigatórios' })
 
       const token = await JwtUtils.authUser(username, password)
 
