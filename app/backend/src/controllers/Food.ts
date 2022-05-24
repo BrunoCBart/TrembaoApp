@@ -3,7 +3,7 @@ import { RequestHandler } from 'express'
 import addFoodToMenuSocket from '../sockets/Food'
 
 class FoodController {
-  public getAllTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  getAllTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const types = await FoodService.getAllTypes()
       return res.status(200).json(types)
@@ -12,7 +12,7 @@ class FoodController {
     }
   }
 
-  public getAllSubTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  getAllSubTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const subTypes = await FoodService.getAllSubTypes()
       return res.status(200).json(subTypes)
@@ -21,7 +21,7 @@ class FoodController {
     }
   }
 
-  public getAllFoods: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  getAllFoods: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const foods = await FoodService.getAllFoods()
       return res.status(200).json(foods)
@@ -30,7 +30,7 @@ class FoodController {
     }
   }
 
-  public updateMenu: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  updateMenu: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     const { id } = req.params
     const { io }: any = req
     try {
