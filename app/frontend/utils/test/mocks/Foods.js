@@ -1,3 +1,5 @@
+export const dailyFoodOptions = ['Arroz', 'Feijão', 'Misturas', 'Guarnições', 'Bebidas']
+
 export const foodOptions = [
   {
     id: 1,

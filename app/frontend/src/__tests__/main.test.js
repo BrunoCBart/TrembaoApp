@@ -4,10 +4,9 @@ import { cleanup, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import mockAxios from 'axios'
 import React from 'react'
-import { foodOptions } from '../../utils/test/mocks/foodOptions'
+import { foodOptions, dailyFoodOptions } from '../../utils/test/mocks/Foods'
 import { renderWithProvider } from '../../utils/test/renderWithRouterAndProvider'
 import Main from '../pages/Main'
-const dailyOptions = ['Arroz', 'Feijão', 'Misturas', 'Guarnições', 'Bebidas']
 
 global.setImmediate = global.setTimeout
 
@@ -37,7 +36,7 @@ describe('Test main page (user order request page)', () => {
   })
 
   it('Page should render daily options', async () => {
-    const promises = await dailyOptions.map(async option => {
+    const promises = await dailyFoodOptions.map(async option => {
       const dailyOption = await screen.findByText(option)
       expect(dailyOption).toBeInTheDocument()
     })
