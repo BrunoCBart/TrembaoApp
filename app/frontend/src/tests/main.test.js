@@ -14,7 +14,6 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 global.setImmediate = global.setTimeout
 
-let container = null
 beforeEach(async () => {
   mockAxios.get.mockImplementationOnce((url) => {
     if (url === '/foods') {
@@ -22,8 +21,6 @@ beforeEach(async () => {
     }
   })
 
-  container = document.createElement('div')
-  document.body.appendChild(container)
   await act(async () => renderWithProvider(<Main />))
 })
 

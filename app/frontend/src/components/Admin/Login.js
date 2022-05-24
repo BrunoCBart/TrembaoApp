@@ -1,11 +1,10 @@
 import React, {
-  useState, useRef, useEffect
+  useState, useRef, useEffect, useContext
 } from 'react'
 import axios from '../../api/axios'
-// import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import auth from '../../tools/auth/auth'
 import './login.css'
+import trembaoAppContext from '../../Context/TrembaoAppContext'
 
 const INITIAL_USER = {
   username: '',
@@ -20,6 +19,8 @@ function Login () {
 
   const [user, setUser] = useState(INITIAL_USER)
   const [errorMsg, setErrorMsg] = useState('')
+
+  const { setLogin, getSession } = useContext(trembaoAppContext)
 
   const navigate = useNavigate()
 
@@ -38,12 +39,8 @@ function Login () {
 
   // This doesn't make sense try to understand it
 
-  const getSession = async () => {
-    await auth.getSession(navigate)
-  }
   useEffect(() => {
-    getSession()
-      .catch(error => console.log(error))
+    getSession(navigate)
   }, [])
 
   const login = async (e) => {
@@ -55,9 +52,8 @@ function Login () {
       }, { withCredentials: true })
       setUser({ username: '', password: '' })
       if (res.data.token) {
-        auth.login(() => {
-          navigate('/admin/dashboard')
-        })
+        setLogin(true)
+        navigate('/admin/dashboard')
       }
     } catch (err) {
       console.log(err.response)

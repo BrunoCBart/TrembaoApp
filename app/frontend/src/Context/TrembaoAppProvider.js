@@ -11,8 +11,27 @@ const INITIAL_FOOD_TYPES = [
   { foods: [], name: 'Saladas' },
   { foods: [], name: 'Bebidas' }
 ]
+
+const LOGIN_URL = '/users/login'
 function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState(INITIAL_FOOD_TYPES)
+  const [login, setLogin] = useState(false)
+
+  const getSession = async (navigate) => {
+    try {
+      const res = await axios.get(`http://localhost:4000/${LOGIN_URL}`, { withCredentials: true })
+      if (res.data.token) {
+        setLogin(true)
+        navigate('/admin/dashboard')
+      }
+    } catch (e) {
+      if (e.response.status === 401) {
+        console.log('Sessão expirada ou inválida')
+      } else {
+        console.log(e.message)
+      }
+    }
+  }
 
   const getFoodOptions = useCallback(async () => {
     const { data: foods } = await axios.get('/foods')
@@ -25,9 +44,12 @@ function TrembaoAppProvider ({ children }) {
   }, [getFoodOptions])
 
   const trembaoAppValue = {
+    login,
+    setLogin,
     foodOptions,
     setFoodOptions,
-    getFoodOptions
+    getFoodOptions,
+    getSession
   }
 
   return (

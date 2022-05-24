@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import auth from '../tools/auth/auth'
+import trembaoAppContext from '../Context/TrembaoAppContext'
 
 function ProtectedRoute ({ component: Component }) {
   const [loadingSession, setLoadingSession] = useState(true)
+  const { login } = useContext(trembaoAppContext)
 
   const navigate = useNavigate()
 
@@ -22,7 +24,7 @@ function ProtectedRoute ({ component: Component }) {
     if (loadingSession) {
       return <div>Loading...</div>
     }
-    return auth.isAuthenticated()
+    return login
       ? <Component />
       : <div>You are not authenticated</div>
   }
