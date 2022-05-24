@@ -15,4 +15,14 @@ const renderWithRouterAndProvider = (component, route = '/') => {
   })
 }
 
-export default renderWithRouterAndProvider
+const renderWithProvider = (component) => {
+  return ({
+    ...render(
+    <TrembaoAppProvider>
+        {component}
+    </TrembaoAppProvider>
+    )
+  })
+}
+
+export { renderWithRouterAndProvider, renderWithProvider }

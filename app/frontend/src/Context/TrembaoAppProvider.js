@@ -14,15 +14,6 @@ const INITIAL_FOOD_TYPES = [
 function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState(INITIAL_FOOD_TYPES)
 
-  // const getFoodOptions = async () => {
-  //   try {
-  //     const foods = await axios.get('/foods')
-  //     setFoodOptions(foods.data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   const getFoodOptions = useCallback(async () => {
     const { data: foods } = await axios.get('/foods')
     setFoodOptions(foods)
