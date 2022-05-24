@@ -10,7 +10,7 @@ class FoodService {
   }
 
   public getAllSubTypes = async () => {
-    const subTypes = await FoodSubType.findAll()
+    const subTypes: IFoodType[] = await FoodSubType.findAll()
     return subTypes
   }
 
@@ -28,10 +28,10 @@ class FoodService {
 
   public updateMenu = async (id: number) => {
     const food = await Food.findByPk(id)
-    if (!food) throw new Error('Food not found')
+    if (!food) return { error: 'Food not found', code: 404 }
     food.checked = !food.checked
     await food.save()
-    return food
+    return { food }
   }
 }
 

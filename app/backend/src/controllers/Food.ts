@@ -3,43 +3,44 @@ import { RequestHandler } from 'express'
 import addFoodToMenuSocket from '../sockets/Food'
 
 class FoodController {
-  static getAllTypes: RequestHandler = async (req, res, next) => {
+  public getAllTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const types = await FoodService.getAllTypes()
       return res.status(200).json(types)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static getAllSubTypes: RequestHandler = async (req, res, next) => {
+  public getAllSubTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const subTypes = await FoodService.getAllSubTypes()
       return res.status(200).json(subTypes)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static getAllFoods: RequestHandler = async (req, res, next) => {
+  public getAllFoods: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const foods = await FoodService.getAllFoods()
       return res.status(200).json(foods)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static updateMenu: RequestHandler = async (req, res, next) => {
+  public updateMenu: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     const { id } = req.params
     const { io }: any = req
     try {
-      const food = await FoodService.updateMenu(Number(id))
+      const { food, error, code } = await FoodService.updateMenu(Number(id))
+      if (error) return res.status(code).json({ error })
       addFoodToMenuSocket(io, food)
       io.emit('foodOption-updated', food)
       return res.status(200).json(food)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }

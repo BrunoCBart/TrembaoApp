@@ -1,16 +1,16 @@
 import OrderService from '../services/Order'
 import { RequestHandler } from 'express'
 class OrderController {
-  static getAllOrders: RequestHandler = async (req, res, next) => {
+  public getAllOrders: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const orders = await OrderService.getAllOrders()
       return res.status(201).json(orders)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static createOrder: RequestHandler = async (req, res, next) => {
+  public createOrder: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     const { name, phone, district, street, foods, number } = req.body
     const { io }: any = req
     try {
@@ -20,7 +20,7 @@ class OrderController {
       io.emit('order-created', order)
       return res.status(201).json(order)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }

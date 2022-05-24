@@ -3,26 +3,26 @@ import UserService from '../services/User'
 import JwtUtils from '../utils/jwt'
 
 class UserController {
-  static getAll: RequestHandler = async (req, res, next) => {
+  public getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const users = await UserService.getAllUsers()
       return res.status(200).json(users)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static createUser: RequestHandler = async (req, res, next) => {
+  public createUser: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const { username, password, admin } = req.body
       const user = await UserService.createUser({ username, password, admin })
       return res.status(201).json(user)
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  static login: RequestHandler = async (req, res, next) => {
+  public login: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const { username, password } = req.body
 
@@ -33,7 +33,7 @@ class UserController {
       if (!token) return res.status(401).json({ error: 'Não autorizado' })
       return res.cookie('TBsession', token).status(200).json({ token })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }
