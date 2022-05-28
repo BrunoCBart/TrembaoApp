@@ -19,7 +19,7 @@ class OrderService {
     }
   }
 
-  public getAllOrders = async () => {
+  public getAll = async () => {
     const orders = await Order.findAll()
     const mappedOrders = orders.map(async (order: any) => {
       const { districtId, streetId, ...rest } = order.dataValues
@@ -64,4 +64,4 @@ class OrderService {
   }
 }
 
-export default new OrderService()
+export default OrderService

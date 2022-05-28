@@ -1,9 +1,10 @@
 import OrderService from '../services/Order'
 import { RequestHandler } from 'express'
 class OrderController {
-  public getAllOrders: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  constructor (protected orderService = new OrderService()) {}
+  public getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
-      const orders = await OrderService.getAllOrders()
+      const orders = await this.orderService.getAll()
       return res.status(201).json(orders)
     } catch (err) {
       return next(err)
@@ -14,7 +15,7 @@ class OrderController {
     const { name, phone, district, street, foods, number } = req.body
     const { io }: any = req
     try {
-      const order = await OrderService.createOrder(
+      const order = await this.orderService.createOrder(
         { name, phone, district, street, foods, number }
       )
       io.emit('order-created', order)

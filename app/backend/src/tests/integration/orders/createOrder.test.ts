@@ -15,8 +15,8 @@ const order = {
   number: 123
 }
 
-describe('createOrder route /orders testing', () => {
-  it('createOrder return objects with proper properties', async () => {
+describe('create Order route /orders testing', () => {
+  it('create Order return objects with proper properties', async () => {
     const res = await chai.request(app).post('/orders')
       .type('json')
       .send(order)

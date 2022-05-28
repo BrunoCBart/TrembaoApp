@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "types": [
+      "mocha",
+      "jest"
+    ],
     "target": "es2016",
     "module": "commonjs",
     "strict": true, 
@@ -13,5 +17,5 @@
     ],
     
   },
-  "include": ["src/**/*", "src/index.d.ts"],
+  "include": [ "src/**/*", "src/index.d.ts"],
 }

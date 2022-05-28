@@ -3,27 +3,20 @@ import { RequestHandler } from 'express'
 import addFoodToMenuSocket from '../sockets/Food'
 
 class FoodController {
-  getAllTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  constructor (protected foodService = new FoodService()) {}
+
+  getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
-      const types = await FoodService.getAllTypes()
-      return res.status(200).json(types)
+      const foods = await this.foodService.getAll()
+      return res.status(200).json(foods)
     } catch (err) {
       return next(err)
     }
   }
 
-  getAllSubTypes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  getAllChecked: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
-      const subTypes = await FoodService.getAllSubTypes()
-      return res.status(200).json(subTypes)
-    } catch (err) {
-      return next(err)
-    }
-  }
-
-  getAllFoods: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
-    try {
-      const foods = await FoodService.getAllFoods()
+      const foods = await this.foodService.getAllChecked()
       return res.status(200).json(foods)
     } catch (err) {
       return next(err)
@@ -34,7 +27,7 @@ class FoodController {
     const { id } = req.params
     const { io }: any = req
     try {
-      const { food, error, code } = await FoodService.updateMenu(Number(id))
+      const { food, error, code } = await this.foodService.updateMenu(Number(id))
       if (error) return res.status(code).json({ error })
       addFoodToMenuSocket(io, food)
       io.emit('foodOption-updated', food)

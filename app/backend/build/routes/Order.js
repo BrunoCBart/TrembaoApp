@@ -5,13 +5,14 @@ const Order_1 = require("../controllers/Order");
 const validateBody_1 = require("../middlewares/validateBody");
 const schemas_1 = require("../schemas");
 class OrderRouter {
-    constructor() {
+    constructor(orderController = new Order_1.default()) {
+        this.orderController = orderController;
         this.router = express.Router();
         this.routes();
     }
     routes() {
-        this.router.get('/', Order_1.default.getAllOrders);
-        this.router.post('/', (0, validateBody_1.default)(schemas_1.orderSchema), Order_1.default.createOrder);
+        this.router.get('/', this.orderController.getAll);
+        this.router.post('/', (0, validateBody_1.default)(schemas_1.orderSchema), this.orderController.createOrder);
     }
 }
 exports.default = new OrderRouter().router;

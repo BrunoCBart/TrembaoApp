@@ -9,25 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const User_1 = require("../database/models/User");
-class UserService {
+const FoodSubType_1 = require("../database/models/FoodSubType");
+class FoodSubTypeService {
     constructor() {
         this.getAll = () => __awaiter(this, void 0, void 0, function* () {
-            const users = yield User_1.default.findAll();
-            return users;
-        });
-        this.create = ({ username, password, admin }) => __awaiter(this, void 0, void 0, function* () {
-            const isUserInDb = yield User_1.default.findOne({ where: { username } });
-            if (isUserInDb)
-                throw (new Error('User already exists'));
-            const user = yield User_1.default.create({ username, password, admin });
-            return user;
-        });
-        this.findOne = (userCredentials) => __awaiter(this, void 0, void 0, function* () {
-            const user = yield User_1.default.findOne({ where: userCredentials });
-            return user;
+            const subTypes = yield FoodSubType_1.default.findAll();
+            return subTypes;
         });
     }
 }
-exports.default = UserService;
-//# sourceMappingURL=User.js.map
+exports.default = FoodSubTypeService;
+//# sourceMappingURL=FoodSubType.js.map

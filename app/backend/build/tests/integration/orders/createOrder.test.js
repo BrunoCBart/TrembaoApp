@@ -23,8 +23,8 @@ const order = {
     foods: ['Arroz branco', 'Feijão preto'],
     number: 123
 };
-describe('createOrder route /orders testing', () => {
-    it('createOrder return objects with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
+describe('create Order route /orders testing', () => {
+    it('create Order return objects with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).post('/orders')
             .type('json')
             .send(order);

@@ -15,12 +15,12 @@ const app_1 = require("../../../app");
 require("mocha");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('getAllUsers route /users testing', () => {
-    it('getAllUsers returns an array', () => __awaiter(void 0, void 0, void 0, function* () {
+describe('getAll Users route /users testing', () => {
+    it('getAll Users returns an array', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).get('/users');
         expect(res.body).to.be.an('array');
     }));
-    it('getAllUsers returns an array of objects', () => {
+    it('getAll Users returns an array of objects', () => {
         chai.request(app_1.app)
             .get('/users')
             .then((res) => {

@@ -34,7 +34,7 @@ class OrderService {
                     foodType: foodType.name
                 })) });
         };
-        this.getAllOrders = () => __awaiter(this, void 0, void 0, function* () {
+        this.getAll = () => __awaiter(this, void 0, void 0, function* () {
             const orders = yield Order_1.default.findAll();
             const mappedOrders = orders.map((order) => __awaiter(this, void 0, void 0, function* () {
                 const _a = order.dataValues, { districtId, streetId } = _a, rest = __rest(_a, ["districtId", "streetId"]);
@@ -74,5 +74,5 @@ class OrderService {
         });
     }
 }
-exports.default = new OrderService();
+exports.default = OrderService;
 //# sourceMappingURL=Order.js.map
