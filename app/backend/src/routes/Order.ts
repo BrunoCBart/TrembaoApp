@@ -6,13 +6,13 @@ import { orderSchema } from '../schemas'
 class OrderRouter {
   public router = express.Router()
 
-  constructor () {
+  constructor (protected orderController = new OrderController()) {
     this.routes()
   }
 
   routes (): void {
-    this.router.get('/', OrderController.getAllOrders)
-    this.router.post('/', validateBody(orderSchema), OrderController.createOrder)
+    this.router.get('/', this.orderController.getAll)
+    this.router.post('/', validateBody(orderSchema), this.orderController.createOrder)
   }
 }
 

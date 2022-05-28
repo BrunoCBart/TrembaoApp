@@ -6,14 +6,15 @@ const middlewares_1 = require("../middlewares");
 const validateBody_1 = require("../middlewares/validateBody");
 const index_1 = require("../schemas/index");
 class UserRouter {
-    constructor() {
+    constructor(userController = new User_1.default()) {
+        this.userController = userController;
         this.router = express.Router();
         this.routes();
     }
     routes() {
-        this.router.get('/', User_1.default.getAll);
-        this.router.post('/', (0, validateBody_1.default)(index_1.userSchema), User_1.default.createUser);
-        this.router.post('/login', (0, validateBody_1.default)(index_1.loginSchema), User_1.default.login);
+        this.router.get('/', this.userController.getAll);
+        this.router.post('/', (0, validateBody_1.default)(index_1.userSchema), this.userController.create);
+        this.router.post('/login', (0, validateBody_1.default)(index_1.loginSchema), this.userController.login);
         this.router.get('/login', middlewares_1.validateSession);
     }
 }

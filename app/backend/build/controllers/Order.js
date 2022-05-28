@@ -8,32 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Order_1 = require("../services/Order");
 class OrderController {
+    constructor(orderService = new Order_1.default()) {
+        this.orderService = orderService;
+        this.getAll = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const orders = yield this.orderService.getAll();
+                return res.status(201).json(orders);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.createOrder = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { name, phone, district, street, foods, number } = req.body;
+            const { io } = req;
+            try {
+                const order = yield this.orderService.createOrder({ name, phone, district, street, foods, number });
+                io.emit('order-created', order);
+                return res.status(201).json(order);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    }
 }
-_a = OrderController;
-OrderController.getAllOrders = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const orders = yield Order_1.default.getAllOrders();
-        return res.status(201).json(orders);
-    }
-    catch (err) {
-        next(err);
-    }
-});
-OrderController.createOrder = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, phone, district, street, foods, number } = req.body;
-    const { io } = req;
-    try {
-        const order = yield Order_1.default.createOrder({ name, phone, district, street, foods, number });
-        io.emit('order-created', order);
-        return res.status(201).json(order);
-    }
-    catch (err) {
-        next(err);
-    }
-});
 exports.default = OrderController;
 //# sourceMappingURL=Order.js.map

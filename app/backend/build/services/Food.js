@@ -10,22 +10,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Food_1 = require("../database/models/Food");
-const FoodSubType_1 = require("../database/models/FoodSubType");
+// import FoodSubType from '../database/models/FoodSubType'
 const FoodType_1 = require("../database/models/FoodType");
 class FoodService {
     constructor() {
-        this.getAllTypes = () => __awaiter(this, void 0, void 0, function* () {
-            const types = yield FoodType_1.default.findAll();
-            return types;
-        });
-        this.getAllSubTypes = () => __awaiter(this, void 0, void 0, function* () {
-            const subTypes = yield FoodSubType_1.default.findAll();
-            return subTypes;
-        });
-        this.getAllFoods = () => __awaiter(this, void 0, void 0, function* () {
+        this.getAll = () => __awaiter(this, void 0, void 0, function* () {
             const foods = yield FoodType_1.default.findAll({
                 include: [
-                    { model: Food_1.default, as: 'foods' }
+                    {
+                        model: Food_1.default,
+                        as: 'foods',
+                        attributes: ['id', 'name', 'foodSubTypeId']
+                    }
+                ],
+                order: [
+                    ['id', 'ASC']
+                ]
+            });
+            return foods;
+        });
+        this.getAllChecked = () => __awaiter(this, void 0, void 0, function* () {
+            const foods = yield FoodType_1.default.findAll({
+                include: [
+                    {
+                        model: Food_1.default,
+                        as: 'foods',
+                        where: { checked: true },
+                        attributes: ['id', 'name', 'checked']
+                    }
                 ],
                 order: [
                     ['id', 'ASC']
@@ -36,12 +48,12 @@ class FoodService {
         this.updateMenu = (id) => __awaiter(this, void 0, void 0, function* () {
             const food = yield Food_1.default.findByPk(id);
             if (!food)
-                throw new Error('Food not found');
+                return { error: 'Food not found', code: 404 };
             food.checked = !food.checked;
             yield food.save();
-            return food;
+            return { food };
         });
     }
 }
-exports.default = new FoodService();
+exports.default = FoodService;
 //# sourceMappingURL=Food.js.map

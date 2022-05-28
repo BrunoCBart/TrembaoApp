@@ -5,6 +5,7 @@ const validateSession = async (req: Request, res: Response, next: NextFunction) 
   const { cookies } = req
   try {
     const token = cookies.TBsession
+    console.log(token)
     const isSessionValid = await JwtUtils.validateSession(token)
     if (!isSessionValid) return res.status(401).json({ error: 'Sessão expirada ou inválida' })
     return res.status(200).json({ token })

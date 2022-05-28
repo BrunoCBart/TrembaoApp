@@ -22,5 +22,4 @@ FoodSubType.init({
   tableName: 'FoodSubTypes',
   sequelize: db
 })
-
 export default FoodSubType

@@ -6,8 +6,8 @@ const { expect } = chai
 
 chai.use(chaiHttp)
 
-describe('createUser route /users testing', () => {
-  it('createUser returns an array', async () => {
+describe('create User route /users testing', () => {
+  it('create returns an array', async () => {
     const res = await chai.request(app).post('/users')
       .type('json')
       .send({

@@ -19,8 +19,8 @@ const foods = [
   { foodType: 'Arroz', id: 1, name: 'Arroz branco' },
   { foodType: 'Feijão', id: 5, name: 'Feijão preto' }]
 
-describe('getAllOrders route /orders testing', () => {
-  it('getAllOrders return objects with proper properties', async () => {
+describe('getAll Orders route /orders testing', () => {
+  it('getAll Orders return objects with proper properties', async () => {
     const resPost = await chai.request(app).post('/orders')
       .type('json')
       .send(order)

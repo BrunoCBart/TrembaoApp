@@ -25,6 +25,7 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User_1 = require("../services/User");
+const userService = new User_1.default();
 dotenv.config();
 const jwtConfig = {
     expiresIn: '1d',
@@ -39,7 +40,7 @@ JwtUtils.createToken = (payload) => {
     return token;
 };
 JwtUtils.authUser = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_1.default.findUser({ username });
+    const user = yield userService.findOne({ username });
     if (!user)
         return false;
     const pwIsValid = yield bcrypt.compare(password, user.password);
@@ -53,7 +54,7 @@ JwtUtils.validateSession = (token) => __awaiter(void 0, void 0, void 0, function
     const payload = JwtUtils.verifyToken(token);
     if (!payload)
         return false;
-    const user = yield User_1.default.findUser({ username: payload.dataValues.username });
+    const user = yield userService.findOne({ username: payload.dataValues.username });
     if (!user)
         return false;
     return true;

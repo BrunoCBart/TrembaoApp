@@ -1,23 +1,34 @@
 import Food from '../database/models/Food'
-import FoodSubType from '../database/models/FoodSubType'
+// import FoodSubType from '../database/models/FoodSubType'
 import FoodType from '../database/models/FoodType'
-import IFoodType from '../interfaces/Food'
 
 class FoodService {
-  public getAllTypes = async () => {
-    const types: IFoodType[] = await FoodType.findAll()
-    return types
-  }
-
-  public getAllSubTypes = async () => {
-    const subTypes: IFoodType[] = await FoodSubType.findAll()
-    return subTypes
-  }
-
-  public getAllFoods = async () => {
+  public getAll = async () => {
     const foods = await FoodType.findAll({
       include: [
-        { model: Food, as: 'foods' }
+        {
+          model: Food,
+          as: 'foods',
+          attributes: ['id', 'name', 'foodSubTypeId', 'checked']
+        }
+      ],
+      order: [
+        ['id', 'ASC']
+      ]
+    })
+
+    return foods
+  }
+
+  public getAllChecked = async () => {
+    const foods = await FoodType.findAll({
+      include: [
+        {
+          model: Food,
+          as: 'foods',
+          where: { checked: true },
+          attributes: ['id', 'name', 'checked']
+        }
       ],
       order: [
         ['id', 'ASC']
@@ -35,4 +46,4 @@ class FoodService {
   }
 }
 
-export default new FoodService()
+export default FoodService

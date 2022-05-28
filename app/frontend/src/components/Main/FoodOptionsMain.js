@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import FoodOption from '../FoodOptions/FoodOption'
+// import FoodOption from '../FoodOptions/FoodOption'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
 import socket from '../../socket'
 import OrderForm from './OrderForm'
@@ -8,6 +8,7 @@ import {
   getCheckedAndUncheckedFoods
 } from '../../utils/foodOptionsMain'
 import '../FoodOptions/foodOptionsForm.css'
+import FoodOptions from '../FoodOptions/FoodOptions'
 
 const INITIAL_ORDER = {
   Arroz: [],
@@ -20,15 +21,16 @@ const INITIAL_ORDER = {
 
 function foodOptionsMain () {
   const [order, setOrder] = useState(INITIAL_ORDER)
-  const { foodOptions, getFoodOptions } = useContext(trembaoAppContext)
+  const { checkedFoodOptions, getCheckedFoodOptions } = useContext(trembaoAppContext)
 
   useEffect(() => {
     socket.on('foodOption-updated', async () => {
-      await getFoodOptions()
+      console.log('a')
+      await getCheckedFoodOptions()
     })
   }, [])
   const setInitialUncheckedOrder = () => {
-    const uncheckedOptions = foodOptions.reduce((acc, { name, foods }) => {
+    const uncheckedOptions = checkedFoodOptions.reduce((acc, { name, foods }) => {
       foods.forEach(({ id, checked, name: foodName }) => {
         if (checked) {
           acc[name].push({ id, foodName, checked: false })
@@ -41,7 +43,7 @@ function foodOptionsMain () {
 
   useEffect(() => {
     setInitialUncheckedOrder()
-  }, [foodOptions])
+  }, [checkedFoodOptions])
 
   useEffect(() => {
     const setLimitForFoodOptions = async () => {
@@ -71,25 +73,11 @@ function foodOptionsMain () {
     setOrder(newOrder)
   }
 
-  const foodOptionIsChecked = (nameType, id) => {
+  const foodOptionIsChecked = (id, nameType) => {
     const food = order[nameType].find(({ id: foodId }) => {
       return foodId === id
     })
     return food ? food.checked : false
-  }
-
-  const renderFoodOptions = (foods, nameType) => {
-    return foods.filter(({ checked }) => {
-      return checked
-    }).map(({ name, id }) => (<FoodOption
-      optionOnCheck={checkFoodOption}
-      foodId={id}
-      nameType={nameType}
-      foodName={name}
-      key={`${name}-key`}
-      checked={foodOptionIsChecked(nameType, id)}
-      />
-    ))
   }
 
   const renderOrderForm = () => {
@@ -113,14 +101,20 @@ function foodOptionsMain () {
 
   return (
     <section className="foodOptionsForm">
-      {order.Arroz && foodOptions.map(({ name, foods }) => (
+      {order.Arroz && checkedFoodOptions.map(({ name, foods }) => (
        <div className={'foodOptionsForm-type-container food-options-container--main'}
         onClick={() => handleActiveFoodType(name)}
         key={name}
         >
         <h2 className="food-options__type">{name}</h2>
         <div className={`foodOptionsForm__food-options-container food-type-${name}`}>
-        {renderFoodOptions(foods, name)}
+        <FoodOptions
+          foods={foods}
+          TypeName={name}
+          onCheck={checkFoodOption}
+          isChecked={foodOptionIsChecked}
+          isDashBoard={false}
+        />
        </div>
      </div>
       ))}

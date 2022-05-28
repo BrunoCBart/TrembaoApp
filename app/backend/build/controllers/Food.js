@@ -8,52 +8,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Food_1 = require("../services/Food");
 const Food_2 = require("../sockets/Food");
 class FoodController {
+    constructor(foodService = new Food_1.default()) {
+        this.foodService = foodService;
+        this.getAll = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const foods = yield this.foodService.getAll();
+                return res.status(200).json(foods);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.getAllChecked = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const foods = yield this.foodService.getAllChecked();
+                return res.status(200).json(foods);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.updateMenu = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const { io } = req;
+            try {
+                const { food, error, code } = yield this.foodService.updateMenu(Number(id));
+                if (error)
+                    return res.status(code).json({ error });
+                (0, Food_2.default)(io, food);
+                io.emit('foodOption-updated', food);
+                return res.status(200).json(food);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    }
 }
-_a = FoodController;
-FoodController.getAllTypes = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const types = yield Food_1.default.getAllTypes();
-        return res.status(200).json(types);
-    }
-    catch (err) {
-        next(err);
-    }
-});
-FoodController.getAllSubTypes = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const subTypes = yield Food_1.default.getAllSubTypes();
-        return res.status(200).json(subTypes);
-    }
-    catch (err) {
-        next(err);
-    }
-});
-FoodController.getAllFoods = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const foods = yield Food_1.default.getAllFoods();
-        return res.status(200).json(foods);
-    }
-    catch (err) {
-        next(err);
-    }
-});
-FoodController.updateMenu = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const { io } = req;
-    try {
-        const food = yield Food_1.default.updateMenu(Number(id));
-        (0, Food_2.default)(io, food);
-        io.emit('foodOption-updated', food);
-        return res.status(200).json(food);
-    }
-    catch (err) {
-        next(err);
-    }
-});
 exports.default = FoodController;
 //# sourceMappingURL=Food.js.map

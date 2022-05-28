@@ -1,8 +1,10 @@
 import * as dotenv from 'dotenv'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import userService from '../services/User'
+import UserService from '../services/User'
 import { UserPayload } from '../interfaces/User'
+
+const userService = new UserService()
 dotenv.config()
 
 const jwtConfig = {
@@ -19,7 +21,7 @@ class JwtUtils {
   }
 
   static authUser = async (username: string, password: string) => {
-    const user = await userService.findUser({ username })
+    const user = await userService.findOne({ username })
     if (!user) return false
     const pwIsValid = await bcrypt.compare(password, user.password)
     if (!pwIsValid) return false
@@ -31,7 +33,7 @@ class JwtUtils {
   static validateSession = async (token: string) => {
     const payload = JwtUtils.verifyToken(token)
     if (!payload) return false
-    const user = await userService.findUser(
+    const user = await userService.findOne(
       { username: payload.dataValues.username })
     if (!user) return false
     return true

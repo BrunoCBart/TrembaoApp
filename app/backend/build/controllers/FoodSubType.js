@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jwt_1 = require("../utils/jwt");
-const validateSession = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { cookies } = req;
-    try {
-        const token = cookies.TBsession;
-        console.log(token);
-        const isSessionValid = yield jwt_1.default.validateSession(token);
-        if (!isSessionValid)
-            return res.status(401).json({ error: 'Sessão expirada ou inválida' });
-        return res.status(200).json({ token });
+const FoodSubType_1 = require("../services/FoodSubType");
+class FoodSubTypeController {
+    constructor(foodSubTypeService = new FoodSubType_1.default()) {
+        this.foodSubTypeService = foodSubTypeService;
+        this.getAll = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const subTypes = yield this.foodSubTypeService.getAll();
+                return res.status(200).json(subTypes);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
     }
-    catch (e) {
-        next(e);
-    }
-});
-exports.default = validateSession;
-//# sourceMappingURL=validateSession.js.map
+}
+exports.default = FoodSubTypeController;
+//# sourceMappingURL=FoodSubType.js.map

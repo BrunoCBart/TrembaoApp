@@ -12,9 +12,10 @@ const INITIAL_FOOD_TYPES = [
   { foods: [], name: 'Bebidas' }
 ]
 
-const LOGIN_URL = '/users/login'
+const LOGIN_URL = 'users/login'
 function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState(INITIAL_FOOD_TYPES)
+  const [checkedFoodOptions, setCheckedFoodOptions] = useState([])
   const [login, setLogin] = useState(false)
 
   const getSession = async (navigate) => {
@@ -38,10 +39,17 @@ function TrembaoAppProvider ({ children }) {
     setFoodOptions(foods)
   })
 
+  const getCheckedFoodOptions = useCallback(async () => {
+    const { data: foods } = await axios.get('/foods/checked')
+    setCheckedFoodOptions(foods)
+  })
+
   useEffect(() => {
     getFoodOptions()
       .catch(error => console.log(error))
-  }, [getFoodOptions])
+    getCheckedFoodOptions()
+      .catch(error => console.log(error))
+  }, [])
 
   const trembaoAppValue = {
     login,
@@ -49,7 +57,9 @@ function TrembaoAppProvider ({ children }) {
     foodOptions,
     setFoodOptions,
     getFoodOptions,
-    getSession
+    getSession,
+    getCheckedFoodOptions,
+    checkedFoodOptions
   }
 
   return (

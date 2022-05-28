@@ -1,0 +1,1 @@
+{"version":3,"file":"FoodSubType.js","sourceRoot":"","sources":["../../src/services/FoodSubType.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,gEAAwD;AAGxD,MAAM,kBAAkB;IAAxB;QACS,WAAM,GAAG,GAAS,EAAE;YACzB,MAAM,QAAQ,GAAgB,MAAM,qBAAW,CAAC,OAAO,EAAE,CAAA;YACzD,OAAO,QAAQ,CAAA;QACjB,CAAC,CAAA,CAAA;IACH,CAAC;CAAA;AAED,kBAAe,kBAAkB,CAAA"}

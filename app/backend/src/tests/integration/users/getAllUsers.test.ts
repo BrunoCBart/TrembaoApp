@@ -7,13 +7,13 @@ const { expect } = chai
 
 chai.use(chaiHttp)
 
-describe('getAllUsers route /users testing', () => {
-  it('getAllUsers returns an array', async () => {
+describe('getAll Users route /users testing', () => {
+  it('getAll Users returns an array', async () => {
     const res = await chai.request(app).get('/users')
     expect(res.body).to.be.an('array')
   })
 
-  it('getAllUsers returns an array of objects', () => {
+  it('getAll Users returns an array of objects', () => {
     chai.request(app)
       .get('/users')
       .then((res) => {

@@ -15,8 +15,8 @@ const app_1 = require("../../../app");
 require("mocha");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('createUser route /users testing', () => {
-    it('createUser returns an array', () => __awaiter(void 0, void 0, void 0, function* () {
+describe('create User route /users testing', () => {
+    it('create returns an array', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).post('/users')
             .type('json')
             .send({
