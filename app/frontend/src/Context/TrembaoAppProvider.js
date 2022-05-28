@@ -17,6 +17,7 @@ function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState(INITIAL_FOOD_TYPES)
   const [checkedFoodOptions, setCheckedFoodOptions] = useState([])
   const [login, setLogin] = useState(false)
+  const [price, setPrice] = useState(0)
 
   const getSession = async (navigate) => {
     try {
@@ -59,7 +60,9 @@ function TrembaoAppProvider ({ children }) {
     getFoodOptions,
     getSession,
     getCheckedFoodOptions,
-    checkedFoodOptions
+    checkedFoodOptions,
+    price,
+    setPrice
   }
 
   return (

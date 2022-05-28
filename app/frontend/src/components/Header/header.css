@@ -6,14 +6,20 @@
   height: 60px;
   top: 0;
   border-radius: 0 0 1rem 1rem;
-  padding: 0.1rem;
+  padding: 0 0.5rem;
+
+}
+
+.header__container {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  max-width: 500px;
+  margin-inline: auto;
 }
 
 .trembao {
-  width: 50px;
+  width: 55px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -28,7 +34,11 @@
   font-family: 'libre_baskervillebold';
   text-decoration: none;
   color: var(--red);
-  
+  text-align: center;
+}
+
+.header__logo-title span {
+  display: block;
 }
 
 .header__logo-title:hover {

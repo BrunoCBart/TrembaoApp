@@ -13,6 +13,13 @@
   color: var(--white);
 }
 
+#price {
+  position: absolute;
+  right: 0;
+  color: var(--black);
+  font-size: 1.3rem;
+}
+
 .orderForm {
   position: fixed;
   color: var(--white);
@@ -83,4 +90,28 @@
 
 .foodOptionsForm__order-btn--hover:hover {
   background-color: var(--yellow-light);
+}
+
+.foodOptionsForm__lunch-size {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+}
+
+.foodOptionsForm__lunch-size label {
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+  font-size: 1.1rem;
+}
+
+
+.foodOptionsForm__lunch-size input {
+  cursor: pointer;
+  transform: scale(1.5);
+  margin-inline: 1rem;
+  margin-bottom: 0.4rem
 }
