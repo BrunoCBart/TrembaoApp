@@ -8,7 +8,7 @@ import {
   getCheckedAndUncheckedFoods
 } from '../../utils/foodOptionsMain'
 import '../FoodOptions/foodOptionsForm.css'
-import FoodOptions from '../FoodOptions/FoodOptions'
+import DailyFoodOptions from './CheckedFoodOptions'
 
 const INITIAL_ORDER = {
   Arroz: [],
@@ -101,7 +101,13 @@ function foodOptionsMain () {
 
   return (
     <section className="foodOptionsForm">
-      {order.Arroz && checkedFoodOptions.map(({ name, foods }) => (
+     <DailyFoodOptions
+      handleActiveFoodType={handleActiveFoodType}
+      checkedFoodOptions={checkedFoodOptions}
+      checkFoodOption={checkFoodOption}
+      foodOptionIsChecked={foodOptionIsChecked}
+      />
+      {/* {order.Arroz && checkedFoodOptions.map(({ name, foods }) => (
        <div className={'foodOptionsForm-type-container food-options-container--main'}
         onClick={() => handleActiveFoodType(name)}
         key={name}
@@ -117,7 +123,7 @@ function foodOptionsMain () {
         />
        </div>
      </div>
-      ))}
+      ))} */}
       <button className="btn foodOptionsForm__order-btn foodOptionsForm__order-btn--hover"
       onClick={renderOrderForm}>
         Pedir
