@@ -20,7 +20,7 @@ class FoodService {
                     {
                         model: Food_1.default,
                         as: 'foods',
-                        attributes: ['id', 'name', 'foodSubTypeId']
+                        attributes: ['id', 'name', 'foodSubTypeId', 'checked']
                     }
                 ],
                 order: [
