@@ -3,17 +3,16 @@ import { cleanup, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import mockAxios from 'axios'
 import React from 'react'
-import { foodOptions, dailyFoodOptions } from '../../utils/test/mocks/Foods'
-import { renderWithProvider } from '../../utils/test/renderWithRouterAndProvider'
+import { foodOptions, dailyFoodOptions } from '../utils/mocks/Foods'
+import { renderWithProvider } from '../utils/mocks/renderWithRouterAndProvider'
 import Main from '../pages/Main'
 
 global.setImmediate = global.setTimeout
 
 beforeEach(() => {
   mockAxios.get.mockImplementation((url) => {
-    if (url === '/foods') {
-      return Promise.resolve({ data: foodOptions })
-    }
+    if (url === '/foods') return Promise.resolve({ data: foodOptions })
+    if (url === '/foods/checked') return Promise.resolve({ data: foodOptions })
   })
 
   waitFor(() => renderWithProvider(<Main />))

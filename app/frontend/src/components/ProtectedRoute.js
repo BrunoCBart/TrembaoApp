@@ -20,7 +20,7 @@ function ProtectedRoute ({ component: Component }) {
     }
     return login
       ? <Component />
-      : <div>You are not authenticated</div>
+      : navigate('/admin')
   }
 
   return (

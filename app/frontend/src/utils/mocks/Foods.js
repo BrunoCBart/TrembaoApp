@@ -1,4 +1,4 @@
-export const dailyFoodOptions = ['Arroz', 'Feijão', 'Misturas', 'Guarnições', 'Bebidas']
+export const dailyFoodOptions = ['Arroz', 'Feijão', 'Misturas', 'Guarnições']
 
 export const foodOptions = [
   {
@@ -37,7 +37,7 @@ export const foodOptions = [
         name: 'Feijão carioca',
         foodTypeId: 2,
         foodSubTypeId: null,
-        checked: false
+        checked: true
       },
       {
         id: 5,
@@ -64,7 +64,7 @@ export const foodOptions = [
         name: 'Almondegas',
         foodTypeId: 3,
         foodSubTypeId: 1,
-        checked: false
+        checked: true
       },
       {
         id: 8,
@@ -615,7 +615,7 @@ export const foodOptions = [
         name: 'Alface americana',
         foodTypeId: 5,
         foodSubTypeId: null,
-        checked: false
+        checked: true
       },
       {
         id: 85,
