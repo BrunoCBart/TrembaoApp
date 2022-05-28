@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useContext } from 'react'
-import FoodOption from '../FoodOptions/FoodOption'
+// import FoodOption from '../FoodOptions/FoodOption'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
 import axios from '../../api/axios'
 import '../FoodOptions/foodOptionsForm.css'
+import FoodOptions from '../FoodOptions/FoodOptions'
 
 const FOODS_URL = '/foods'
 function FoodOptionsDashboard ({ currentType }) {
@@ -17,26 +18,31 @@ function FoodOptionsDashboard ({ currentType }) {
       console.log(e)
     }
   }
-  const renderFoodOptions = (foods, nameType) => {
-    return foods.map(({ name, id, checked }) => (
-      <FoodOption
-      optionOnCheck={optionOnCheck}
-      foodId={id}
-      foodName={name}
-      nameType={nameType}
-      key={`${name}-key`}
-      checked={checked}
-      />
-    ))
-  }
+  // const renderFoodOptions = (foods, nameType) => {
+  //   return foods.map(({ name, id, checked }) => (
+  //     <FoodOption
+  //     optionOnCheck={optionOnCheck}
+  //     foodId={id}
+  //     foodName={name}
+  //     nameType={nameType}
+  //     key={`${name}-key`}
+  //     checked={checked}
+  //     />
+  //   ))
+  // }
 
   return (
     <form className="foodOptionsForm">
-      {foodOptions.filter(({ name }) => name === currentType).map(({ name, foods }) => (
+      {foodOptions.length > 0 && foodOptions.filter(({ name }) => name === currentType).map(({ name, foods }) => (
         <div className="foodOptionsForm-type-container" key={name}>
           <h2>{name}</h2>
           <div className="foodOptionsForm__food-options-container food-type--active">
-          {renderFoodOptions(foods, name)}
+          <FoodOptions
+            foods={foods}
+            TypeName={name}
+            onCheck={optionOnCheck}
+            isDashBoard={true}
+          />
           </div>
         </div>
       ))}

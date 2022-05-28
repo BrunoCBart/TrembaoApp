@@ -1,4 +1,3 @@
-// import App from '../App'
 import '@testing-library/jest-dom/extend-expect'
 import { cleanup, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -11,7 +10,7 @@ import Main from '../pages/Main'
 global.setImmediate = global.setTimeout
 
 beforeEach(() => {
-  mockAxios.get.mockImplementationOnce((url) => {
+  mockAxios.get.mockImplementation((url) => {
     if (url === '/foods') {
       return Promise.resolve({ data: foodOptions })
     }
