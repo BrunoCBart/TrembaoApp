@@ -17,8 +17,8 @@ const order = {
 
 const foods = [
   { foodType: 'Arroz', id: 1, name: 'Arroz branco' },
-  { foodType: 'Feijão', id: 5, name: 'Feijão preto' }]
-
+  { foodType: 'Feijão', id: 5, name: 'Feijão preto' }
+]
 describe('getAll Orders route /orders testing', () => {
   it('getAll Orders return objects with proper properties', async () => {
     const resPost = await chai.request(app).post('/orders')
@@ -30,6 +30,7 @@ describe('getAll Orders route /orders testing', () => {
     const res = await chai.request(app).get('/orders')
     const i = user.id - 1
     const orders = res.body
+    console.log(orders[i].foods)
     expect(orders).to.be.an('array')
     expect(orders).to.have.lengthOf(user.id)
     expect(orders[i]).to.have.property('id', user.id)
