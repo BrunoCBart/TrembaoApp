@@ -5,7 +5,7 @@ import addFoodToMenuSocket from '../sockets/Food'
 class FoodController {
   constructor (protected foodService = new FoodService()) {}
 
-  getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  public getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
       const foods = await this.foodService.getAll()
       return res.status(200).json(foods)
@@ -23,12 +23,51 @@ class FoodController {
     }
   }
 
-  updateMenu: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  public update: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    const { price, name, foodType, foodSubType } = req.body
+    const { id } = req.params
+    try {
+      const updatedFood = await this.foodService.update(Number(id), { price, name, foodType, foodSubType })
+      return res.status(200).json(updatedFood)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  public getAllFoods: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    try {
+      const foods = await this.foodService.getAllFoods()
+      return res.status(200).json(foods)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  public create: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    const { name, price, foodType, foodSubType } = req.body
+    try {
+      const newFood = await this.foodService.create({ name, price, foodType, foodSubType })
+      return res.status(200).json(newFood)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  public delete: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    const { id } = req.params
+    try {
+      const deletedFood = await this.foodService.delete(Number(id))
+      return res.status(200).json(deletedFood)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  public updateMenu: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     const { id } = req.params
     const { io }: any = req
     try {
-      const { food, error, code } = await this.foodService.updateMenu(Number(id))
-      if (error) return res.status(code).json({ error })
+      const food = await this.foodService.updateMenu(Number(id))
       addFoodToMenuSocket(io, food)
       io.emit('foodOption-updated', food)
       return res.status(200).json(food)

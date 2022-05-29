@@ -30,7 +30,8 @@ module.exports = {
           key: 'id'
         },
         onUpdate: 'cascade',
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        defaultValue: null
       },
       checked: {
         type: Sequelize.BOOLEAN,
