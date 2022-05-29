@@ -12,24 +12,12 @@ function FoodOptionsDashboard ({ currentType }) {
 
   const optionOnCheck = async (id) => {
     try {
-      await axios.put(`${FOODS_URL}/${id}`)
+      await axios.put(`${FOODS_URL}/${id}/check`)
       await getFoodOptions()
     } catch (e) {
       console.log(e)
     }
   }
-  // const renderFoodOptions = (foods, nameType) => {
-  //   return foods.map(({ name, id, checked }) => (
-  //     <FoodOption
-  //     optionOnCheck={optionOnCheck}
-  //     foodId={id}
-  //     foodName={name}
-  //     nameType={nameType}
-  //     key={`${name}-key`}
-  //     checked={checked}
-  //     />
-  //   ))
-  // }
 
   return (
     <form className="foodOptionsForm">
