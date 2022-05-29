@@ -8,13 +8,11 @@ const { expect } = chai
 chai.use(chaiHttp)
 
 describe('Route /subTypes testing', () => {
-  it('getAllTypes returns an array', async () => {
+  it('getAllTypes returns an array with proper properties', async () => {
     const res = await chai.request(app).get('/foods/subTypes')
-    expect(res.body).to.be.an('array')
-  })
 
-  it('getAllSubTypes returns an array with proper properties', async () => {
-    const res = await chai.request(app).get('/foods/types')
+    expect(res.body).to.be.an('array')
+
     res.body.forEach((subType: IFoodType) => {
       expect(subType).to.have.property('id')
       expect(subType).to.have.property('name')
