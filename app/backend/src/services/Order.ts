@@ -20,7 +20,7 @@ class OrderService {
   }
 
   public getAll = async () => {
-    const orders = await Order.findAll()
+    const orders: Order[] = await Order.findAll()
     const mappedOrders = orders.map(async (order: any) => {
       const { districtId, streetId, ...rest } = order.dataValues
       return ({
@@ -59,7 +59,7 @@ class OrderService {
     } else {
       streetId = dbStreet.dataValues.id
     }
-    const order = await Order.create({ name, phone, districtId, streetId, foods, number })
+    const order: Order = await Order.create({ name, phone, districtId, streetId, foods, number })
     return order
   }
 }

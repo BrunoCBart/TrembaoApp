@@ -32,6 +32,10 @@ Food.init({
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false
+  },
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   timestamps: false,

@@ -9,19 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jwt_1 = require("../utils/jwt");
-const validateSession = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { cookies } = req;
-    try {
-        const token = cookies.TBsession;
-        const isSessionValid = yield jwt_1.default.validateSession(token);
-        if (!isSessionValid)
-            return res.status(401).json({ error: 'Sessão expirada ou inválida' });
-        return res.status(200).json({ token });
-    }
-    catch (e) {
-        next(e);
-    }
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const app_1 = require("../../../app");
+require("mocha");
+const { expect } = chai;
+chai.use(chaiHttp);
+describe('create Route /foods testing', () => {
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield chai.request(app_1.app).post('/foods').send({
+            name: 'arroz con pollo',
+            foodType: 'Arroz'
+        });
+    }));
+    it('Food should be created', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield chai.request(app_1.app).get('/foods/all');
+        expect(res.body[0].name).to.equal('arroz con pollo');
+        expect(res.body[0].foodTypeId).to.equal(1);
+    }));
 });
-exports.default = validateSession;
-//# sourceMappingURL=validateSession.js.map
+//# sourceMappingURL=create.test.js.map

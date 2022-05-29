@@ -32,13 +32,51 @@ class FoodController {
                 return next(err);
             }
         });
+        this.update = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { price, name, foodType, foodSubType } = req.body;
+            const { id } = req.params;
+            try {
+                const updatedFood = yield this.foodService.update(Number(id), { price, name, foodType, foodSubType });
+                return res.status(200).json(updatedFood);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.getAllFoods = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const foods = yield this.foodService.getAllFoods();
+                return res.status(200).json(foods);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.create = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { name, price, foodType, foodSubType } = req.body;
+            try {
+                const newFood = yield this.foodService.create({ name, price, foodType, foodSubType });
+                return res.status(200).json(newFood);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.delete = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            try {
+                const deletedFood = yield this.foodService.delete(Number(id));
+                return res.status(200).json(deletedFood);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
         this.updateMenu = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const { io } = req;
             try {
-                const { food, error, code } = yield this.foodService.updateMenu(Number(id));
-                if (error)
-                    return res.status(code).json({ error });
+                const food = yield this.foodService.updateMenu(Number(id));
                 (0, Food_2.default)(io, food);
                 io.emit('foodOption-updated', food);
                 return res.status(200).json(food);

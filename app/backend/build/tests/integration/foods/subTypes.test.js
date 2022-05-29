@@ -1,31 +1,22 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const app_1 = require("../../../app");
-require("mocha");
-const { expect } = chai;
-chai.use(chaiHttp);
-describe('Route /subTypes testing', () => {
-    it('getAllTypes returns an array', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield chai.request(app_1.app).get('/foods/subTypes');
-        expect(res.body).to.be.an('array');
-    }));
-    it('getAllSubTypes returns an array with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield chai.request(app_1.app).get('/foods/types');
-        res.body.forEach((subType) => {
-            expect(subType).to.have.property('id');
-            expect(subType).to.have.property('name');
-        });
-    }));
-});
+// import * as chai from 'chai'
+// import chaiHttp = require('chai-http')
+// import { app } from '../../../app'
+// import 'mocha'
+// import IFoodType from '../../../interfaces/Food'
+// const { expect } = chai
+// chai.use(chaiHttp)
+// describe('Route /subTypes testing', () => {
+//   it('getAllTypes returns an array', async () => {
+//     const res = await chai.request(app).get('/foods/subTypes')
+//     expect(res.body).to.be.an('array')
+//   })
+//   it('getAllSubTypes returns an array with proper properties', async () => {
+//     const res = await chai.request(app).get('/foods/types')
+//     res.body.forEach((subType: IFoodType) => {
+//       expect(subType).to.have.property('id')
+//       expect(subType).to.have.property('name')
+//     })
+//   })
+// })
 //# sourceMappingURL=subTypes.test.js.map

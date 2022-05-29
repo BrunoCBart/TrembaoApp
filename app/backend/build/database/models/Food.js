@@ -27,6 +27,10 @@ Food.init({
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+    price: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
     }
 }, {
     timestamps: false,

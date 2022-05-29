@@ -37,6 +37,7 @@ describe('getAll Orders route /orders testing', () => {
         const res = yield chai.request(app_1.app).get('/orders');
         const i = user.id - 1;
         const orders = res.body;
+        console.log(orders[i].foods);
         expect(orders).to.be.an('array');
         expect(orders).to.have.lengthOf(user.id);
         expect(orders[i]).to.have.property('id', user.id);
