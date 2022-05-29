@@ -5,6 +5,7 @@ import trembaoAppContext from '../../Context/TrembaoAppContext'
 import axios from '../../api/axios'
 import '../FoodOptions/foodOptionsForm.css'
 import FoodOptions from '../FoodOptions/FoodOptions'
+import Pen from '../svgs/Pen'
 
 const FOODS_URL = '/foods'
 function FoodOptionsDashboard ({ currentType }) {
@@ -12,24 +13,20 @@ function FoodOptionsDashboard ({ currentType }) {
 
   const optionOnCheck = async (id) => {
     try {
-      await axios.put(`${FOODS_URL}/${id}`)
+      await axios.put(`${FOODS_URL}/${id}/check`)
       await getFoodOptions()
     } catch (e) {
       console.log(e)
     }
   }
-  // const renderFoodOptions = (foods, nameType) => {
-  //   return foods.map(({ name, id, checked }) => (
-  //     <FoodOption
-  //     optionOnCheck={optionOnCheck}
-  //     foodId={id}
-  //     foodName={name}
-  //     nameType={nameType}
-  //     key={`${name}-key`}
-  //     checked={checked}
-  //     />
-  //   ))
-  // }
+
+  const EditBtn = () => {
+    return (
+      <button className="food-option-edit-btn" onClick={() => ''}>
+        <Pen className="food-option-edit-pen" />
+      </button>
+    )
+  }
 
   return (
     <form className="foodOptionsForm">
@@ -42,6 +39,7 @@ function FoodOptionsDashboard ({ currentType }) {
             TypeName={name}
             onCheck={optionOnCheck}
             isDashBoard={true}
+            editFoodBtn={EditBtn()}
           />
           </div>
         </div>

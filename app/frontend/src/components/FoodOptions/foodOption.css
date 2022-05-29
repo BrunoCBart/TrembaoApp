@@ -16,6 +16,33 @@
   font-size: 1.2rem;
 }
 
-.form-group {
-  padding: 0.2rem;
+.food-option-form-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+.food-option-edit-btn {
+  position: absolute;
+  background-color: var(--crimson);
+  right: 0;
+  cursor: pointer;
+  padding: 0.3rem;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.food-option-edit-btn:hover {
+  background-color: var(--red);
+}
+
+.food-option-edit-pen {
+  width: 23px;
+  /* width: 1rem; */
+  /* height: 1rem; */
+  /* background-color: var(--white); */
+  /* border-radius: 50%; */
+  /* margin-right: 0.5rem; */
 }
