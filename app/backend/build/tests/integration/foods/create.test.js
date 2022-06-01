@@ -13,6 +13,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app_1 = require("../../../app");
 require("mocha");
+const food_1 = require("../../mocks/food");
 const { expect } = chai;
 chai.use(chaiHttp);
 describe('create Route /foods testing', () => {
@@ -21,13 +22,10 @@ describe('create Route /foods testing', () => {
         yield chai.request(app_1.app).delete(`/foods/${lastIndex}`);
     }));
     it('Food should be created', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).post('/foods').send({
-            name: 'arroz con pollo',
-            foodType: 'Arroz'
-        });
+        yield chai.request(app_1.app).post('/foods').send(food_1.createFood);
         const res = yield chai.request(app_1.app).get('/foods/all');
         lastIndex = res.body.length - 1;
-        expect(res.body[lastIndex].name).to.equal('arroz con pollo');
+        expect(res.body[lastIndex].name).to.equal(food_1.createFood.name);
         expect(res.body[lastIndex].foodTypeId).to.equal(1);
     }));
 });

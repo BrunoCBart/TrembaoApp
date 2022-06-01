@@ -3,38 +3,28 @@ import FoodSubType from '../database/models/FoodSubType'
 import FoodType from '../database/models/FoodType'
 import { IFoodUpdate } from '../interfaces/Food'
 class FoodService {
-  public getAll = async () => {
-    const foods: FoodType[] = await FoodType.findAll({
-      include: [
-        {
-          model: Food,
-          as: 'foods',
-          attributes: ['id', 'name', 'foodSubTypeId', 'checked', 'price']
-        }
-      ],
-      order: [
-        ['id', 'ASC']
-      ]
-    })
+  private foodTypesReduce = (foods: any) => {
+    return foods.reduce((acc: any, food: any) => {
+      if (!acc.find((f: any) => f.foodType === food.foodType)) {
+        acc.push({
+          foodType: food.foodType,
+          foods: []
+        })
+      }
+      acc.find((f: any) => f.foodType === food.foodType).foods.push(food)
+      return acc
+    }, [])
+  }
 
-    return foods
+  public getAll = async () => {
+    const foods = await this.getAllFoods()
+    return this.foodTypesReduce(foods)
   }
 
   public getAllChecked = async () => {
-    const foods: FoodType[] = await FoodType.findAll({
-      include: [
-        {
-          model: Food,
-          as: 'foods',
-          where: { checked: true },
-          attributes: ['id', 'name', 'checked', 'price']
-        }
-      ],
-      order: [
-        ['id', 'ASC']
-      ]
-    })
-    return foods
+    const foods = await this.getAllFoods()
+    const checkedFoods = foods.filter((food: any) => food.checked)
+    return this.foodTypesReduce(checkedFoods)
   }
 
   public create = async (food: IFoodUpdate) => {
@@ -49,9 +39,28 @@ class FoodService {
     return newFood
   }
 
+  private allFoodsMap = (food: any) => ({
+    id: food.id,
+    name: food.name,
+    price: food.price,
+    checked: food.checked,
+    foodType: food['foodType.name'],
+    foodTypeId: food['foodType.id'],
+    foodSubType: food['foodSubType.name'],
+    foodSubTypeId: food['foodSubType.id']
+  })
+
   public getAllFoods = async () => {
-    const foods: Food[] = await Food.findAll()
-    return foods
+    const foods: Food[] = await Food.findAll(
+      {
+        raw: true,
+        include: [
+          { model: FoodType, as: 'foodType' },
+          { model: FoodSubType, as: 'foodSubType' }
+        ]
+      })
+
+    return foods.map(this.allFoodsMap)
   }
 
   public update = async (id: number, fields: IFoodUpdate) => {

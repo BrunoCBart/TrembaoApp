@@ -13,21 +13,16 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app_1 = require("../../../app");
 require("mocha");
+const food_1 = require("../../mocks/food");
 const { expect } = chai;
 chai.use(chaiHttp);
 describe('update Route /foods testing', () => {
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).put('/foods/1').send({
-            name: 'Arroz branco',
-            price: 0
-        });
+        yield chai.request(app_1.app).put('/foods/1').send(food_1.firstFood);
     }));
     it('Update first food should return proper values', () => __awaiter(void 0, void 0, void 0, function* () {
         yield chai.request(app_1.app).put('/foods/1')
-            .send({
-            name: 'Pizza',
-            price: '10'
-        });
+            .send(food_1.updatedFood);
         const res = yield chai.request(app_1.app).get('/foods/all');
         expect(res.body[0].name).to.equal('Pizza');
         expect(res.body[0].price).to.equal(10);

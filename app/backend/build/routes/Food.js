@@ -18,12 +18,12 @@ class UserRouter {
         this.router.get('/', this.foodController.getAll);
         this.router.post('/', (0, validateBody_1.default)(schemas_1.createFoodSchema), this.foodController.create);
         this.router.get('/all', this.foodController.getAllFoods);
+        this.router.get('/checked', this.foodController.getAllChecked);
+        this.router.get('/types', this.foodTypeController.getAll);
+        this.router.get('/subtypes', this.foodSubTypeController.getAll);
         this.router.put('/:id', (0, validateBody_1.default)(schemas_1.updateFoodSchema), this.foodController.update);
         this.router.delete('/:id', this.foodController.delete);
         this.router.put('/:id/check', this.foodController.updateMenu);
-        this.router.get('/types', this.foodTypeController.getAll);
-        this.router.get('/subtypes', this.foodSubTypeController.getAll);
-        this.router.get('/checked', this.foodController.getAllChecked);
     }
 }
 exports.default = new UserRouter().router;

@@ -29,21 +29,24 @@ class FoodService {
             });
             return foods;
         });
+        this.foodTypesReduce = (foods) => {
+            console.log(foods);
+            return foods.reduce((acc, food) => {
+                if (!acc.find((f) => f.foodType === food.foodType)) {
+                    acc.push({
+                        foodType: food.foodType,
+                        foods: []
+                    });
+                }
+                console.log(acc.find(acc.find((f) => f.foodType === food.foodType)));
+                // acc.find((f: any) => f.foodType === food.foodType).foods.push(food)
+                return acc;
+            }, []);
+        };
         this.getAllChecked = () => __awaiter(this, void 0, void 0, function* () {
-            const foods = yield FoodType_1.default.findAll({
-                include: [
-                    {
-                        model: Food_1.default,
-                        as: 'foods',
-                        where: { checked: true },
-                        attributes: ['id', 'name', 'checked', 'price']
-                    }
-                ],
-                order: [
-                    ['id', 'ASC']
-                ]
-            });
-            return foods;
+            const foods = yield this.getAllFoods();
+            const checkedFoods = foods.filter((food) => food.checked);
+            return this.foodTypesReduce(checkedFoods);
         });
         this.create = (food) => __awaiter(this, void 0, void 0, function* () {
             const { name, price, foodType, foodSubType } = food;
@@ -54,9 +57,25 @@ class FoodService {
             const newFood = yield Food_1.default.create({ name, price, foodTypeId, foodSubTypeId });
             return newFood;
         });
+        this.allFoodsMap = (food) => ({
+            id: food.id,
+            name: food.name,
+            price: food.price,
+            checked: food.checked,
+            foodType: food['foodType.name'],
+            foodTypeId: food['foodType.id'],
+            foodSubType: food['foodSubType.name'],
+            foodSubTypeId: food['foodSubType.id']
+        });
         this.getAllFoods = () => __awaiter(this, void 0, void 0, function* () {
-            const foods = yield Food_1.default.findAll();
-            return foods;
+            const foods = yield Food_1.default.findAll({
+                raw: true,
+                include: [
+                    { model: FoodType_1.default, as: 'foodType' },
+                    { model: FoodSubType_1.default, as: 'foodSubType' }
+                ]
+            });
+            return foods.map(this.allFoodsMap);
         });
         this.update = (id, fields) => __awaiter(this, void 0, void 0, function* () {
             const { name, price, foodType, foodSubType } = fields;
