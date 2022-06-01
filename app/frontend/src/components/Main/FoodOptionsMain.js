@@ -5,47 +5,43 @@ import socket from '../../socket'
 import OrderForm from './OrderForm'
 import {
   disableOrEnableOptions,
-  getCheckedAndUncheckedFoods
+  getCheckedAndUncheckedFoods,
+  getFoodTypes
 } from '../../utils/foodOptionsMain'
 import '../FoodOptions/foodOptionsForm.css'
 import DailyFoodOptions from './CheckedFoodOptions'
 import LunchSize from './LunchSize'
 
-const INITIAL_ORDER = {
-  Arroz: [],
-  Feijão: [],
-  Misturas: [],
-  Guarnições: [],
-  Saladas: [],
-  Bebidas: []
-}
-
 function foodOptionsMain () {
-  const [order, setOrder] = useState(INITIAL_ORDER)
+  const [order, setOrder] = useState({})
   const { checkedFoodOptions, getCheckedFoodOptions } = useContext(trembaoAppContext)
 
   useEffect(() => {
     socket.on('foodOption-updated', async () => {
-      console.log('a')
       await getCheckedFoodOptions()
     })
   }, [])
-  const setInitialUncheckedOrder = () => {
-    const uncheckedOptions = checkedFoodOptions.reduce((acc, { name, foods }) => {
-      foods.forEach(({ id, checked, name: foodName }) => {
-        if (checked) {
-          acc[name].push({ id, foodName, checked: false })
-        }
-      })
-      return acc
-    }, { Arroz: [], Feijão: [], Misturas: [], Guarnições: [], Saladas: [], Bebidas: [] })
-    setOrder(uncheckedOptions)
-  }
 
   useEffect(() => {
-    setInitialUncheckedOrder()
+    getFoodTypes()
+      .then(({ data: types }) => {
+        setInitialUncheckedOrder(types)
+      })
   }, [checkedFoodOptions])
+  const setInitialUncheckedOrder = (types) => {
+    const initialOrder = types.reduce((acc, type) => {
+      acc[type.name] = []
+      return acc
+    }, {})
+    const uncheckedOptions = checkedFoodOptions.reduce((acc, { foodType, foods }) => {
+      foods.forEach(({ id, checked, name: foodName }) => {
+        if (checked) acc[foodType].push({ id, foodName, checked: false })
+      })
+      return acc
+    }, initialOrder)
 
+    setOrder(uncheckedOptions)
+  }
   useEffect(() => {
     const setLimitForFoodOptions = async () => {
       const foodTypeOptions = Object.keys(order)
@@ -61,21 +57,21 @@ function foodOptionsMain () {
       .catch(error => console.log(error))
   }, [order])
 
-  const checkFoodOption = (id, nameType) => {
+  const checkFoodOption = (id, foodType) => {
     const newOrder = { ...order }
 
-    newOrder[nameType] = newOrder[nameType]
-      .map(({ id: foodId, foodName, checked }) => {
-        if (foodId === id) {
-          return { id, foodName, checked: !checked }
+    newOrder[foodType] = newOrder[foodType]
+      .map((food) => {
+        if (food.id === id) {
+          return { ...food, checked: !food.checked }
         }
-        return { id: foodId, foodName, checked }
+        return food
       })
     setOrder(newOrder)
   }
 
-  const foodOptionIsChecked = (id, nameType) => {
-    const food = order[nameType].find(({ id: foodId }) => {
+  const foodOptionIsChecked = (id, foodType) => {
+    const food = order[foodType].find(({ id: foodId }) => {
       return foodId === id
     })
     return food ? food.checked : false
@@ -103,17 +99,17 @@ function foodOptionsMain () {
   return (
     <section className="foodOptionsForm">
       <LunchSize />
-     <DailyFoodOptions
-      handleActiveFoodType={handleActiveFoodType}
-      checkedFoodOptions={checkedFoodOptions}
-      checkFoodOption={checkFoodOption}
-      foodOptionIsChecked={foodOptionIsChecked}
-      />
+      {Object.keys(order).length > 0 && <DailyFoodOptions
+        handleActiveFoodType={handleActiveFoodType}
+        checkedFoodOptions={checkedFoodOptions}
+        checkFoodOption={checkFoodOption}
+        foodOptionIsChecked={foodOptionIsChecked}
+      />}
       <button className="btn foodOptionsForm__order-btn foodOptionsForm__order-btn--hover"
       onClick={renderOrderForm}>
         Pedir
       </button>
-      <OrderForm orderIngredients={order}/>
+      {Object.keys(order).length > 0 && <OrderForm orderIngredients={order}/>}
     </section>
   )
 }

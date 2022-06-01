@@ -5,7 +5,6 @@ import trembaoAppContext from '../../Context/TrembaoAppContext'
 import axios from '../../api/axios'
 import '../FoodOptions/foodOptionsForm.css'
 import FoodOptions from '../FoodOptions/FoodOptions'
-import Pen from '../svgs/Pen'
 
 const FOODS_URL = '/foods'
 function FoodOptionsDashboard ({ currentType }) {
@@ -20,30 +19,23 @@ function FoodOptionsDashboard ({ currentType }) {
     }
   }
 
-  const EditBtn = () => {
-    return (
-      <button className="food-option-edit-btn" onClick={() => ''}>
-        <Pen className="food-option-edit-pen" />
-      </button>
-    )
-  }
-
   return (
     <form className="foodOptionsForm">
-      {foodOptions.length > 0 && foodOptions.filter(({ name }) => name === currentType).map(({ name, foods }) => (
-        <div className="foodOptionsForm-type-container" key={name}>
-          <h2>{name}</h2>
+      {foodOptions.length > 0 && foodOptions
+        .filter(({ foodType }) => foodType === currentType)
+        .map(({ foodType, foods }) => (
+        <div className="foodOptionsForm-type-container" key={foodType}>
+          <h2>{foodType}</h2>
           <div className="foodOptionsForm__food-options-container food-type--active">
           <FoodOptions
             foods={foods}
-            TypeName={name}
+            foodType={foodType}
             onCheck={optionOnCheck}
             isDashBoard={true}
-            editFoodBtn={EditBtn()}
           />
           </div>
         </div>
-      ))}
+        ))}
     </form>
   )
 }

@@ -40,7 +40,7 @@ function Login () {
   // This doesn't make sense try to understand it
 
   useEffect(() => {
-    getSession(navigate)
+    getSession()
   }, [])
 
   const login = async (e) => {

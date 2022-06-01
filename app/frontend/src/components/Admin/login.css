@@ -1,3 +1,6 @@
+.Admin-login {
+  height: 100vh;
+}
 .loginForm {
   background-color: var(--red);
   position: absolute;

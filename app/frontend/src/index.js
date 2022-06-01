@@ -8,9 +8,9 @@ import MovieAppProvider from './Context/TrembaoAppProvider'
 const container = document.getElementById('root')
 const root = createRoot(container)
 root.render(
-  <MovieAppProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </MovieAppProvider>
+  <BrowserRouter>
+    <MovieAppProvider>
+        <App />
+    </MovieAppProvider>
+  </BrowserRouter>
 )

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from '../api/axios'
 import trembaoAppContext from './TrembaoAppContext'
 
@@ -18,8 +19,10 @@ function TrembaoAppProvider ({ children }) {
   const [checkedFoodOptions, setCheckedFoodOptions] = useState([])
   const [login, setLogin] = useState(false)
   const [price, setPrice] = useState(0)
+  const [foodToEdit, setFoodToEdit] = useState(null)
 
-  const getSession = async (navigate) => {
+  const navigate = useNavigate()
+  const getSession = async () => {
     try {
       const res = await axios.get(`http://localhost:4000/${LOGIN_URL}`, { withCredentials: true })
       if (res.data.token) {
@@ -62,7 +65,9 @@ function TrembaoAppProvider ({ children }) {
     getCheckedFoodOptions,
     checkedFoodOptions,
     price,
-    setPrice
+    setPrice,
+    foodToEdit,
+    setFoodToEdit
   }
 
   return (

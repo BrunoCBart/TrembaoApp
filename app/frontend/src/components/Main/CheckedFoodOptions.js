@@ -6,16 +6,19 @@ function DailyFoodOptions ({
   checkFoodOption, foodOptionIsChecked
 }) {
   const renderCheckedFoodOptions = () => {
-    return checkedFoodOptions.length > 0 && checkedFoodOptions.map(({ name, foods }) => (
-      <div className={'foodOptionsForm-type-container food-options-container--main'}
-       onClick={() => handleActiveFoodType(name)}
-       key={name}
+    return checkedFoodOptions.length > 0 && checkedFoodOptions.map(({ foodType, foods }) => (
+      <div className={'foodOptionsForm-type-container foodOptionsForm-container--main'}
+       key={foodType}
        >
-       <h2 className="food-options__type">{name}</h2>
-       <div className={`foodOptionsForm__food-options-container food-type-${name}`}>
+       <div className="foodOptionsForm-type-container--main__type"
+        onClick={() => handleActiveFoodType(foodType)}
+        >
+         <h2 className="food-options__type-title">{foodType}</h2>
+       </div>
+       <div className={`foodOptionsForm__food-options-container food-type-${foodType}`}>
        <FoodOptions
           foods={foods}
-          TypeName={name}
+          foodType={foodType}
           onCheck={checkFoodOption}
           isChecked={foodOptionIsChecked}
           isDashBoard={false}
