@@ -1,26 +1,36 @@
 "use strict";
-// import * as chai from 'chai'
-// import chaiHttp = require('chai-http')
-// import { app } from '../../../app'
-// import 'mocha'
-// const { expect } = chai
-// chai.use(chaiHttp)
-// describe('update Route /foods testing', () => {
-//   beforeEach(async () => {
-//     await chai.request(app).post('/foods').send({
-//       name: 'arroz con pollo',
-//       foodType: 'Arroz'
-//     })
-//   })
-//   it('Update first food should return proper values', async () => {
-//     await chai.request(app).put('/foods/1')
-//       .send({
-//         name: 'Pizza',
-//         price: '10'
-//       })
-//     const res = await chai.request(app).get('/foods/all')
-//     expect(res.body[0].name).to.equal('Pizza')
-//     expect(res.body[0].price).to.equal(10)
-//   })
-// })
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const app_1 = require("../../../app");
+require("mocha");
+const { expect } = chai;
+chai.use(chaiHttp);
+describe('update Route /foods testing', () => {
+    afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield chai.request(app_1.app).put('/foods/1').send({
+            name: 'Arroz branco',
+            price: 0
+        });
+    }));
+    it('Update first food should return proper values', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield chai.request(app_1.app).put('/foods/1')
+            .send({
+            name: 'Pizza',
+            price: '10'
+        });
+        const res = yield chai.request(app_1.app).get('/foods/all');
+        expect(res.body[0].name).to.equal('Pizza');
+        expect(res.body[0].price).to.equal(10);
+    }));
+});
 //# sourceMappingURL=%20update.test.js.map

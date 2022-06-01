@@ -15,20 +15,17 @@ const app_1 = require("../../../app");
 require("mocha");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('create Route /foods testing', () => {
-    let lastIndex;
-    afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).delete(`/foods/${lastIndex}`);
-    }));
-    it('Food should be created', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).post('/foods').send({
-            name: 'arroz con pollo',
-            foodType: 'Arroz'
-        });
+describe('Route /foods testing', () => {
+    it('getAll returns an array of foods with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).get('/foods/all');
-        lastIndex = res.body.length - 1;
-        expect(res.body[lastIndex].name).to.equal('arroz con pollo');
-        expect(res.body[lastIndex].foodTypeId).to.equal(1);
+        res.body.forEach((food) => {
+            expect(food).to.have.property('id');
+            expect(food).to.have.property('name');
+            expect(food).to.have.property('foodTypeId');
+            expect(food).to.have.property('foodSubTypeId');
+            expect(food).to.have.property('price');
+            expect(food).to.have.property('checked');
+        });
     }));
 });
-//# sourceMappingURL=create.test.js.map
+//# sourceMappingURL=getAllfoods.test.js.map
