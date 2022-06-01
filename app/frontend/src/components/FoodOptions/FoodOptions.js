@@ -2,30 +2,27 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import FoodOption from './FoodOption'
 
-function FoodOptions ({ onCheck, isChecked, isDashBoard, foods, TypeName, editFoodBtn }) {
-  const renderFoodOptions = (foods, nameType) => {
-    return foods.map(({ name, id, checked }) => (
-    <FoodOption
-      optionOnCheck={onCheck}
-      foodId={id}
-      nameType={nameType}
-      foodName={name}
-      key={`${name}-key`}
-      checked={isDashBoard ? checked : isChecked(id, nameType)}
-      >
-      {editFoodBtn}
-      </FoodOption>
-    ))
+function FoodOptions ({ onCheck, isChecked, isDashBoard, foods }) {
+  const renderFoodOptions = () => {
+    return foods.map((food) => {
+      const { name, id, checked, foodType } = food
+      return (<FoodOption
+        optionOnCheck={onCheck}
+        foodId={id}
+        foodType={foodType}
+        foodName={name}
+        key={`${name}-key`}
+        checked={isDashBoard ? checked : isChecked(id, foodType)}
+        isDashBoard={isDashBoard}
+        />)
+    })
   }
-  return renderFoodOptions(foods, TypeName)
+  return renderFoodOptions()
 }
 
 FoodOptions.propTypes = {
-  TypeName: PropTypes.string.isRequired,
   editFoodBtn: PropTypes.node,
-  foods: PropTypes.shape({
-    map: PropTypes.func
-  }),
+  foods: PropTypes.array.isRequired,
   isChecked: PropTypes.func,
   isDashBoard: PropTypes.bool.isRequired,
   onCheck: PropTypes.func.isRequired

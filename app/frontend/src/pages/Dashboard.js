@@ -7,10 +7,12 @@ import DashboardOptions from '../components/Dashboard/DashboardOptions'
 import axios from '../api/axios'
 import socket from '../socket'
 import Orders from '../components/Dashboard/Orders'
+// import trembaoAppContext from '../Context/TrembaoAppContext'
 function Dashboard () {
   const [currentFoodType, setCurrentFoodType] = useState('Arroz')
   const [orders, setOrders] = useState([])
 
+  // const { foodToEdit } = useContext(trembaoAppContext)
   const getOrders = async () => {
     const response = await axios.get('/orders')
     setOrders(response.data)
@@ -21,6 +23,18 @@ function Dashboard () {
     })
     getOrders()
   }, [])
+
+  // const FoodOptionEdit = () => {
+  //   return (
+  //     <div className="dashboard__food-option-edit-container">
+  //       <form className="dashboard__food-option-edit">
+  //         <div className="dashboard__food-option-edit-title">
+  //           <h2>Editar opção de comida</h2>
+  //         </div>
+  //       </form >
+  //     </div>
+  //   )
+  // }
 
   return (
     <main className="main dashboard">

@@ -1,5 +1,7 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '.'
+import FoodSubType from './FoodSubType'
+import FoodType from './FoodType'
 
 class Food extends Model {
   public id: number
@@ -42,4 +44,5 @@ Food.init({
   tableName: 'Foods',
   sequelize: db
 })
+
 export default Food

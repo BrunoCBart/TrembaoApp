@@ -13,20 +13,21 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app_1 = require("../../../app");
 require("mocha");
-const food_1 = require("../../mocks/food");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('create Route /foods testing', () => {
-    let lastIndex;
-    afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).delete(`/foods/${lastIndex}`);
-    }));
-    it('Food should be created', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield chai.request(app_1.app).post('/foods').send(food_1.createFood);
+describe('Route /foods testing', () => {
+    it('getAll returns an array of foods with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).get('/foods/all');
-        lastIndex = res.body.length - 1;
-        expect(res.body[lastIndex].name).to.equal(food_1.createFood.name);
-        expect(res.body[lastIndex].foodTypeId).to.equal(1);
+        res.body.forEach((food) => {
+            expect(food).to.have.property('id');
+            expect(food).to.have.property('name');
+            expect(food).to.have.property('price');
+            expect(food).to.have.property('checked');
+            expect(food).to.have.property('foodType');
+            expect(food).to.have.property('foodTypeId');
+            expect(food).to.have.property('foodSubType');
+            expect(food).to.have.property('foodSubTypeId');
+        });
     }));
 });
-//# sourceMappingURL=create.test.js.map
+//# sourceMappingURL=getAllfoods.test.js.map

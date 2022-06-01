@@ -12,10 +12,7 @@
     "outDir": "build",
     "sourceMap": true,
     "strictPropertyInitialization": false,
-    "typeRoots": [
-      "src/index.d.ts",
-    ],
+
     
-  },
-  "include": [ "src/**/*", "src/index.d.ts"],
+  }
 }

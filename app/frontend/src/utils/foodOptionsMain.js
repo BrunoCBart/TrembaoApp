@@ -1,4 +1,6 @@
-const FOOD_OPTIONS_QUANTITY = {
+import axios from '../api/axios'
+
+export const FOOD_OPTIONS_QUANTITY = {
   Arroz: 1,
   Feijão: 1,
   Misturas: 2,
@@ -7,15 +9,22 @@ const FOOD_OPTIONS_QUANTITY = {
   Bebidas: 9999
 }
 
+export const getFoodTypes = async () => {
+  const foodTypes = axios.get('/foods/types')
+    .catch(error => console.log(error))
+
+  return foodTypes
+}
+
 const hasReachedFoodLimit = (checkedAmount, type) => checkedAmount >= FOOD_OPTIONS_QUANTITY[type]
 
-const getCheckedAndUncheckedFoods = (foodOptionCheckboxes) => {
+export const getCheckedAndUncheckedFoods = (foodOptionCheckboxes) => {
   const checkedOptions = foodOptionCheckboxes.filter(({ checked }) => checked)
   const uncheckedOptions = foodOptionCheckboxes.filter(({ checked }) => !checked)
   return { checkedOptions, uncheckedOptions }
 }
 
-const disableOrEnableOptions = (checkedAmount, type, uncheckedOptions) => {
+export const disableOrEnableOptions = (checkedAmount, type, uncheckedOptions) => {
   if (hasReachedFoodLimit(checkedAmount, type)) {
     uncheckedOptions.forEach((foodOptionCheckbox) => {
       foodOptionCheckbox.disabled = true
@@ -26,5 +35,3 @@ const disableOrEnableOptions = (checkedAmount, type, uncheckedOptions) => {
     })
   }
 }
-
-export { hasReachedFoodLimit, getCheckedAndUncheckedFoods, disableOrEnableOptions }

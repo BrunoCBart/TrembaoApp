@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '.'
+import Food from './Food'
 
 class FoodType extends Model {
   public id: number
