@@ -5,11 +5,13 @@ function FoodType ({ setType }) {
   const { foodOptions } = useContext(trembaoAppContext)
 
   const renderFoodTypes = () => {
-    return foodOptions.map(({ foodType }) => (
-      <div className="food-type" key={foodType} onClick={() => setType(foodType)}>
+    return foodOptions.map(({ foodType }) => {
+      return (
+      <button className="food-type-btn" key={foodType} onClick={() => setType(foodType)}>
         <h2>{foodType}</h2>
-      </div>
-    ))
+      </button>
+      )
+    })
   }
 
   return (

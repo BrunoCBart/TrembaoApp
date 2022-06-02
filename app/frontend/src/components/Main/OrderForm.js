@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import ErrorMessage from './ErrorMessage'
 import orderErrors from '../../tools/Errors/OrderErrors'
-import axios from '../../api/axios'
 import {
   getOrderFoodNames,
   getOrderFoods,
@@ -83,9 +82,8 @@ function OrderForm ({ orderIngredients }) {
 
   const makeOrder = async () => {
     const foods = getOrderFoods(orderIngredients)
-    const { name, district, street, number, phone } = userData
     try {
-      await axios.post('/orders', { name, district, street, foods, number, phone })
+      await makeOrder({ ...userData, foods })
     } catch (e) {
       console.log(e)
     }
@@ -114,6 +112,7 @@ function OrderForm ({ orderIngredients }) {
               onChange={handleUserDataChange}
               onFocus={showActiveError}
               value={userData.name}
+              placeholder="Digite seu nome"
               />
           </label>
           {errorMessages.name && <ErrorMessage error={errorMessages.name} name="name"/>
@@ -129,6 +128,7 @@ function OrderForm ({ orderIngredients }) {
               onChange={handleUserDataChange}
               onFocus={showActiveError}
               value={userData.phone}
+              placeholder="Digite seu telefone"
               />
           </label>
           {errorMessages.phone && <ErrorMessage error={errorMessages.phone} name="phone"/>}
@@ -143,6 +143,7 @@ function OrderForm ({ orderIngredients }) {
               onChange={handleUserDataChange}
               onFocus={showActiveError}
               value={userData.district}
+              placeholder="Digite seu bairro"
               />
           </label>
           {errorMessages.district && <ErrorMessage error={errorMessages.district} name="district"/>}
@@ -157,6 +158,7 @@ function OrderForm ({ orderIngredients }) {
               onChange={handleUserDataChange}
               onFocus={showActiveError}
               value={userData.street}
+              placeholder="Digite sua rua"
               />
           </label>
           {errorMessages.street && <ErrorMessage error={errorMessages.street} name="street"/>}
@@ -171,6 +173,7 @@ function OrderForm ({ orderIngredients }) {
               onChange={handleUserDataChange}
               onFocus={showActiveError}
               value={userData.number}
+              placeholder="Digite seu número"
               />
           </label>
           {errorMessages.number && <ErrorMessage error={errorMessages.number} name="number"/>}

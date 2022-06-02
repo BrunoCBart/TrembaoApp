@@ -1,17 +1,14 @@
 import React, {
   useState, useRef, useEffect, useContext
 } from 'react'
-import axios from '../../api/axios'
 import { useNavigate } from 'react-router-dom'
 import './login.css'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
-
+import { login } from '../../api/trembao'
 const INITIAL_USER = {
   username: '',
   password: ''
 }
-
-const LOGIN_URL = '/users/login'
 
 function Login () {
   const userRef = useRef()
@@ -37,21 +34,16 @@ function Login () {
     setUser({ ...user, [name]: value })
   }
 
-  // This doesn't make sense try to understand it
-
   useEffect(() => {
     getSession()
   }, [])
 
-  const login = async (e) => {
+  const loginSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post(LOGIN_URL, {
-        username: user.username,
-        password: user.password
-      }, { withCredentials: true })
+      const res = await login({ username: user.username, password: user.password })
       setUser({ username: '', password: '' })
-      if (res.data.token) {
+      if (res.token) {
         setLogin(true)
         navigate('/admin/dashboard')
       }
@@ -73,7 +65,7 @@ function Login () {
   }
 
   const form = () => (
-    <form className="loginForm">
+    <form className="loginForm" onSubmit={loginSubmit}>
       <p
         ref={errRef}
         className={errorMsg ? 'errorMsg' : 'offscreen'}
@@ -84,7 +76,7 @@ function Login () {
       <h1 className="loginForm__login-title">Login</h1>
       <div className="form-group">
         <label htmlFor="login-username">
-          Username:
+          Usuário:
           <input
             id="login-username"
             ref={userRef}
@@ -92,24 +84,26 @@ function Login () {
             name="username"
             onChange={(e) => handleLogin(e)}
             value={user.username}
+            placeholder="Digite seu nome de usuário"
             required
           />
         </label>
       </div>
       <div className="form-group">
         <label htmlFor="login-pw">
-          Password:
+          Senha:
           <input
             id="login-pw"
             type="text"
             name="password"
             onChange={(e) => handleLogin(e)}
             value={user.password}
+            placeholder="Digite sua senha"
             required
           />
         </label>
       </div>
-      <button className="btn" onClick={(e) => login(e)}>Login</button>
+      <button className="btn">Login</button>
     </form>
   )
 

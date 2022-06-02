@@ -1,4 +1,4 @@
-import axios from '../api/axios'
+import { getFoodTypes } from '../api/trembao'
 
 export const FOOD_OPTIONS_QUANTITY = {
   Arroz: 1,
@@ -9,8 +9,8 @@ export const FOOD_OPTIONS_QUANTITY = {
   Bebidas: 9999
 }
 
-export const getFoodTypes = async () => {
-  const foodTypes = axios.get('/foods/types')
+export const getAllFoodTypes = async () => {
+  const foodTypes = await getFoodTypes()
     .catch(error => console.log(error))
 
   return foodTypes

@@ -1,26 +1,27 @@
 import PropTypes from 'prop-types'
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import trembaoAppContext from '../Context/TrembaoAppContext'
 
 function ProtectedRoute ({ component: Component }) {
-  const [loadingSession, setLoadingSession] = useState(true)
   const { login, getSession } = useContext(trembaoAppContext)
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    getSession(navigate)
-      .then(setLoadingSession(false))
+    getSession()
   }, [])
 
-  const renderDashboard = () => {
-    if (loadingSession) {
-      return <div>Loading...</div>
+  useEffect(() => {
+    if (!login) {
+      navigate('/admin')
     }
+  }, [login])
+
+  const renderDashboard = () => {
     return login
       ? <Component />
-      : navigate('/admin')
+      : <div>Carregando...</div>
   }
 
   return (
