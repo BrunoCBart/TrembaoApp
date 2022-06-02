@@ -11,7 +11,7 @@ function FoodOptions ({ onCheck, isChecked, isDashBoard, foods }) {
         foodId={id}
         foodType={foodType}
         foodName={name}
-        key={`${name}-key`}
+        key={isDashBoard ? `${name}-key-dashboard` : `${name}-key`}
         checked={isDashBoard ? checked : isChecked(id, foodType)}
         isDashBoard={isDashBoard}
         />)

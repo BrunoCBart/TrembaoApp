@@ -4,24 +4,22 @@ import FoodTypes from '../components/Dashboard/FoodTypes'
 import '../components/Dashboard/dashboard.css'
 import Header from '../components/Header/Header'
 import DashboardOptions from '../components/Dashboard/DashboardOptions'
-import axios from '../api/axios'
 import socket from '../socket'
 import Orders from '../components/Dashboard/Orders'
-// import trembaoAppContext from '../Context/TrembaoAppContext'
+import { getOrders } from '../api/trembao'
 function Dashboard () {
   const [currentFoodType, setCurrentFoodType] = useState('Arroz')
   const [orders, setOrders] = useState([])
 
-  // const { foodToEdit } = useContext(trembaoAppContext)
-  const getOrders = async () => {
-    const response = await axios.get('/orders')
-    setOrders(response.data)
+  const getClientOrders = async () => {
+    const orders = await getOrders()
+    setOrders(orders)
   }
   useEffect(() => {
     socket.on('order-created', async () => {
-      await getOrders()
+      await getClientOrders()
     })
-    getOrders()
+    getClientOrders()
   }, [])
 
   // const FoodOptionEdit = () => {

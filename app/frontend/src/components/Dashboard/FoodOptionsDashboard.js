@@ -1,18 +1,16 @@
 import PropTypes from 'prop-types'
 import React, { useContext } from 'react'
-// import FoodOption from '../FoodOptions/FoodOption'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
-import axios from '../../api/axios'
 import '../FoodOptions/foodOptionsForm.css'
 import FoodOptions from '../FoodOptions/FoodOptions'
+import { checkFood } from '../../api/trembao'
 
-const FOODS_URL = '/foods'
 function FoodOptionsDashboard ({ currentType }) {
   const { foodOptions, getFoodOptions } = useContext(trembaoAppContext)
 
   const optionOnCheck = async (id) => {
     try {
-      await axios.put(`${FOODS_URL}/${id}/check`)
+      await checkFood(id)
       await getFoodOptions()
     } catch (e) {
       console.log(e)

@@ -22,7 +22,8 @@ class FoodService {
                         foods: []
                     });
                 }
-                acc.find((f) => f.foodType === food.foodType).foods.push(food);
+                acc.find((f) => f.foodType === food.foodType)
+                    .foods.push(Object.assign(Object.assign({}, food), { checked: !!food.checked }));
                 return acc;
             }, []);
         };

@@ -1,12 +1,21 @@
-.Admin-login {
+.admin-login {
   height: 100vh;
+  padding: 0.5rem;
+  position: relative;
 }
-.loginForm {
-  background-color: var(--red);
-  position: absolute;
+
+.admin-login__container {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: inherit;
+  position: absolute;
+  width: 100%;
+  max-width: 350px;
+}
+.loginForm {
+  background-color: var(--red);
+  width: 100%;
   padding: 2rem;
   color: var(--white);
   border-radius: 1rem;

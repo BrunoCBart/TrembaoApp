@@ -19,14 +19,8 @@ describe('Route /foods testing', () => {
     it('getAll returns an array of foods with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).get('/foods');
         res.body.forEach((food) => {
-            expect(food).to.have.property('id');
-            expect(food).to.have.property('name');
-            expect(food).to.have.property('price');
-            expect(food).to.have.property('checked');
             expect(food).to.have.property('foodType');
-            expect(food).to.have.property('foodTypeId');
-            expect(food).to.have.property('foodSubType');
-            expect(food).to.have.property('foodSubTypeId');
+            expect(food).to.have.property('foods');
         });
     }));
 });

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import FoodOption from '../FoodOptions/FoodOption'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
 import socket from '../../socket'
 import OrderForm from './OrderForm'
 import {
   disableOrEnableOptions,
   getCheckedAndUncheckedFoods,
-  getFoodTypes
+  getAllFoodTypes
 } from '../../utils/foodOptionsMain'
 import '../FoodOptions/foodOptionsForm.css'
 import DailyFoodOptions from './CheckedFoodOptions'
@@ -23,8 +22,8 @@ function foodOptionsMain () {
   }, [])
 
   useEffect(() => {
-    getFoodTypes()
-      .then(({ data: types }) => {
+    getAllFoodTypes()
+      .then((types) => {
         setInitialUncheckedOrder(types)
       })
   }, [checkedFoodOptions])
