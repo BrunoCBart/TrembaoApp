@@ -1,6 +1,6 @@
 ## Aplicativo de pedidos (Trembão Restaurante)
 
-TrembaõApp é um aplicativo de de pedidos que procura resolver a dor do cliente de precisar ligar ou conversar pelo whatsapp para fazer o pedido, nesse site aplicação o cliente simplismente seleciona o que ele quer do menu e faz seu pedido inserindo seus dados.
+TrembãoApp é um aplicativo de de pedidos que procura resolver a dor do cliente de precisar ligar ou conversar pelo whatsapp para fazer o pedido, nesse site aplicação o cliente simplismente seleciona o que ele quer do menu e faz seu pedido inserindo seus dados.
 
 ### Como rodar a aplicação
 
