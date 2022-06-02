@@ -11,7 +11,8 @@ class FoodService {
           foods: []
         })
       }
-      acc.find((f: any) => f.foodType === food.foodType).foods.push(food)
+      acc.find((f: any) => f.foodType === food.foodType)
+        .foods.push({ ...food, checked: !!food.checked })
       return acc
     }, [])
   }
