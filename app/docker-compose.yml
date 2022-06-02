@@ -16,20 +16,23 @@ services:
     depends_on:
       - trembao-db
     build: ./backend
+    # working_dir: /app
     environment:
       - PORT=4000
       - DB_USER=root
-      - DB_HOSTNAME=trembao-db
-      - DB_PASSWORD=password
-      - DB_DIALECT=mysql
+      - DB_HOST=trembao-db
+      - DB_PASS=password
       - DB_NAME=trembao_db
       - JWT_SECRET=secret
     ports:
       - 4000:4000
     stdin_open: true
     tty: true
+    # volumes:
+    #   - ./backend:/app
   frontend:
     container_name: trembao-frontend
+    # working_dir: /app
     depends_on:
       - backend
     build: ./frontend
@@ -37,6 +40,9 @@ services:
       - 3000:3000
     stdin_open: true
     tty: true
+    # volumes:
+    #   - ./frontend:/app
 volumes: 
   db:
+
   ## Volumes backs up data from containers

@@ -111,7 +111,7 @@
 
 .foodOptionsForm__lunch-size input {
   cursor: pointer;
-  transform: scale(1.5);
+  transform: scale(1.);
   margin-inline: 1rem;
   margin-bottom: 0.4rem
 }
