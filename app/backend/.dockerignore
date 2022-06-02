@@ -1,7 +1,4 @@
-dockerfile
-docker-compose.yml
-node_modules
 .eslintrc.json
-.gitignore
 tests
-package-lock.json
+.env
+.env.example
