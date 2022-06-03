@@ -84,7 +84,7 @@ function Login () {
             name="username"
             onChange={(e) => handleLogin(e)}
             value={user.username}
-            placeholder="Digite seu nome de usuário"
+            placeholder="admin"
             required
           />
         </label>
@@ -98,7 +98,7 @@ function Login () {
             name="password"
             onChange={(e) => handleLogin(e)}
             value={user.password}
-            placeholder="Digite sua senha"
+            placeholder="mysecretpw"
             required
           />
         </label>

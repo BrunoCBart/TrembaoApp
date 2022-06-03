@@ -1,94 +1,67 @@
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
-import ErrorMessage from './ErrorMessage'
-import orderErrors from '../../tools/Errors/OrderErrors'
+import React from 'react'
+// import ErrorMessage from './ErrorMessage'
+// import orderErrors from '../../tools/Errors/OrderErrors'
 import {
-  getOrderFoodNames,
-  getOrderFoods,
-  hasErrorMessage,
-  noFoodsInType,
+  formatOrderMessage,
+  requestOrder,
   sendOrderToWhatsapp
 } from '../../utils/orderForm'
 import CloseMark from '../svgs/CloseMark'
+import FormInput from '../FormInput'
 
-const INITIAL_USER_DATA = {
-  name: '',
-  phone: '',
-  district: '',
-  street: '',
-  number: ''
-}
+const inputs = [
+  {
+    name: 'name',
+    label: 'Nome',
+    placeholder: 'Seu nome',
+    type: 'text',
+    errorMessage: 'Nome precisa ter mais de 2 caracteres',
+    required: true
+  },
+  {
+    name: 'phone',
+    label: 'Telefone',
+    placeholder: 'Seu telefone',
+    type: 'text',
+    errorMessage: 'Telefone precisa ter 11 digitos',
+    required: true
+  },
+  {
+    name: 'district',
+    label: 'Bairro',
+    placeholder: 'Seu bairro',
+    type: 'text',
+    errorMessage: 'Bairro precisa ser preenchido',
+    required: true
+  },
+  {
+    name: 'street',
+    label: 'Rua',
+    placeholder: 'Sua rua',
+    type: 'text',
+    errorMessage: 'Rua precisa ser preenchida',
+    required: true
+  },
+  {
+    name: 'number',
+    label: 'Número',
+    placeholder: 'Seu número',
+    type: 'text',
+    errorMessage: 'Número precisa ser preenchido',
+    required: true
+  },
+  {
+    name: 'reference',
+    label: 'Referência',
+    placeholder: 'Seu número',
+    type: 'text',
+    errorMessage: 'Referência precisa ser preenchida',
+    required: false
+  }
+]
 
 function OrderForm ({ orderIngredients }) {
-  const [userData, setUserData] = useState(INITIAL_USER_DATA)
-  const [orderMessage, setOrderMessage] = useState('')
-  const [errorMessages, setErrorMessages] = useState(INITIAL_USER_DATA)
-
-  const handleUserDataChange = ({ target }) => {
-    const { name, value } = target
-    setUserData({ ...userData, [name]: value })
-  }
-
-  useEffect(() => {
-    formatOrderMessage()
-    const errors = orderErrors.getErrors(userData)
-    setErrorMessages(errors)
-  }, [userData])
-
-  const formatOrderMessage = () => {
-    const { name, phone, district, street, number } = userData
-    // falta inserir o horário do pedido
-    const message = ` 
-      Nome: ${name}%0a
-      Telefone: ${phone}%0a
-      Bairro: ${district}%0a
-      Rua: ${street}%0a
-      Número: ${number}%0a
-      ${formatOrderIngredients()}
-    `.replace(/\s+/g, ' ')
-
-    setOrderMessage(message)
-  }
-
-  const handleOrder = async (e) => {
-    e.preventDefault()
-    const errorKeys = Object.keys(errorMessages)
-    if (hasErrorMessage(errorKeys, errorMessages)) {
-      const errors = document.querySelectorAll('.error-msg')
-      errors.forEach((error) => error.classList.add('error-msg--show'))
-      return
-    }
-    setUserData(INITIAL_USER_DATA)
-    await makeOrder()
-    sendOrderToWhatsapp(orderMessage)
-  }
-
-  const formatOrderIngredients = () => {
-    const ingredientsKeys = Object.keys(orderIngredients)
-    const formatedIngredients = ingredientsKeys.reduce((acc, key) => {
-      const foods = orderIngredients[key]
-      const foodNames = getOrderFoodNames(foods)
-      if (noFoodsInType(foodNames)) return acc
-      return acc + ` ${key}: ${foodNames.join(', ')}%0a`
-    }, '')
-    return formatedIngredients
-  }
-
-  const showActiveError = ({ target }) => {
-    const { name } = target
-    const error = document.querySelector(`.error-${name}`)
-    error.classList.add('error-msg--show')
-  }
-
-  const makeOrder = async () => {
-    const foods = getOrderFoods(orderIngredients)
-    try {
-      await makeOrder({ ...userData, foods })
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
   const closeOrderForm = () => {
     const orderBtn = document.querySelector('.foodOptionsForm__order-btn')
     document.querySelector('.orderForm').classList.remove('orderForm--active')
@@ -97,87 +70,32 @@ function OrderForm ({ orderIngredients }) {
     orderBtn.style.opacity = 1
   }
 
+  const handleOrder = (e) => {
+    e.preventDefault()
+    const data = new FormData(e.target)
+    const userData = Object.fromEntries(data.entries())
+    const orderMessage = formatOrderMessage(userData, orderIngredients)
+    sendOrderToWhatsapp(orderMessage)
+    requestOrder(orderIngredients)
+  }
+
   return (
     <form className="orderForm" onSubmit={handleOrder}>
       <div className='orderForm__container'>
         <CloseMark className="orderFrom__close-btn" onClick={closeOrderForm}/>
         <h2>Insira seus dados</h2>
-        <div className='form-group'>
-          <label htmlFor='order-name'>
-            Nome:
-            <input
-              name="name"
-              type="text"
-              id="order-name"
-              onChange={handleUserDataChange}
-              onFocus={showActiveError}
-              value={userData.name}
-              placeholder="Digite seu nome"
-              />
-          </label>
-          {errorMessages.name && <ErrorMessage error={errorMessages.name} name="name"/>
-          }
-        </div>
-        <div className='form-group'>
-          <label htmlFor='order-phone'>
-            Telefone:
-            <input
-              name="phone"
-              type="text"
-              id="order-phone"
-              onChange={handleUserDataChange}
-              onFocus={showActiveError}
-              value={userData.phone}
-              placeholder="Digite seu telefone"
-              />
-          </label>
-          {errorMessages.phone && <ErrorMessage error={errorMessages.phone} name="phone"/>}
-        </div>
-        <div className='form-group'>
-          <label htmlFor='order-district'>
-            Bairro:
-            <input
-              name="district"
-              type="text"
-              id="order-district"
-              onChange={handleUserDataChange}
-              onFocus={showActiveError}
-              value={userData.district}
-              placeholder="Digite seu bairro"
-              />
-          </label>
-          {errorMessages.district && <ErrorMessage error={errorMessages.district} name="district"/>}
-        </div>
-        <div className='form-group'>
-          <label htmlFor='order-street'>
-            Rua:
-            <input
-              name="street"
-              type="text"
-              id="order-street"
-              onChange={handleUserDataChange}
-              onFocus={showActiveError}
-              value={userData.street}
-              placeholder="Digite sua rua"
-              />
-          </label>
-          {errorMessages.street && <ErrorMessage error={errorMessages.street} name="street"/>}
-        </div>
-        <div className='form-group'>
-          <label htmlFor='order-number'>
-            Número:
-            <input
-              name="number"
-              type="text"
-              id="order-number"
-              onChange={handleUserDataChange}
-              onFocus={showActiveError}
-              value={userData.number}
-              placeholder="Digite seu número"
-              />
-          </label>
-          {errorMessages.number && <ErrorMessage error={errorMessages.number} name="number"/>}
-        </div>
+        {inputs.map(({ name, label, placeholder, type, errorMessage, required }) => (
+          <FormInput
+            key={name}
+            name={name}
+            label={label}
+            placeholder={placeholder}
+            type={type}
+            errorMessage={errorMessage}
+            required={required}
+          />
+        ))}
+
         <button className="btn btn-green">
           Confirmar
         </button>

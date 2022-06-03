@@ -21,25 +21,33 @@ function foodOptionsMain () {
     })
   }, [])
 
+  // useMemo(() => {
+  //   console.log('a')
+  //   getAllFoodTypes()
+  //     .then((types) => {
+  //       setInitialUncheckedOrder(types)
+  //     })
+  // }, [checkedFoodOptions])
+
   useEffect(() => {
     getAllFoodTypes()
       .then((types) => {
         setInitialUncheckedOrder(types)
       })
-  }, [checkedFoodOptions])
-  const setInitialUncheckedOrder = (types) => {
+  }, [])
+  const setInitialUncheckedOrder = (types = []) => {
     const initialOrder = types.reduce((acc, type) => {
       acc[type.name] = []
       return acc
     }, {})
-    const uncheckedOptions = checkedFoodOptions.reduce((acc, { foodType, foods }) => {
+    const uncheckedOrderOptions = checkedFoodOptions.reduce((acc, { foodType, foods }) => {
       foods.forEach(({ id, checked, name: foodName }) => {
         if (checked) acc[foodType].push({ id, foodName, checked: false })
       })
       return acc
     }, initialOrder)
 
-    setOrder(uncheckedOptions)
+    setOrder(uncheckedOrderOptions)
   }
   useEffect(() => {
     const setLimitForFoodOptions = async () => {
@@ -69,7 +77,7 @@ function foodOptionsMain () {
     setOrder(newOrder)
   }
 
-  const foodOptionIsChecked = (id, foodType) => {
+  const isFoodOptionChecked = (id, foodType) => {
     const food = order[foodType].find(({ id: foodId }) => {
       return foodId === id
     })
@@ -102,13 +110,13 @@ function foodOptionsMain () {
         handleActiveFoodType={handleActiveFoodType}
         checkedFoodOptions={checkedFoodOptions}
         checkFoodOption={checkFoodOption}
-        foodOptionIsChecked={foodOptionIsChecked}
+        isFoodOptionChecked={isFoodOptionChecked}
       />}
       <button className="btn foodOptionsForm__order-btn foodOptionsForm__order-btn--hover"
       onClick={renderOrderForm}>
         Pedir
       </button>
-      {Object.keys(order).length > 0 && <OrderForm orderIngredients={order}/>}
+      <OrderForm orderIngredients={order}/>
     </section>
   )
 }

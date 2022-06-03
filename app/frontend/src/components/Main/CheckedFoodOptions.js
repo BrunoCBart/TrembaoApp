@@ -3,7 +3,7 @@ import React from 'react'
 import FoodOptions from '../FoodOptions/FoodOptions'
 function DailyFoodOptions ({
   checkedFoodOptions, handleActiveFoodType,
-  checkFoodOption, foodOptionIsChecked
+  checkFoodOption, isFoodOptionChecked
 }) {
   const renderCheckedFoodOptions = () => {
     return checkedFoodOptions.length > 0 && checkedFoodOptions.map(({ foodType, foods }) => (
@@ -20,7 +20,7 @@ function DailyFoodOptions ({
           foods={foods}
           foodType={foodType}
           onCheck={checkFoodOption}
-          isChecked={foodOptionIsChecked}
+          isChecked={isFoodOptionChecked}
           isDashBoard={false}
         />
       </div>

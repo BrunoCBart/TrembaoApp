@@ -21,7 +21,6 @@
 }
 
 .orderForm {
-  position: fixed;
   color: var(--white);
   text-align: start;
   width: 100%;
@@ -29,9 +28,6 @@
   background-color: var(--red);
   padding: 1rem;
   border-radius: 0.5rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   z-index: 1;
   display: none;
 }
@@ -45,13 +41,22 @@
 }
 
 .orderForm .form-group label {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .orderForm .form-group label input {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.3rem;
+  outline: none;
+  border: none;
+}
+
+.orderForm .form-group .error-msg {
+  font-size: 1rem;
+  color: var(--yellow);
+  margin-top: 0.3rem;
+  /* display: none; */
 }
 
 .orderFrom__close-btn {
@@ -68,17 +73,15 @@
   fill: var(--white);
 }
 
-.error-msg {
-  display: none;
-}
 
-.error-msg--show {
+
+/* .error-msg--show {
   display: block;
   color: var(--yellow);
   font-family: 'dm_sansbold';
   margin-top: 0.1rem;
 }
-
+   */
 
 .main__subtitle {
   font-size: 1.4rem;
@@ -111,7 +114,7 @@
 
 .foodOptionsForm__lunch-size input {
   cursor: pointer;
-  transform: scale(1.);
+  transform: scale(1.8);
   margin-inline: 1rem;
   margin-bottom: 0.4rem
 }

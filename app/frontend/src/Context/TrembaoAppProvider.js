@@ -29,7 +29,6 @@ function TrembaoAppProvider ({ children }) {
         navigate('/admin/dashboard')
       }
     } catch (e) {
-      console.log('a')
       if (e.response.status === 401) {
         console.log('Sessão expirada ou inválida')
       } else {

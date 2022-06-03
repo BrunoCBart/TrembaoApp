@@ -17,6 +17,7 @@ class OrderErrors {
 
   validate (userData) {
     const { name, phone, district, street, number } = userData
+    console.log(name)
 
     if (!name) {
       this.errors.name = 'Nome precisa ser preenchido'
@@ -27,7 +28,7 @@ class OrderErrors {
     }
 
     if (!phone.match(/^[0-9]{11}$/)) {
-      this.errors.phone = 'Telefone precisa ter 9 dígitos'
+      this.errors.phone = 'Telefone precisa ter 11 dígitos'
     } else {
       this.errors.phone = ''
     }
