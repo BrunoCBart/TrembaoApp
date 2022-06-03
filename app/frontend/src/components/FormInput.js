@@ -1,20 +1,23 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 
-function FormInput ({ name, label, placeholder, type, errorMessage, required, ...props }) {
+function FormInput ({ name, label, placeholder, errorMessage, required, ...inputProps }) {
+  const [focused, setFocused] = useState(false)
+
+  const handleFocus = () => {
+    setFocused(true)
+  }
   return (
     <div className="form-group">
       <label htmlFor={`order-${name}`}>{label}<span>{required ? '*' : ''}</span>
         <input
+          onBlur={handleFocus}
           id={`order-${name}`}
-          name={name}
-          placeholder={placeholder}
-          type={type}
-          required={required}
-          {...props}
+          {...inputProps}
+          focused={focused.toString()}
          />
+        <span className='error-msg'>{errorMessage}</span>
       </label>
-      <span className='error-msg'>{errorMessage}</span>
     </div>
   )
 }

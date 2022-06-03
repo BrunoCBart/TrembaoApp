@@ -56,7 +56,11 @@
   font-size: 1rem;
   color: var(--yellow);
   margin-top: 0.3rem;
-  /* display: none; */
+  display: none;
+}
+
+.orderForm .form-group input:invalid[focused="true"] ~ span {
+  display: block;
 }
 
 .orderFrom__close-btn {
@@ -72,16 +76,6 @@
 .orderFrom__close-btn path {
   fill: var(--white);
 }
-
-
-
-/* .error-msg--show {
-  display: block;
-  color: var(--yellow);
-  font-family: 'dm_sansbold';
-  margin-top: 0.1rem;
-}
-   */
 
 .main__subtitle {
   font-size: 1.4rem;

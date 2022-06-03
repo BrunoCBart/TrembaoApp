@@ -17,6 +17,7 @@ const inputs = [
     placeholder: 'Seu nome',
     type: 'text',
     errorMessage: 'Nome precisa ter mais de 2 caracteres',
+    pattern: '^[a-zA-Z]{3,16}$',
     required: true
   },
   {
@@ -25,6 +26,7 @@ const inputs = [
     placeholder: 'Seu telefone',
     type: 'text',
     errorMessage: 'Telefone precisa ter 11 digitos',
+    pattern: '^[0-9]{11}$',
     required: true
   },
   {
@@ -32,7 +34,8 @@ const inputs = [
     label: 'Bairro',
     placeholder: 'Seu bairro',
     type: 'text',
-    errorMessage: 'Bairro precisa ser preenchido',
+    errorMessage: 'Bairro precisa ter mais de 2 caracteres',
+    pattern: '^[a-zA-Z]{3,16}$',
     required: true
   },
   {
@@ -40,7 +43,8 @@ const inputs = [
     label: 'Rua',
     placeholder: 'Sua rua',
     type: 'text',
-    errorMessage: 'Rua precisa ser preenchida',
+    errorMessage: 'Rua precisa ter mais de 2 caracteres',
+    pattern: '^[a-zA-Z]{3,16}$',
     required: true
   },
   {
@@ -48,7 +52,8 @@ const inputs = [
     label: 'Número',
     placeholder: 'Seu número',
     type: 'text',
-    errorMessage: 'Número precisa ser preenchido',
+    errorMessage: 'Número precisa ter no máximo 5 digitos',
+    pattern: '^[0-9]{1,5}$',
     required: true
   },
   {
@@ -57,6 +62,7 @@ const inputs = [
     placeholder: 'Seu número',
     type: 'text',
     errorMessage: 'Referência precisa ser preenchida',
+    pattern: '^[a-zA-Z0-9]{3,16}$',
     required: false
   }
 ]
@@ -70,8 +76,12 @@ function OrderForm ({ orderIngredients }) {
     orderBtn.style.opacity = 1
   }
 
+  const inputIsEmpty = (input) => input.value === ''
+
   const handleOrder = (e) => {
     e.preventDefault()
+    const inputs = Array.from(document.querySelectorAll('.orderForm__input'))
+    if (inputs.some(inputIsEmpty)) return alert('Preencha todos os campos')
     const data = new FormData(e.target)
     const userData = Object.fromEntries(data.entries())
     const orderMessage = formatOrderMessage(userData, orderIngredients)
@@ -84,15 +94,11 @@ function OrderForm ({ orderIngredients }) {
       <div className='orderForm__container'>
         <CloseMark className="orderFrom__close-btn" onClick={closeOrderForm}/>
         <h2>Insira seus dados</h2>
-        {inputs.map(({ name, label, placeholder, type, errorMessage, required }) => (
+        {inputs.map((input) => (
           <FormInput
-            key={name}
-            name={name}
-            label={label}
-            placeholder={placeholder}
-            type={type}
-            errorMessage={errorMessage}
-            required={required}
+          key={input.name}
+          className='orderForm__input'
+          {...input}
           />
         ))}
 
