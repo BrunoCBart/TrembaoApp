@@ -1,4 +1,4 @@
-import { makeOrder } from '../api/trembao'
+import { makeOrder } from '../api/order'
 
 export const sendOrderToWhatsapp = (orderMessage) => {
   const link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')

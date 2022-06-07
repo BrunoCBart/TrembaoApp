@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
 import socket from '../../socket'
-import OrderForm from './OrderForm'
+import OrderForm from '../FoodForm/OrderForm'
 import {
   disableOrEnableOptions,
   getCheckedAndUncheckedFoods,
   getAllFoodTypes
-} from '../../utils/foodOptionsMain'
-import '../FoodOptions/foodOptionsForm.css'
+} from '../../helpers/foodOptionsMain'
+import '../../Css/foodOptionsForm.css'
 import DailyFoodOptions from './CheckedFoodOptions'
 import LunchSize from './LunchSize'
 

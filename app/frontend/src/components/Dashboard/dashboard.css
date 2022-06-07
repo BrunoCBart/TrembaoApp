@@ -101,3 +101,19 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.foodEditForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.foodEditForm__container {
+  position: absolute;
+}
+
+.foodEditForm--active {
+  display: block;
+}

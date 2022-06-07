@@ -1,18 +1,21 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-function FormInput ({ name, label, placeholder, errorMessage, required, ...inputProps }) {
+function FormInput ({ name, label, placeholder, errorMessage, required, isDashboard, ...inputProps }) {
   const [focused, setFocused] = useState(false)
 
   const handleFocus = () => {
     setFocused(true)
   }
+  const id = isDashboard ? `${name}-input-dashboard` : `${name}-input`
+
   return (
     <div className="form-group">
-      <label htmlFor={`order-${name}`}>{label}<span>{required ? '*' : ''}</span>
+      <label htmlFor={id}>{label}<span>{required ? '*' : ''}</span>
         <input
+          name={name}
           onBlur={handleFocus}
-          id={`order-${name}`}
+          id={id}
           {...inputProps}
           focused={focused.toString()}
          />
@@ -23,12 +26,13 @@ function FormInput ({ name, label, placeholder, errorMessage, required, ...input
 }
 
 FormInput.propTypes = {
-  errorMessage: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
+  isDashboard: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired
+  required: PropTypes.bool,
+  type: PropTypes.string.isRequired
 }
 
 export default FormInput

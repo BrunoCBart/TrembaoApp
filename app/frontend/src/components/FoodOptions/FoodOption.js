@@ -1,36 +1,38 @@
 import PropTypes from 'prop-types'
-import React, { useContext } from 'react'
+import React from 'react'
 import Pen from '../svgs/Pen'
-import './foodOption.css'
-import trembaoAppContext from '../../Context/TrembaoAppContext'
+import '../../Css/foodOption.css'
+import FormButton from '../FormButton'
 
-function FoodOption ({ foodName, foodId, optionOnCheck, checked, foodType, isDashBoard }) {
-  const { setFoodToEdit } = useContext(trembaoAppContext)
-  const onEditButtonClick = (e) => {
-    e.preventDefault()
-    setFoodToEdit(foodId)
-  }
+function FoodOption ({
+  food,
+  optionOnCheck,
+  isDashBoard,
+  checked,
+  onEditButtonClick
+}) {
   const EditBtn = () => {
     return (
-      <button className="food-option-edit-btn" onClick={onEditButtonClick}>
-        <Pen className="food-option-edit-pen" />
-      </button>
+      <FormButton className="food-option-svg-btn" onClick={(e) => onEditButtonClick(e, food)}>
+        <Pen width="100%" />
+      </FormButton>
     )
   }
+
   return (
     <div className="food-option-form-group">
-      <label className="food-option-label" htmlFor={`${foodName}-option`}>
+      <label className="food-option-label" htmlFor={`${food.name}-option`}>
         <input
         className={'food-option food-type-$ foodType}'}
-        onChange={() => optionOnCheck(foodId, foodType)}
+        onChange={() => optionOnCheck(food.id, food.foodType)}
         type="checkbox"
-        name={foodName}
-        id={`${foodName}-option`}
+        name={food.name}
+        id={`${food.name}-option`}
         checked={checked}
         />
 
         <span className='food-option-text'>
-        { foodName }
+        { food.name }
         </span>
       </label>
      {isDashBoard ? EditBtn() : null}
@@ -40,10 +42,17 @@ function FoodOption ({ foodName, foodId, optionOnCheck, checked, foodType, isDas
 
 FoodOption.propTypes = {
   checked: PropTypes.bool.isRequired,
-  foodId: PropTypes.number.isRequired,
-  foodName: PropTypes.string.isRequired,
+  food: PropTypes.shape({
+    checked: PropTypes.bool.isRequired,
+    foodSubType: PropTypes.string,
+    foodSubTypeId: PropTypes.number,
+    foodType: PropTypes.string.isRequired,
+    foodTypeId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  }),
   isDashBoard: PropTypes.bool.isRequired,
-  foodType: PropTypes.string.isRequired,
+  onEditButtonClick: PropTypes.func,
   optionOnCheck: PropTypes.func.isRequired
 }
 

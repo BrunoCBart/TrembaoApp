@@ -1,48 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import FoodOptionsDashboard from '../components/Dashboard/FoodOptionsDashboard'
-import FoodTypes from '../components/Dashboard/FoodTypes'
-import '../components/Dashboard/dashboard.css'
+import React, { useContext } from 'react'
+import FoodFormDashboard from '../components/FoodForm/FoodFormDashboard'
+import FoodThemes from '../components/FoodForm/FoodThemes'
+import trembaoAppContext from '../Context/TrembaoAppContext'
+import '../components/FoodForm/foodForm.css'
 import Header from '../components/Header/Header'
-import DashboardOptions from '../components/Dashboard/DashboardOptions'
-import socket from '../socket'
-import Orders from '../components/Dashboard/Orders'
-import { getOrders } from '../api/trembao'
 function Dashboard () {
-  const [currentFoodType, setCurrentFoodType] = useState('Arroz')
-  const [orders, setOrders] = useState([])
-
-  const getClientOrders = async () => {
-    const orders = await getOrders()
-    setOrders(orders)
-  }
-  useEffect(() => {
-    socket.on('order-created', async () => {
-      await getClientOrders()
-    })
-    getClientOrders()
-  }, [])
-
-  // const FoodOptionEdit = () => {
-  //   return (
-  //     <div className="dashboard__food-option-edit-container">
-  //       <form className="dashboard__food-option-edit">
-  //         <div className="dashboard__food-option-edit-title">
-  //           <h2>Editar opção de comida</h2>
-  //         </div>
-  //       </form >
-  //     </div>
-  //   )
-  // }
-
+  const { foodOptions } = useContext(trembaoAppContext)
+  console.log(foodOptions)
+  const themeIsSelected = foodOptions.length > 0
   return (
-    <main className="main dashboard">
+    <>
       <Header />
-      <h1 className="dashborad__title">Painel de controle</h1>
-      <Orders orders={orders}/>
-      <DashboardOptions />
-      <FoodTypes setType={setCurrentFoodType} />
-      <FoodOptionsDashboard currentType={currentFoodType}/>
-    </main>
+      <section className="main2">
+        {themeIsSelected
+          ? <FoodFormDashboard foodOptions={foodOptions} />
+          : <FoodThemes/>}
+
+      </section>
+    </>
   )
 }
 

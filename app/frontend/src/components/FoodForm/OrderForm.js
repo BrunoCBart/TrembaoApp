@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-// import ErrorMessage from './ErrorMessage'
-// import orderErrors from '../../tools/Errors/OrderErrors'
 import {
   formatOrderMessage,
   requestOrder,
   sendOrderToWhatsapp
-} from '../../utils/orderForm'
+} from '../../helpers/orderForm'
 import CloseMark from '../svgs/CloseMark'
 import FormInput from '../FormInput'
+import FormButton from '../FormButton'
+import '../../Css/form.css'
 
 const inputs = [
   {
@@ -17,7 +17,7 @@ const inputs = [
     placeholder: 'Seu nome',
     type: 'text',
     errorMessage: 'Nome precisa ter mais de 2 caracteres',
-    pattern: '^[a-zA-Z]{3,16}$',
+    pattern: '^[a-zA-Z ]{3,}$',
     required: true
   },
   {
@@ -35,7 +35,7 @@ const inputs = [
     placeholder: 'Seu bairro',
     type: 'text',
     errorMessage: 'Bairro precisa ter mais de 2 caracteres',
-    pattern: '^[a-zA-Z]{3,16}$',
+    pattern: '^[a-zA-Z ]{3,}$',
     required: true
   },
   {
@@ -44,7 +44,7 @@ const inputs = [
     placeholder: 'Sua rua',
     type: 'text',
     errorMessage: 'Rua precisa ter mais de 2 caracteres',
-    pattern: '^[a-zA-Z]{3,16}$',
+    pattern: '^[a-zA-Z ]{3,}$',
     required: true
   },
   {
@@ -61,50 +61,49 @@ const inputs = [
     label: 'Referência',
     placeholder: 'Seu número',
     type: 'text',
-    errorMessage: 'Referência precisa ser preenchida',
-    pattern: '^[a-zA-Z0-9]{3,16}$',
     required: false
   }
 ]
 
-function OrderForm ({ orderIngredients }) {
+function OrderForm ({ orderIngredients, renderOrderForm }) {
   const closeOrderForm = () => {
-    const orderBtn = document.querySelector('.foodOptionsForm__order-btn')
-    document.querySelector('.orderForm').classList.remove('orderForm--active')
-    orderBtn.classList.add('foodOptionsForm__order-btn--hover')
-    orderBtn.disabled = false
-    orderBtn.style.opacity = 1
+    renderOrderForm(false)
+    // const orderBtn = document.querySelector('.foodOptionsForm__order-btn')
+    // document.querySelector('.orderForm').classList.remove('orderForm--active')
+    // orderBtn.classList.add('foodOptionsForm__order-btn--hover')
+    // orderBtn.disabled = false
+    // orderBtn.style.opacity = 1
   }
 
   const inputIsEmpty = (input) => input.value === ''
 
   const handleOrder = (e) => {
     e.preventDefault()
-    const inputs = Array.from(document.querySelectorAll('.orderForm__input'))
+    const inputs = Array.from(document.querySelectorAll('.form__input'))
     if (inputs.some(inputIsEmpty)) return alert('Preencha todos os campos')
     const data = new FormData(e.target)
     const userData = Object.fromEntries(data.entries())
     const orderMessage = formatOrderMessage(userData, orderIngredients)
     sendOrderToWhatsapp(orderMessage)
-    requestOrder(orderIngredients)
+    requestOrder(orderIngredients, userData)
   }
 
   return (
-    <form className="orderForm" onSubmit={handleOrder}>
-      <div className='orderForm__container'>
-        <CloseMark className="orderFrom__close-btn" onClick={closeOrderForm}/>
+    <form className="form orderForm" onSubmit={handleOrder}>
+      <div className='form__container'>
+        <CloseMark className="form__close-btn orderForm__close-btn" onClick={closeOrderForm}/>
         <h2>Insira seus dados</h2>
         {inputs.map((input) => (
           <FormInput
           key={input.name}
-          className='orderForm__input'
+          className='form__input'
           {...input}
+          isDashboard={false}
           />
         ))}
-
-        <button className="btn btn-green">
+        <FormButton className="btn btn-green">
           Confirmar
-        </button>
+        </FormButton>
       </div>
     </form>
   )
@@ -118,7 +117,8 @@ OrderForm.propTypes = {
     Guarnições: PropTypes.array.isRequired,
     Misturas: PropTypes.array.isRequired,
     Saladas: PropTypes.array.isRequired
-  })
+  }),
+  renderOrderForm: PropTypes.func.isRequired
 }
 
 export default OrderForm

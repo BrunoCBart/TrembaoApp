@@ -43,3 +43,16 @@
 .food-type--active {
   max-height: 800px;
 }
+
+.FoodOptionsForm-type-container__headig-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  height: 2.5rem;
+}
+
+.FoodOptionsForm-type-container__heading-title {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

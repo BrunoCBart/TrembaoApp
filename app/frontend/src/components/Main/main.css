@@ -20,63 +20,6 @@
   font-size: 1.3rem;
 }
 
-.orderForm {
-  color: var(--white);
-  text-align: start;
-  width: 100%;
-  max-width: 500px;
-  background-color: var(--red);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  z-index: 1;
-  display: none;
-}
-
-.orderForm__container {
-  position: relative;
-}
-
-.orderForm--active {
-  display: block;
-}
-
-.orderForm .form-group label {
-  font-size: 1.1rem;
-}
-
-.orderForm .form-group label input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
-  outline: none;
-  border: none;
-}
-
-.orderForm .form-group .error-msg {
-  font-size: 1rem;
-  color: var(--yellow);
-  margin-top: 0.3rem;
-  display: none;
-}
-
-.orderForm .form-group input:invalid[focused="true"] ~ span {
-  display: block;
-}
-
-.orderFrom__close-btn {
-  position: absolute;
-  top: 0px;
-  right: 0rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  width: 25px;
-  color: black;
-}
-
-.orderFrom__close-btn path {
-  fill: var(--white);
-}
-
 .main__subtitle {
   font-size: 1.4rem;
 }
@@ -104,7 +47,6 @@
   align-items: center;  
   font-size: 1.1rem;
 }
-
 
 .foodOptionsForm__lunch-size input {
   cursor: pointer;

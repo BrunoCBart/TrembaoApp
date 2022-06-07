@@ -4,7 +4,7 @@ import React, {
 import { useNavigate } from 'react-router-dom'
 import './login.css'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
-import { login } from '../../api/trembao'
+import { login } from '../../api/login'
 const INITIAL_USER = {
   username: '',
   password: ''
