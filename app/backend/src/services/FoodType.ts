@@ -6,6 +6,13 @@ class FoodTypeService {
     const types: IFoodType[] = await FoodType.findAll()
     return types
   }
+
+  public getTypesByTheme = async (foodThemeId: number) => {
+    const types: IFoodType[] = await FoodType.findAll({
+      where: { foodThemeId }
+    })
+    return types
+  }
 }
 
 export default FoodTypeService

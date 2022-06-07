@@ -1,10 +1,11 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '.'
-import Food from './Food'
 
 class FoodType extends Model {
   public id: number
   public name: string
+  public image: string
+  public foodThemeId: number
 }
 
 FoodType.init({
@@ -15,8 +16,15 @@ FoodType.init({
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  foodThemeId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   timestamps: false,

@@ -15,7 +15,7 @@ const app_1 = require("../../../app");
 require("mocha");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('Route /subTypes testing', () => {
+describe('GET /foods/subTypes', () => {
     it('getAllTypes returns an array with proper properties', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield chai.request(app_1.app).get('/foods/subTypes');
         expect(res.body).to.be.an('array');

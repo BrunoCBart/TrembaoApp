@@ -4,6 +4,7 @@ import db from '.'
 class Street extends Model {
   public id: number
   public name: string
+  public districtId: number
 }
 
 Street.init({

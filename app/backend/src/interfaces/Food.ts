@@ -1,6 +1,7 @@
 interface IFoodType {
   id: number;
   name: string;
+  image?: string;
 }
 
 export interface IFoodUpdate {

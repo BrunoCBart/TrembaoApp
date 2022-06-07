@@ -22,6 +22,16 @@ class FoodTypeController {
                 return next(err);
             }
         });
+        this.getTypesByTheme = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { foodThemeId } = req.params;
+            try {
+                const types = yield this.foodService.getTypesByTheme(Number(foodThemeId));
+                return res.status(200).json(types);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
     }
 }
 exports.default = FoodTypeController;

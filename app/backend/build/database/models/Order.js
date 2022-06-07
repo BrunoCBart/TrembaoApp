@@ -33,6 +33,18 @@ Order.init({
     number: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
+    },
+    reference: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false
     }
 }, {
     timestamps: false,

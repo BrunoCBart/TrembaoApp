@@ -16,6 +16,12 @@ class FoodTypeService {
             const types = yield FoodType_1.default.findAll();
             return types;
         });
+        this.getTypesByTheme = (foodThemeId) => __awaiter(this, void 0, void 0, function* () {
+            const types = yield FoodType_1.default.findAll({
+                where: { foodThemeId }
+            });
+            return types;
+        });
     }
 }
 exports.default = FoodTypeService;

@@ -5,19 +5,20 @@ import addFoodToMenuSocket from '../sockets/Food'
 class FoodController {
   constructor (protected foodService = new FoodService()) {}
 
-  public getAll: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  public getAllByTheme: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    const { id } = req.params
     try {
-      const foods = await this.foodService.getAll()
+      const foods = await this.foodService.getAllByTheme(Number(id))
       return res.status(200).json(foods)
     } catch (err) {
       return next(err)
     }
   }
 
-  getAllChecked: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+  public getAllThemes: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     try {
-      const foods = await this.foodService.getAllChecked()
-      return res.status(200).json(foods)
+      const themes = await this.foodService.getAllThemes()
+      return res.status(200).json(themes)
     } catch (err) {
       return next(err)
     }
@@ -38,6 +39,16 @@ class FoodController {
     try {
       const foods = await this.foodService.getAllFoods()
       return res.status(200).json(foods)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  public getFoodById: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
+    const { id } = req.params
+    try {
+      const food = await this.foodService.getFoodById(Number(id))
+      return res.status(200).json(food)
     } catch (err) {
       return next(err)
     }

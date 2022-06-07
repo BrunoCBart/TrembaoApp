@@ -7,7 +7,7 @@ const { expect } = chai
 
 chai.use(chaiHttp)
 
-describe('Route /subTypes testing', () => {
+describe('GET /foods/subTypes', () => {
   it('getAllTypes returns an array with proper properties', async () => {
     const res = await chai.request(app).get('/foods/subTypes')
 

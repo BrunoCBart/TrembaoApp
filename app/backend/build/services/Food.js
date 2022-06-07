@@ -11,30 +11,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Food_1 = require("../database/models/Food");
 const FoodSubType_1 = require("../database/models/FoodSubType");
+const FoodTheme_1 = require("../database/models/FoodTheme");
 const FoodType_1 = require("../database/models/FoodType");
 class FoodService {
     constructor() {
-        this.foodTypesReduce = (foods) => {
-            return foods.reduce((acc, food) => {
-                if (!acc.find((f) => f.foodType === food.foodType)) {
-                    acc.push({
-                        foodType: food.foodType,
-                        foods: []
-                    });
-                }
-                acc.find((f) => f.foodType === food.foodType)
-                    .foods.push(Object.assign(Object.assign({}, food), { checked: !!food.checked }));
-                return acc;
-            }, []);
+        this.getAllByThemeMap = ({ dataValues: foodTypes }) => {
+            return Object.assign(Object.assign({}, foodTypes), { foodTheme: foodTypes.foodTheme.name, foods: foodTypes.foods.map((food) => {
+                    return {
+                        id: food.id,
+                        name: food.name,
+                        price: food.price,
+                        foodType: food.foodType.name,
+                        foodTypeId: food.foodTypeId,
+                        foodSubType: food.foodSubType === null ? null : food.foodSubType.name,
+                        foodSubTypeId: food.foodSubTypeId,
+                        onMenu: food.onMenu
+                    };
+                }) });
         };
-        this.getAll = () => __awaiter(this, void 0, void 0, function* () {
-            const foods = yield this.getAllFoods();
-            return this.foodTypesReduce(foods);
+        this.getAllByTheme = (foodThemeId) => __awaiter(this, void 0, void 0, function* () {
+            const foods = yield FoodType_1.default.findAll({
+                where: { foodThemeId },
+                include: [
+                    { model: FoodTheme_1.default, as: 'foodTheme' },
+                    {
+                        model: Food_1.default,
+                        as: 'foods',
+                        include: [
+                            { model: FoodSubType_1.default, as: 'foodSubType' },
+                            { model: FoodType_1.default, as: 'foodType' }
+                        ]
+                    }
+                ]
+            });
+            return foods.map(this.getAllByThemeMap);
         });
-        this.getAllChecked = () => __awaiter(this, void 0, void 0, function* () {
-            const foods = yield this.getAllFoods();
-            const checkedFoods = foods.filter((food) => food.checked);
-            return this.foodTypesReduce(checkedFoods);
+        this.getAllThemes = () => __awaiter(this, void 0, void 0, function* () {
+            const themes = yield FoodTheme_1.default.findAll();
+            return themes;
         });
         this.create = (food) => __awaiter(this, void 0, void 0, function* () {
             const { name, price, foodType, foodSubType } = food;
@@ -65,6 +79,10 @@ class FoodService {
             });
             return foods.map(this.allFoodsMap);
         });
+        this.getFoodById = (foodId) => __awaiter(this, void 0, void 0, function* () {
+            const food = yield Food_1.default.findOne({ where: { id: foodId } });
+            return food;
+        });
         this.update = (id, fields) => __awaiter(this, void 0, void 0, function* () {
             const { name, price, foodType, foodSubType } = fields;
             const { foodTypeId, foodSubTypeId } = yield this.doesfoodTypesExist(foodType, foodSubType);
@@ -80,12 +98,13 @@ class FoodService {
             const food = yield Food_1.default.findByPk(id);
             if (!food)
                 throw new Error('404|Food not found');
-            food.checked = !food.checked;
+            food.onMenu = !food.onMenu;
             yield food.save();
             return food;
         });
         this.doesfoodTypesExist = (foodType, foodSubType) => __awaiter(this, void 0, void 0, function* () {
-            let foodTypeId, foodSubTypeId;
+            let foodTypeId;
+            let foodSubTypeId;
             const foodTypeExists = yield FoodType_1.default.findOne({ where: { name: foodType || null } });
             if (foodTypeExists) {
                 foodTypeId = foodTypeExists.id;

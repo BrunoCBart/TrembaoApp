@@ -11,8 +11,23 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null
+      },
+      foodThemeId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        primaryKey: true,
+        references: {
+          model: 'FoodThemes',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       }
     })
   },

@@ -23,10 +23,10 @@ class OrderController {
             }
         });
         this.createOrder = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const { name, phone, district, street, foods, number } = req.body;
+            const { name, phone, district, street, foods, number, reference } = req.body;
             const { io } = req;
             try {
-                const order = yield this.orderService.createOrder({ name, phone, district, street, foods, number });
+                const order = yield this.orderService.createOrder({ name, phone, district, street, foods, number, reference });
                 io.emit('order-created', order);
                 return res.status(201).json(order);
             }

@@ -35,9 +35,6 @@ exports.updateFoodSchema = joi.object({
         'string.base': '400|Food type should be a string',
         'string.empty': '400|Food type can\'t be empty'
     }),
-    foodSubType: joi.string().messages({
-        'string.base': '400|Food subtype should be a string',
-        'string.empty': '400|Food subtype can\'t be empty'
-    })
+    foodSubType: joi.string().allow(null, '')
 });
 //# sourceMappingURL=food.js.map
