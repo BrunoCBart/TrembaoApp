@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { session } from '../api/login'
-import { getCheckedFoods, getFoodsByThemeId } from '../api/trembao'
+import { getFoodsByThemeId } from '../api/trembao'
 import trembaoAppContext from './TrembaoAppContext'
 
 function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState([])
-  const [checkedFoodOptions, setCheckedFoodOptions] = useState([])
   const [login, setLogin] = useState(false)
   const [price, setPrice] = useState(0)
-  const [foodToEdit, setFoodToEdit] = useState({})
 
   const navigate = useNavigate()
   const getSession = async () => {
@@ -34,18 +32,6 @@ function TrembaoAppProvider ({ children }) {
     setFoodOptions(foodsByTheme)
   }
 
-  const getCheckedFoodOptions = useCallback(async () => {
-    const foods = await getCheckedFoods()
-    setCheckedFoodOptions(foods)
-  })
-
-  // useEffect(() => {
-  //   getFoodOptions()
-  //     .catch(error => console.log(error))
-  //   getCheckedFoodOptions()
-  //     .catch(error => console.log(error))
-  // }, [])
-
   const trembaoAppValue = {
     getFoodsByTheme,
     login,
@@ -53,12 +39,8 @@ function TrembaoAppProvider ({ children }) {
     foodOptions,
     setFoodOptions,
     getSession,
-    getCheckedFoodOptions,
-    checkedFoodOptions,
     price,
-    setPrice,
-    foodToEdit,
-    setFoodToEdit
+    setPrice
   }
 
   return (

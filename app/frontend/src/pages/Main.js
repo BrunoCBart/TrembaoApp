@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import FoodThemes from '../components/FoodForm/FoodThemes'
-import trembaoAppContext from '../Context/TrembaoAppContext'
+import trembaoAppContext from '../context/TrembaoAppContext'
 import '../components/FoodForm/foodForm.css'
 import Header from '../components/Header/Header'
 import FoodFormMain from '../components/FoodForm/FoodFormMain'

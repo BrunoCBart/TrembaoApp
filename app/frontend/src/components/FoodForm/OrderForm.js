@@ -101,7 +101,7 @@ function OrderForm ({ orderIngredients, renderOrderForm }) {
           isDashboard={false}
           />
         ))}
-        <FormButton className="btn btn-green">
+        <FormButton className="btn btn-green" aria-label="confirm-order">
           Confirmar
         </FormButton>
       </div>

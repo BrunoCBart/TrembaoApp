@@ -1,12 +1,10 @@
 import { useRoutes } from 'react-router-dom'
-// import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useEffect } from 'react'
 import Admin from './pages/Admin'
-// import FoodForm from './components/FoodForm/FoodForm'
 import Main from './pages/Main'
-// import socket from './socket'
 import Dashboard from './pages/Dashboard'
+// import socket from './socket'
 
 function App () {
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { getFoodThemes } from '../../api/trembao'
-import trembaoAppContext from '../../Context/TrembaoAppContext'
+import trembaoAppContext from '../../context/TrembaoAppContext'
 
 function FoodThemes () {
   const [foodThemes, setFoodThemes] = useState([])
