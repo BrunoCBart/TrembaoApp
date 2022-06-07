@@ -14,19 +14,20 @@ const Food_2 = require("../sockets/Food");
 class FoodController {
     constructor(foodService = new Food_1.default()) {
         this.foodService = foodService;
-        this.getAll = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getAllByTheme = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
             try {
-                const foods = yield this.foodService.getAll();
+                const foods = yield this.foodService.getAllByTheme(Number(id));
                 return res.status(200).json(foods);
             }
             catch (err) {
                 return next(err);
             }
         });
-        this.getAllChecked = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getAllThemes = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const foods = yield this.foodService.getAllChecked();
-                return res.status(200).json(foods);
+                const themes = yield this.foodService.getAllThemes();
+                return res.status(200).json(themes);
             }
             catch (err) {
                 return next(err);
@@ -47,6 +48,16 @@ class FoodController {
             try {
                 const foods = yield this.foodService.getAllFoods();
                 return res.status(200).json(foods);
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+        this.getFoodById = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            try {
+                const food = yield this.foodService.getFoodById(Number(id));
+                return res.status(200).json(food);
             }
             catch (err) {
                 return next(err);

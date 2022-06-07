@@ -1,24 +1,21 @@
 import React, { useContext } from 'react'
-import '../components/Main/main.css'
-import FoodOptionsMain from '../components/Main/FoodOptionsMain'
-import Header from '../components/Header/Header'
+import FoodThemes from '../components/FoodForm/FoodThemes'
 import trembaoAppContext from '../Context/TrembaoAppContext'
+import '../components/FoodForm/foodForm.css'
+import Header from '../components/Header/Header'
+import FoodFormMain from '../components/FoodForm/FoodFormMain'
 function Main () {
-  const { price } = useContext(trembaoAppContext)
+  const { foodOptions } = useContext(trembaoAppContext)
+  const themeIsSelected = foodOptions.length > 0
   return (
     <>
-      <Header>
-        <span id="price">
-          {price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-        </span>
-      </Header>
-    <section aria-label="Opções do dia" className="main">
-      <header className="main__header">
-        <h1 className="main__title">Faça já seu pedido!</h1>
-        <p className="main__subtitle">Opções do dia</p>
-      </header>
-      <FoodOptionsMain />
-    </section>
+      <Header />
+      <section className="main2">
+        {themeIsSelected
+          ? <FoodFormMain foodOptions={foodOptions} />
+          : <FoodThemes/>}
+
+      </section>
     </>
   )
 }

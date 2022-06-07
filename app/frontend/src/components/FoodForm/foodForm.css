@@ -1,0 +1,239 @@
+/* ----------- FoodForm ------------- */
+
+.main2 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-block: 4.4rem;
+}
+
+.foodForm {
+  width: 100%;
+  max-width: 500px;
+  margin-inline: auto;
+  background-color: var(--red) ;
+  padding: 0.7rem;
+  border-radius: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.foodForm__type-container {
+  color: var(--white);
+  padding-block: 0.5rem;
+}
+
+.foodForm__type-container:nth-child(odd) {
+  background-color: var(--red-light);
+}
+
+.foodForm__type-heading_container {
+  display: flex;
+  align-items: center;  
+  cursor: pointer;
+}
+
+.foodForm__type-heading_container:hover {
+  background-color: var(--orange);
+}
+
+
+.foodForm__type-heading-title {
+  width: 50%;
+  margin-left: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.foodForm__type-image-container {
+  width: 50%;
+}
+
+.foodForm__type-image {
+  float: left;
+  width:  100%;
+  height: 120px;
+  object-fit: cover;
+
+}
+
+/* ----------- FoodFormOptions ------------- */
+
+.foodForm-type__foods-container {
+  position: fixed;
+  background-color: var(--red);
+  color: var(--white);
+  display: none;
+  width: 100%;
+  max-width: 500px;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  padding: 1rem;
+  overflow: scroll;
+  max-height: 100vh;
+}
+
+.foodForm-type__foods-container.active {
+  display: block;
+}
+
+.foodForm-type__image {
+  width: 100%;
+  height: 169px;
+  object-fit: cover;
+}
+
+.foodForm-type__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 0.8rem;
+}
+
+.foodForm-type__close-btn {
+  width: 30px;
+  cursor: pointer;
+  right: 0;
+}
+
+.foodForm-type__close-btn:hover {
+  transform: scale(1.2);
+}
+
+/* ----------- FoodFormCheckbox ------------- */
+
+.foodForm-group {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.1rem;
+  padding-block: 0.5rem;
+}
+
+.foodForm-group label {
+  cursor: pointer;
+  width: 100%;
+  padding-block: 0.5rem;
+  border-radius: 0.2rem;
+}
+
+.foodForm-group label:hover {
+  background-color: var(--orange);
+}
+
+.foodForm-group label span {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.foodForm-group input {
+  transform: scale(1.8);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.foodForm-editBtn-container {
+  margin-left: 0.3rem;
+}
+
+.food-option-svg-btn {
+  background-color: var(--crimson);
+  right: 0;
+  cursor: pointer;
+  padding: 0.3rem;
+  border: none;
+  border-radius: 0.5rem;
+  width: 33px;
+}
+
+.food-option-svg-btn:hover {
+  background-color: var(--orange);
+}
+
+/* ----------- FoodFormEditForm ------------- */
+
+.foodEditForm-1 {
+  position: absolute;
+  width: 100%;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.7rem;
+  background-color: var(--red);
+  z-index: 99;
+}
+
+.foodEditForm-1__heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 0.8rem;
+}
+
+.foodEditForm-1 input {
+  width: 100%;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  border-radius: 0.2rem;
+}
+
+/* ----------- FoodThemes ------------- */
+
+.foodTheme-container {
+  background-color: var(--red);
+  width: 100%;
+  max-width: 500px;
+  margin-inline: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: var(--white);
+}
+
+.foodTheme-container h1 {
+  font-size: 1.8rem;
+  margin-block: 1rem;
+}
+
+.foodTheme {
+  position: relative;
+  height: 100px;
+  background-color: var(--red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.foodTheme:hover img {
+  -webkit-filter: brightness(80%);
+
+}
+
+.foodTheme__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--white);
+  z-index: 99;
+}
+
+.foodTheme__image {
+  -webkit-filter: brightness(50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* ------- OrderForm ------- */
+

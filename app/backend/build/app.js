@@ -18,6 +18,7 @@ class App {
         this.server = http.createServer(this.app);
         this.config();
         this.routes();
+        this.app.use(express.static('public'));
         this.app.use(middlewares_1.errorHandler);
         this.io = require('socket.io')(this.server, {
             cors: {

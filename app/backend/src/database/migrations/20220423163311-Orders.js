@@ -44,6 +44,20 @@ module.exports = {
       number: {
         type: Sequelize.INTEGER,
         allowNull: false
+      },
+      reference: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       }
     })
   },

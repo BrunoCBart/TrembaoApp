@@ -13,6 +13,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      price: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
       foodTypeId: {
         type: Sequelize.INTEGER,
         references: {
@@ -33,7 +38,7 @@ module.exports = {
         onDelete: 'cascade',
         defaultValue: null
       },
-      checked: {
+      onMenu: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false

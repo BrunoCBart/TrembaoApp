@@ -1,31 +1,50 @@
 import Food from '../database/models/Food'
 import FoodSubType from '../database/models/FoodSubType'
+import FoodTheme from '../database/models/FoodTheme'
 import FoodType from '../database/models/FoodType'
 import { IFoodUpdate } from '../interfaces/Food'
 class FoodService {
-  private foodTypesReduce = (foods: any) => {
-    return foods.reduce((acc: any, food: any) => {
-      if (!acc.find((f: any) => f.foodType === food.foodType)) {
-        acc.push({
-          foodType: food.foodType,
-          foods: []
-        })
-      }
-      acc.find((f: any) => f.foodType === food.foodType)
-        .foods.push({ ...food, checked: !!food.checked })
-      return acc
-    }, [])
+  private getAllByThemeMap = ({ dataValues: foodTypes }: any) => {
+    return {
+      ...foodTypes,
+      foodTheme: foodTypes.foodTheme.name,
+      foods: foodTypes.foods.map((food: any) => {
+        return {
+          id: food.id,
+          name: food.name,
+          price: food.price,
+          foodType: food.foodType.name,
+          foodTypeId: food.foodTypeId,
+          foodSubType: food.foodSubType === null ? null : food.foodSubType.name,
+          foodSubTypeId: food.foodSubTypeId,
+          onMenu: food.onMenu
+        }
+      })
+    }
   }
 
-  public getAll = async () => {
-    const foods = await this.getAllFoods()
-    return this.foodTypesReduce(foods)
+  public getAllByTheme = async (foodThemeId: number) => {
+    const foods = await FoodType.findAll({
+      where: { foodThemeId },
+      include: [
+        { model: FoodTheme, as: 'foodTheme' },
+        {
+
+          model: Food,
+          as: 'foods',
+          include: [
+            { model: FoodSubType, as: 'foodSubType' },
+            { model: FoodType, as: 'foodType' }
+          ]
+        }
+      ]
+    })
+    return foods.map(this.getAllByThemeMap)
   }
 
-  public getAllChecked = async () => {
-    const foods = await this.getAllFoods()
-    const checkedFoods = foods.filter((food: any) => food.checked)
-    return this.foodTypesReduce(checkedFoods)
+  public getAllThemes = async () => {
+    const themes = await FoodTheme.findAll()
+    return themes
   }
 
   public create = async (food: IFoodUpdate) => {
@@ -64,6 +83,11 @@ class FoodService {
     return foods.map(this.allFoodsMap)
   }
 
+  public getFoodById = async (foodId: number) => {
+    const food: Food | null = await Food.findOne({ where: { id: foodId } })
+    return food
+  }
+
   public update = async (id: number, fields: IFoodUpdate) => {
     const { name, price, foodType, foodSubType } = fields
     const { foodTypeId, foodSubTypeId } = await this.doesfoodTypesExist(foodType, foodSubType)
@@ -80,13 +104,14 @@ class FoodService {
   public updateMenu = async (id: number) => {
     const food: Food | null = await Food.findByPk(id)
     if (!food) throw new Error('404|Food not found')
-    food.checked = !food.checked
+    food.onMenu = !food.onMenu
     await food.save()
     return food
   }
 
   private doesfoodTypesExist = async (foodType: string, foodSubType: string) => {
-    let foodTypeId: number | undefined, foodSubTypeId: number | undefined
+    let foodTypeId: number | undefined
+    let foodSubTypeId: number | undefined
 
     const foodTypeExists = await FoodType.findOne({ where: { name: foodType || null } })
 

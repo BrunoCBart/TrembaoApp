@@ -9,13 +9,19 @@ module.exports = {
       admin: true
     }])
 
+    const imagePath = 'http://localhost:4000/images/'
+
+    await queryInterface.bulkInsert('FoodThemes', [
+      { name: 'Marmitex', image: `${imagePath}marmitex.jpg` }
+    ])
+
     await queryInterface.bulkInsert('FoodTypes', [
-      { name: 'Arroz' },
-      { name: 'Feijão' },
-      { name: 'Misturas' },
-      { name: 'Guarnições' },
-      { name: 'Saladas' },
-      { name: 'Bebidas' }
+      { name: 'Arroz', foodThemeId: 1, image: `${imagePath}arroz.jpg` },
+      { name: 'Feijão', foodThemeId: 1, image: `${imagePath}feijao.png` },
+      { name: 'Misturas', foodThemeId: 1, image: `${imagePath}misturas.jpeg` },
+      { name: 'Guarnições', foodThemeId: 1, image: `${imagePath}guarnicoes.jpg` },
+      { name: 'Saladas', foodThemeId: 1, image: `${imagePath}saladas.jpg` },
+      { name: 'Bebidas', foodThemeId: 1, image: `${imagePath}bebidas.jpeg` }
     ], {})
 
     await queryInterface.bulkInsert('FoodSubTypes', [

@@ -1,0 +1,55 @@
+.form {
+  color: var(--white);
+  text-align: start;
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--red);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+
+.form__container {
+  position: relative;
+}
+
+.form--active {
+  display: block;
+}
+
+.form .form-group label {
+  font-size: 1.1rem;
+}
+
+.form .form-group label input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  outline: none;
+  border: none;
+}
+
+.form .form-group .error-msg {
+  font-size: 1rem;
+  color: var(--yellow);
+  margin-top: 0.3rem;
+  display: none;
+}
+
+.form .form-group input:invalid[focused="true"] ~ span {
+  display: block;
+}
+
+.form__close-btn {
+  position: absolute;
+  top: 0px;
+  right: 0rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 25px;
+  color: black;
+}
+
+.form__close-btn path {
+  fill: var(--white);
+}

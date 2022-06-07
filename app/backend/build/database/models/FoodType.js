@@ -12,8 +12,15 @@ FoodType.init({
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
+    },
+    image: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    },
+    foodThemeId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     timestamps: false,

@@ -3,7 +3,11 @@ import db from '.'
 
 class Order extends Model {
   public id: number
-  public foodNames: number[]
+  public phone: string
+  public districtId: number
+  public streetId: number
+  public foods: number[]
+  public number: number
 }
 
 Order.init({
@@ -35,6 +39,16 @@ Order.init({
   number: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  reference: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  createdAt: {
+    type: DataTypes.DATE
+  },
+  updatedAt: {
+    type: DataTypes.DATE
   }
 }, {
   timestamps: false,

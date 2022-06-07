@@ -6,6 +6,7 @@ interface IOrder {
   street: number;
   foods: string[];
   number: number;
+  reference?: string;
 }
 
 export default IOrder

@@ -1,14 +1,12 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '.'
-import FoodSubType from './FoodSubType'
-import FoodType from './FoodType'
 
 class Food extends Model {
   public id: number
   public name: string
   public foodTypeId: number
   public foodSubTypeId: number
-  public checked: boolean
+  public onMenu: boolean
 }
 
 Food.init({
@@ -30,7 +28,7 @@ Food.init({
     type: DataTypes.INTEGER,
     allowNull: true
   },
-  checked: {
+  onMenu: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false

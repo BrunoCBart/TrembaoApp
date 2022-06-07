@@ -16,14 +16,14 @@ require("mocha");
 const food_1 = require("../../mocks/food");
 const { expect } = chai;
 chai.use(chaiHttp);
-describe('create Route /foods testing', () => {
+describe('POST /foods', () => {
     let lastIndex;
     afterEach(() => __awaiter(void 0, void 0, void 0, function* () {
         yield chai.request(app_1.app).delete(`/foods/${lastIndex}`);
     }));
     it('Food should be created', () => __awaiter(void 0, void 0, void 0, function* () {
         yield chai.request(app_1.app).post('/foods').send(food_1.createFood);
-        const res = yield chai.request(app_1.app).get('/foods/all');
+        const res = yield chai.request(app_1.app).get('/foods/');
         lastIndex = res.body.length - 1;
         expect(res.body[lastIndex].name).to.equal(food_1.createFood.name);
         expect(res.body[lastIndex].foodTypeId).to.equal(1);

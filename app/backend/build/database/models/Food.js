@@ -23,7 +23,7 @@ Food.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true
     },
-    checked: {
+    onMenu: {
         type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false

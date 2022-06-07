@@ -4,7 +4,7 @@ import React, {
 import { useNavigate } from 'react-router-dom'
 import './login.css'
 import trembaoAppContext from '../../Context/TrembaoAppContext'
-import { login } from '../../api/trembao'
+import { login } from '../../api/login'
 const INITIAL_USER = {
   username: '',
   password: ''
@@ -84,7 +84,7 @@ function Login () {
             name="username"
             onChange={(e) => handleLogin(e)}
             value={user.username}
-            placeholder="Digite seu nome de usuário"
+            placeholder="admin"
             required
           />
         </label>
@@ -98,7 +98,7 @@ function Login () {
             name="password"
             onChange={(e) => handleLogin(e)}
             value={user.password}
-            placeholder="Digite sua senha"
+            placeholder="mysecretpw"
             required
           />
         </label>
