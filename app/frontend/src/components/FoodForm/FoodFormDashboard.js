@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { checkFood, getFoodsByThemeId } from '../../api/trembao'
 import './foodForm.css'
 import FoodFormOptions from './FoodFormOptions'
-import trembaoAppContext from '../../Context/TrembaoAppContext'
+import trembaoAppContext from '../../context/TrembaoAppContext'
 
 function FoodFormDashboard ({ foodOptions }) {
   const { setFoodOptions } = useContext(trembaoAppContext)

@@ -22,10 +22,6 @@ export const getFoodThemes = () => {
     .then(res => res.data)
     .catch(err => console.log(err))
 }
-export const getCheckedFoods = () => (
-  axios.get('/foods/checked'))
-  .then(res => res.data)
-  .catch(err => console.log(err))
 
 export const checkFood = (id) => (
   axios.put(`${FOODS_URL}/${id}/check`))

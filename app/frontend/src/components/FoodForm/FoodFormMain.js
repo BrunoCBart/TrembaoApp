@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { getAllFoodTypes } from '../../helpers/foodOptionsMain'
 import FoodFormOptions from './FoodFormOptions'
 import socket from '../../socket'
-import trembaoAppContext from '../../Context/TrembaoAppContext'
+import trembaoAppContext from '../../context/TrembaoAppContext'
 import OrderForm from './OrderForm'
 function FoodFormMain ({ foodOptions }) {
   const [order, setOrder] = useState({})
@@ -91,7 +91,7 @@ function FoodFormMain ({ foodOptions }) {
             </div>
           )
         })}
-        <button className="btn">Pedir</button>
+        <button className="btn" aria-label='make-order'>Pedir</button>
       </form>
       {renderOrderForm &&
       <OrderForm
