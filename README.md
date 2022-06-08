@@ -31,6 +31,12 @@ Wait for the creation of the containers and... Good! The application will be run
 
 The second method requires you to have mysql installed [mysql download](https://www.mysql.com/downloads/)
 
+Run the following command at the root folder to install all dependencies:
+
+```
+npm run install
+```
+
 Make sure mysql service is running by running the command:
 
 ```
@@ -51,6 +57,19 @@ Right after open another terminal, go to frontend folder ./app/frontend and run 
 npm start
 ```
 Good! The application will be running here http://localhost:3000/
+
+## How the application works(now)
+
+The main page running at (/) http://localhost:3000/ route is the order form where the user can choose what they want and make their orders, at first glance it will seem that there is no options but we will get to that later.
+
+The next route is running at (/admin) http://localhost:3000/admin, in this route you can log in as a admin user using the following credentials:
+
+username as "admin"
+password as "mysecretpw"
+
+After you login with those credentials you will be redirected to a protected route called (/admin/dashboard) http://localhost:3000/admin/dashboard, on that route it will render the admin control panel where he can add the foods to the menu, edit them, create and delete them, he will also be able to create "food themes" and create his own food form for whichever food category he wants to sell (sandwiches, lunch box... etc).
+
+When the admin adds a new food to the menu it will then appear as an option on the (/) http://localhost:3000/ route automatically via socket, so the user may be able to choose the options he wants and the admin can control the daily options.
 
 
 ## Aplicativo de pedidos (Trembão Restaurante)(pt)
@@ -85,6 +104,12 @@ npm run compose:up
 Espere a criação dos containers e... Pronto! sua aplicação vai estar rodando aqui http://localhost:3000/
 
 O segundo método você precisa ter mysql instalado [mysql download](https://www.mysql.com/downloads/)
+
+Rode o seguinte comando para instalar todas as dependências:
+
+```
+npm run install
+```
 
 Se assegure que o serviço do mysql está ligado com o comando:
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install": "cd app/backend && npm install && cd ../frontend && npm install",
     "compose:up": "cd app; docker-compose up -d --build",
     "compose:down": "cd app; docker-compose down --remove-orphans"
   },
