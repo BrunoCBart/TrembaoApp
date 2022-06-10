@@ -29,8 +29,8 @@
 .header__logo-title {
   font-size: 1.1rem;
   font-weight: bold;
-  margin-left: 0.8rem;  
-  font-family: 'libre_baskervillebold';
+  margin-left: 0.8rem;
+  font-family: "libre_baskervillebold";
   text-decoration: none;
   color: var(--red);
   text-align: center;
@@ -41,14 +41,13 @@
 }
 
 .header__logo-title:hover {
-  
   transform: scale(1.1);
 }
 
 @media screen and (min-width: 628px) {
   .header {
-  left: 50%;
-   transform: translateX(-50%);
-   width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
   }
 }
