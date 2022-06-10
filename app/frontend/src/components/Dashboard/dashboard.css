@@ -30,7 +30,8 @@
 .dashboard__orders {
   width: 100%;
 }
-/* Same code as foodOptionsForm  maybe refactor later*/
+
+/* Same code as foodOptionsForm  maybe refactor later */
 .order-container {
   display: flex;
   flex-direction: column;
@@ -40,7 +41,7 @@
   height: 100%;
   background-color: var(--white);
   border-radius: 0.5rem;
-  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px 3px rgb(0 0 0 / 20%);
   padding: 0.6rem;
   margin-bottom: 0.6rem;
   color: var(--black);
@@ -69,24 +70,23 @@
   max-height: 800px;
 }
 
-
 .food-types::-webkit-scrollbar {
   display: none;
 }
 
 .food-types {
   display: grid;
-  grid-auto-flow: column; 
+  grid-auto-flow: column;
   max-width: 100%;
   padding: 1rem 0;
   overflow-x: scroll;
-  color: var(--red)
+  color: var(--red);
 }
 
 .food-type-btn {
   width: 100px;
   height: 100%;
-  background-color: rgb(255, 229, 199);
+  background-color: rgb(255 229 199);
   border-radius: 5px;
   margin: 5px;
   cursor: pointer;

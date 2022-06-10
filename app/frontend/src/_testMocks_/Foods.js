@@ -1,10 +1,10 @@
 export const foodTypes = [
-  'Arroz',
-  'Feijão',
-  'Misturas',
-  'Guarnições',
-  'Saladas',
-  'Bebidas'
+  { name: 'Arroz', id: 1 },
+  { name: 'Feijão', id: 2 },
+  { name: 'Misturas', id: 3 },
+  { name: 'Guarnições', id: 4 },
+  { name: 'Saladas', id: 5 },
+  { name: 'Bebidas', id: 6 }
 ]
 
 export const foodThemes = [

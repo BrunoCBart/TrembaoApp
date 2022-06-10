@@ -13,7 +13,7 @@
   width: 100%;
   max-width: 500px;
   margin-inline: auto;
-  background-color: var(--red) ;
+  background-color: var(--red);
   padding: 0.7rem;
   border-radius: 0.7rem;
   margin-bottom: 0.5rem;
@@ -30,14 +30,13 @@
 
 .foodForm__type-heading_container {
   display: flex;
-  align-items: center;  
+  align-items: center;
   cursor: pointer;
 }
 
 .foodForm__type-heading_container:hover {
   background-color: var(--orange);
 }
-
 
 .foodForm__type-heading-title {
   width: 50%;
@@ -52,10 +51,9 @@
 
 .foodForm__type-image {
   float: left;
-  width:  100%;
+  width: 100%;
   height: 120px;
   object-fit: cover;
-
 }
 
 /* ----------- FoodFormOptions ------------- */
@@ -67,7 +65,7 @@
   display: none;
   width: 100%;
   max-width: 500px;
-  top:50%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99;
@@ -159,7 +157,7 @@
 .foodEditForm-1 {
   position: absolute;
   width: 100%;
-  top:50%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0.7rem;
@@ -212,8 +210,7 @@
 }
 
 .foodTheme:hover img {
-  -webkit-filter: brightness(80%);
-
+  filter: brightness(80%);
 }
 
 .foodTheme__title {
@@ -228,7 +225,7 @@
 }
 
 .foodTheme__image {
-  -webkit-filter: brightness(50%);
+  filter: brightness(50%);
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -236,4 +233,3 @@
 }
 
 /* ------- OrderForm ------- */
-

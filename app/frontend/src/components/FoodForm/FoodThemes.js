@@ -7,6 +7,7 @@ function FoodThemes () {
   const { getFoodsByTheme } = useContext(trembaoAppContext)
 
   useEffect(() => {
+    console.log('a')
     getFoodThemes()
       .then((themes) => setFoodThemes(themes))
   }, [])
@@ -15,8 +16,8 @@ function FoodThemes () {
     <section className='foodTheme-container'>
       <h1>Opções</h1>
       {foodThemes.map((theme) => (
-        <div key={theme} className="foodTheme" onClick={() => getFoodsByTheme(theme.id)}>
-          <h2 className="foodTheme__title">{theme.name}</h2>
+        <div key={theme.name} className="foodTheme" onClick={() => getFoodsByTheme(theme.id)}>
+          <h3 className="foodTheme__title">{theme.name}</h3>
           <img className="foodTheme__image" src={theme.image} alt={theme.name} />
         </div>
       ))}

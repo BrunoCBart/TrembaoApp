@@ -12,7 +12,6 @@ function FoodFormMain ({ foodOptions }) {
 
   useEffect(() => {
     socket.on('foodOption-updated', async () => {
-      console.log('a')
       await getFoodsByTheme()
     })
   }, [])
@@ -79,7 +78,7 @@ function FoodFormMain ({ foodOptions }) {
                 <div className="foodForm__type-image-container">
                   <img src={image} alt="idk" className="foodForm__type-image"/>
                 </div>
-                <h2 className="foodForm__type-heading-title">{type}</h2>
+                <h2 className="foodForm__type-heading-title" data-testid={type}>{type}</h2>
               </div>
                 <FoodFormOptions
                   onCheck={checkFoodOption}

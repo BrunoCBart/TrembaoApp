@@ -1,22 +1,25 @@
 import '@testing-library/jest-dom/extend-expect'
-import { cleanup, screen, waitFor } from '@testing-library/react'
+import { cleanup, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import mockAxios from 'axios'
 import React from 'react'
-import { foodOptions, foodTypes, foodThemes } from '../utils/mocks/Foods'
-import { renderWithRouterAndProvider } from '../utils/mocks/renderWithRouterAndProvider'
+import { foodOptions, foodTypes, foodThemes } from '../_testMocks_/Foods'
+import { renderWithRouterAndProvider } from '../_testMocks_/renderWithRouterAndProvider'
 import Main from '../pages/Main'
+
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 global.setImmediate = global.setTimeout
 
-beforeEach(() => {
+beforeEach(async () => {
   mockAxios.get.mockImplementation((url) => {
     console.log(url)
     if (url === '/foods/themes/1') return Promise.resolve({ data: foodOptions })
     if (url === '/foods/themes') return Promise.resolve({ data: foodThemes })
+    if (url === '/foods/types') return Promise.resolve({ data: foodTypes })
   })
 
-  waitFor(() => renderWithRouterAndProvider(<Main />))
+  await waitFor(async () => await renderWithRouterAndProvider(<Main />))
 })
 
 afterEach(cleanup)
@@ -42,16 +45,16 @@ describe('Test main page (user order request page)', () => {
     await Promise.all(promises)
   })
 
-  // it('Order button should open order form', async () => {
-  //   const themeButton = await screen.findByText(/marmitex/i)
-  //   userEvent.click(themeButton)
-  //   const orderButton = await screen.findByRole('button', { name: /make-order/i })
-  //   userEvent.click(orderButton)
-  //   expect(await screen.findByRole('button', { name: /confirm-order/i })).toBeInTheDocument()
-  // })
-
-  // it('Options should render in the food type', async () => {
-  //   const rice = await screen.findByText(/^Arroz branco$/)
-  //   expect(rice).toBeInTheDocument()
-  // })
+  it('Theme button should render theme types', async () => {
+    const themeButton = await screen.findByText(/marmitex/i)
+    expect(themeButton).toBeInTheDocument()
+    userEvent.click(themeButton)
+    await waitForElementToBeRemoved(() => screen.getByText(/marmitex/i))
+    const promises = await foodTypes.map(async (type) => {
+      const typeTitle = await screen.findByTestId(type.name)
+      console.log(typeTitle)
+      expect(typeTitle).toBeInTheDocument()
+    })
+    await Promise.all(promises)
+  })
 })
