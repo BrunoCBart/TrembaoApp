@@ -1,4 +1,3 @@
-import { getFoodTypes } from '../api/trembao'
 
 export const FOOD_OPTIONS_QUANTITY = {
   Arroz: 1,
@@ -7,13 +6,6 @@ export const FOOD_OPTIONS_QUANTITY = {
   Guarnições: 3,
   Saladas: 2,
   Bebidas: 9999
-}
-
-export const getAllFoodTypes = async () => {
-  const foodTypes = await getFoodTypes()
-    .catch(error => console.log(error))
-
-  return foodTypes
 }
 
 const hasReachedFoodLimit = (checkedAmount, type) => checkedAmount >= FOOD_OPTIONS_QUANTITY[type]

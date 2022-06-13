@@ -49,7 +49,8 @@ body {
   --red: #941717;
   --red-light: #b33131;
   --yellow-light: #fbfd74;
-  --orange: #fa9a1c;
+  --orange: #fa8e00;
+  --orange-light: #ffaa3b;
   --yellow: #ffd900;
   --green: #22d478;
 }
@@ -69,4 +70,23 @@ body {
 
 .btn-green {
   background-color: var(--green);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 1rem;
+  margin-block: 0.1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--orange);
 }

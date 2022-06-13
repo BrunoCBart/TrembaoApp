@@ -75,8 +75,10 @@ class FoodController {
         });
         this.delete = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
+            const { io } = req;
             try {
                 const deletedFood = yield this.foodService.delete(Number(id));
+                (0, Food_2.deleteFoodFromMenu)(io, deletedFood);
                 return res.status(200).json(deletedFood);
             }
             catch (err) {
@@ -88,7 +90,7 @@ class FoodController {
             const { io } = req;
             try {
                 const food = yield this.foodService.updateMenu(Number(id));
-                (0, Food_2.default)(io, food);
+                (0, Food_2.updateFoodToMenu)(io, food);
                 io.emit('foodOption-updated', food);
                 return res.status(200).json(food);
             }

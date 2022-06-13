@@ -9,6 +9,7 @@ function TrembaoAppProvider ({ children }) {
   const [foodOptions, setFoodOptions] = useState([])
   const [login, setLogin] = useState(false)
   const [price, setPrice] = useState(0)
+  const [foodTypes, setFoodTypes] = useState([])
 
   const navigate = useNavigate()
   const getSession = async () => {
@@ -28,7 +29,13 @@ function TrembaoAppProvider ({ children }) {
   }
 
   const getFoodsByTheme = async (id) => {
+    console.log(id)
     const foodsByTheme = await getFoodsByThemeId(id)
+    const types = foodsByTheme.reduce((acc, { name, id }) => {
+      acc.push({ name, id })
+      return acc
+    }, [])
+    setFoodTypes(types)
     setFoodOptions(foodsByTheme)
   }
 
@@ -40,7 +47,8 @@ function TrembaoAppProvider ({ children }) {
     setFoodOptions,
     getSession,
     price,
-    setPrice
+    setPrice,
+    foodTypes
   }
 
   return (

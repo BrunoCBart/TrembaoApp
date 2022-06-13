@@ -1,25 +1,80 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import FormButton from '../FormButton'
-import Pen from '../svgs/Pen'
+import React, { useContext, useState } from 'react'
 import FoodEditForm from './FoodEditForm'
+import fork from '../../images/svgs/fork.svg'
+import pen from '../../images/svgs/pen.svg'
+import trash from '../../images/svgs/trash.svg'
+import FoodFormButton from './FoodFormButton'
+import { deleteFood } from '../../api/trembao'
+import trembaoAppContext from '../../context/TrembaoAppContext'
 
-function FoodFormCheckbox ({ name, label, isDashboard, food, ...inputProps }) {
+function FoodFormCheckbox ({ name, label, isDashboard, food, foodThemeId, ...checkboxProps }) {
   const [editingFood, setEditingFood] = useState(false)
   const [foodToEdit, setFoodToEdit] = useState(food)
   const id = isDashboard ? `${name}-input-dashboard` : `${name}-input`
 
-  const EditBtn = () => {
-    const onEditButtonClick = (e) => {
-      e.preventDefault()
-      setEditingFood(true)
-    }
+  const { getFoodsByTheme } = useContext(trembaoAppContext)
 
+  const onDeleteButtonClick = (e) => {
+    e.preventDefault()
+    deleteFood(food.id)
+      .then(() => getFoodsByTheme(foodThemeId))
+  }
+
+  const onEditButtonClick = (e) => {
+    e.preventDefault()
+    setEditingFood(true)
+  }
+
+  const onFoodToolsButtonClick = (e) => {
+    e.preventDefault()
+    const foodTollsBtn = e.target.classList.contains('food-option-tools-btn') ? e.target : e.target.parentElement
+    const previousActive = document.querySelector('.food-option-tools-btn.active')
+    if (previousActive && previousActive !== foodTollsBtn) {
+      previousActive.classList.remove('active')
+    }
+    foodTollsBtn.classList.toggle('active')
+  }
+
+  const onToolsLostFocus = (e) => {
+    e.target.classList.remove('active')
+  }
+
+  const foodFormButtons = [
+    {
+      iconClassName: 'food-option-svg-btn',
+      className: 'foodForm-btn food-option-tools-btn',
+      src: fork,
+      key: 'foodToolsBtn',
+      onClick: onFoodToolsButtonClick
+    },
+    {
+      iconClassName: 'food-option-svg-btn food-option-svg-img',
+      className: 'foodForm-btn food-option-edit-btn',
+      src: pen,
+      key: 'foodEditBtn',
+      onMouseDown: (e) => e.preventDefault(),
+      onClick: onEditButtonClick
+    },
+    {
+      iconClassName: 'food-option-svg-btn food-option-svg-img',
+      className: 'foodForm-btn food-option-trash-btn',
+      src: trash,
+      key: 'foodDeleteBtn',
+      onMouseDown: (e) => e.preventDefault(),
+      onClick: onDeleteButtonClick
+    }
+  ]
+
+  const FoodTools = () => {
     return (
-      <div className="foodForm-editBtn-container">
-        <FormButton className="food-option-svg-btn" onClick={(e) => onEditButtonClick(e)}>
-          <Pen width="100%" />
-        </FormButton>
+      <div className="food-option-tools-btn-container" onBlur={onToolsLostFocus} >
+        {foodFormButtons.map((button) => (
+        <FoodFormButton
+          key={button.key}
+          {...button}
+        />
+        ))}
       </div>
     )
   }
@@ -33,11 +88,11 @@ function FoodFormCheckbox ({ name, label, isDashboard, food, ...inputProps }) {
             name={name}
             id={id}
 
-            {...inputProps}
+            {...checkboxProps}
             />
             <span>{label}</span>
         </label>
-        {isDashboard ? EditBtn() : null}
+        {isDashboard ? FoodTools() : null}
       </div>
       {editingFood && (
         <FoodEditForm
@@ -58,6 +113,7 @@ FoodFormCheckbox.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired
   }),
+  foodThemeId: PropTypes.number.isRequired,
   isDashboard: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired

@@ -70,8 +70,9 @@
   transform: translate(-50%, -50%);
   z-index: 99;
   padding: 1rem;
-  overflow: scroll;
-  max-height: 100vh;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  max-height: 96vh;
 }
 
 .foodForm-type__foods-container.active {
@@ -117,6 +118,7 @@
   width: 100%;
   padding-block: 0.5rem;
   border-radius: 0.2rem;
+  margin-right: 0.5rem;
 }
 
 .foodForm-group label:hover {
@@ -134,26 +136,62 @@
   margin-left: 0.5rem;
 }
 
-.foodForm-editBtn-container {
-  margin-left: 0.3rem;
-}
-
 .food-option-svg-btn {
   background-color: var(--crimson);
   right: 0;
   cursor: pointer;
-  padding: 0.3rem;
+  padding: 0.4rem;
   border: none;
   border-radius: 0.5rem;
   width: 33px;
+  height: 33px;
 }
 
 .food-option-svg-btn:hover {
   background-color: var(--orange);
 }
 
-/* ----------- FoodFormEditForm ------------- */
+.food-option-tools-btn-container {
+  position: relative;
+}
 
+.foodForm-btn {
+  background: transparent;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.food-option-svg-img {
+  background-color: var(--orange);
+}
+
+.food-option-svg-img:hover {
+  background-color: var(--orange-light);
+}
+
+.food-option-edit-btn,
+.food-option-trash-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.food-option-tools-btn.active ~ .food-option-edit-btn,
+.food-option-tools-btn.active ~ .food-option-trash-btn {
+  visibility: initial;
+}
+
+.food-option-tools-btn.active ~ .food-option-edit-btn {
+  transform: translateX(-45px) scale(1.2);
+}
+
+.food-option-tools-btn.active ~ .food-option-trash-btn {
+  transform: translateY(-45px) scale(1.2);
+}
+
+/* ----------- FoodFormEditForm ------------- */
 .foodEditForm-1 {
   position: absolute;
   width: 100%;
