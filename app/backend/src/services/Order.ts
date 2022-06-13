@@ -2,7 +2,7 @@ import Food from '../database/models/Food'
 import District from '../database/models/District'
 import Street from '../database/models/Street'
 import Order from '../database/models/Order'
-import IOrder from '../interfaces/Order'
+import IOrder, { IOrderCreate } from '../interfaces/Order'
 import FoodType from '../database/models/FoodType'
 
 class OrderService {
@@ -20,7 +20,7 @@ class OrderService {
   }
 
   public getAll = async () => {
-    const orders: Order[] = await Order.findAll()
+    const orders: IOrder[] = await Order.findAll()
     const mappedOrders = orders.map(async (order: any) => {
       const { districtId, streetId, ...rest } = order.dataValues
       return ({
@@ -42,25 +42,27 @@ class OrderService {
     return ordersResolved.map(this.mapOrdersFoods)
   }
 
-  public createOrder = async ({ name, phone, district, street, foods, number }: IOrder) => {
+  public createOrder = async (order: IOrderCreate) => {
     let districtId: number
     let streetId: number
-    const dbDistrict: any = await District.findOne({ where: { name: district } })
+    const dbDistrict: any = await District.findOne({ where: { name: order.district } })
     if (!dbDistrict) {
-      const { dataValues: { id } }: any = await District.create({ name: district })
+      const { dataValues: { id } }: any = await District.create({ name: order.district })
       districtId = id
     } else {
       districtId = dbDistrict.dataValues.id
     }
-    const dbStreet: any = await Street.findOne({ where: { name: street } })
+    const dbStreet: any = await Street.findOne({ where: { name: order.street } })
     if (!dbStreet) {
-      const { dataValues: { id } }: any = await Street.create({ name: street, districtId })
+      const { dataValues: { id } }: any = await Street.create({ name: order.street, districtId })
       streetId = id
     } else {
       streetId = dbStreet.dataValues.id
     }
-    const order: Order = await Order.create({ name, phone, districtId, streetId, foods, number })
-    return order
+    const { street, district, ...currentOrder } = order
+    const orderWithAdressIds = { ...currentOrder, streetId, districtId }
+    const newOrder: Order = await Order.create(orderWithAdressIds)
+    return newOrder
   }
 }
 

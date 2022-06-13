@@ -18,6 +18,8 @@ class FoodController {
             const { id } = req.params;
             try {
                 const foods = yield this.foodService.getAllByTheme(Number(id));
+                if ('error' in foods)
+                    return res.status(foods.code).json({ error: foods.error });
                 return res.status(200).json(foods);
             }
             catch (err) {
@@ -38,6 +40,8 @@ class FoodController {
             const { id } = req.params;
             try {
                 const updatedFood = yield this.foodService.update(Number(id), { price, name, foodType, foodSubType });
+                if ('error' in updatedFood)
+                    return res.status(updatedFood.code).json({ error: updatedFood.error });
                 return res.status(200).json(updatedFood);
             }
             catch (err) {
@@ -57,6 +61,8 @@ class FoodController {
             const { id } = req.params;
             try {
                 const food = yield this.foodService.getFoodById(Number(id));
+                if ('error' in food)
+                    return res.status(food.code).json({ error: food.error });
                 return res.status(200).json(food);
             }
             catch (err) {
@@ -67,6 +73,8 @@ class FoodController {
             const { name, price, foodType, foodSubType } = req.body;
             try {
                 const newFood = yield this.foodService.create({ name, price, foodType, foodSubType });
+                if ('error' in newFood)
+                    return res.status(newFood.code).json({ error: newFood.error });
                 return res.status(200).json(newFood);
             }
             catch (err) {
@@ -78,6 +86,8 @@ class FoodController {
             const { io } = req;
             try {
                 const deletedFood = yield this.foodService.delete(Number(id));
+                if ('error' in deletedFood)
+                    return res.status(deletedFood.code).json({ error: deletedFood.error });
                 (0, Food_2.deleteFoodFromMenu)(io, deletedFood);
                 return res.status(200).json(deletedFood);
             }
@@ -90,6 +100,8 @@ class FoodController {
             const { io } = req;
             try {
                 const food = yield this.foodService.updateMenu(Number(id));
+                if ('error' in food)
+                    return res.status(food.code).json({ error: food.error });
                 (0, Food_2.updateFoodToMenu)(io, food);
                 io.emit('foodOption-updated', food);
                 return res.status(200).json(food);
