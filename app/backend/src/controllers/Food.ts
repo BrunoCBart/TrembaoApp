@@ -1,6 +1,6 @@
 import FoodService from '../services/Food'
 import { RequestHandler } from 'express'
-import addFoodToMenuSocket from '../sockets/Food'
+import { deleteFoodFromMenu, updateFoodToMenu } from '../sockets/Food'
 
 class FoodController {
   constructor (protected foodService = new FoodService()) {}
@@ -66,8 +66,10 @@ class FoodController {
 
   public delete: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
     const { id } = req.params
+    const { io }: any = req
     try {
       const deletedFood = await this.foodService.delete(Number(id))
+      deleteFoodFromMenu(io, deletedFood)
       return res.status(200).json(deletedFood)
     } catch (err) {
       return next(err)
@@ -79,7 +81,7 @@ class FoodController {
     const { io }: any = req
     try {
       const food = await this.foodService.updateMenu(Number(id))
-      addFoodToMenuSocket(io, food)
+      updateFoodToMenu(io, food)
       io.emit('foodOption-updated', food)
       return res.status(200).json(food)
     } catch (err) {

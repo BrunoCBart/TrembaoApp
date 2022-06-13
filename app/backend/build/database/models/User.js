@@ -35,12 +35,10 @@ User.init({
         allowNull: false
     },
     createdAt: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: false
+        type: sequelize_1.DataTypes.DATE
     },
     updatedAt: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: false
+        type: sequelize_1.DataTypes.DATE
     }
 }, {
     tableName: 'Users',

@@ -1,7 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const addFoodToMenu = (io, food) => {
+exports.deleteFoodFromMenu = exports.updateFoodToMenu = void 0;
+const updateFoodToMenu = (io, food) => {
     io.emit('foodOption-updated', food);
 };
-exports.default = addFoodToMenu;
+exports.updateFoodToMenu = updateFoodToMenu;
+const deleteFoodFromMenu = (io, food) => {
+    io.emit('foodOption-removed', food);
+};
+exports.deleteFoodFromMenu = deleteFoodFromMenu;
 //# sourceMappingURL=Food.js.map

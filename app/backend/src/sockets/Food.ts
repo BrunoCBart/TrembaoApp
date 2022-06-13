@@ -1,5 +1,7 @@
-const addFoodToMenu = (io: any, food: any) => {
+export const updateFoodToMenu = (io: any, food: any) => {
   io.emit('foodOption-updated', food)
 }
 
-export default addFoodToMenu
+export const deleteFoodFromMenu = (io: any, food: any) => {
+  io.emit('foodOption-removed', food)
+}
