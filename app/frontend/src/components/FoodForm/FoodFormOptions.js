@@ -3,7 +3,7 @@ import React from 'react'
 import FoodFormCheckbox from './FoodFormCheckbox'
 import CloseMark from '../svgs/CloseMark'
 
-function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, onCheck }) {
+function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, foodThemeId, onCheck }) {
   const closeFoodType = () => {
     document.querySelector(`.foodForm__type-${type}`).classList.remove('active')
   }
@@ -29,6 +29,7 @@ function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, onCheck 
                   checked={isDashboard ? food.onMenu : isChecked(food.id, type)}
                   label={food.name}
                   name={food.name}
+                  foodThemeId={foodThemeId}
                   isDashboard={isDashboard}
                   food={food}
                   key={food.name}
@@ -42,6 +43,7 @@ function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, onCheck 
 }
 
 FoodFormOptions.propTypes = {
+  foodThemeId: PropTypes.number.isRequired,
   foods: PropTypes.array.isRequired,
   image: PropTypes.string.isRequired,
   isChecked: PropTypes.func.isRequired,

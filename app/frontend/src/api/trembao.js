@@ -7,13 +7,8 @@ export const getFoodsByThemeId = (id = 1) => (
   .then(res => res.data)
   .catch(err => console.log(err))
 
-export const getTypesByTheme = (id = 1) => (
+export const getTypesByThemeId = (id = 1) => (
   axios.get(`/foods/types/${id}`))
-  .then(res => res.data)
-  .catch(err => console.log(err))
-
-export const getFoodTypes = () => (
-  axios.get('/foods/types'))
   .then(res => res.data)
   .catch(err => console.log(err))
 
@@ -30,3 +25,7 @@ export const checkFood = (id) => (
 export const editFood = (id, food) => (
   axios.put(`${FOODS_URL}/${id}`, food))
   .catch(() => console.log(food))
+
+export const deleteFood = (id) => (
+  axios.delete(`${FOODS_URL}/${id}`))
+  .catch(err => console.log(err))

@@ -7,7 +7,6 @@ function FoodThemes () {
   const { getFoodsByTheme } = useContext(trembaoAppContext)
 
   useEffect(() => {
-    console.log('a')
     getFoodThemes()
       .then((themes) => setFoodThemes(themes))
   }, [])

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
-import { getAllFoodTypes } from '../../helpers/foodOptionsMain'
 import FoodFormOptions from './FoodFormOptions'
 import socket from '../../socket'
 import trembaoAppContext from '../../context/TrembaoAppContext'
@@ -8,11 +7,14 @@ import OrderForm from './OrderForm'
 function FoodFormMain ({ foodOptions }) {
   const [order, setOrder] = useState({})
   const [renderOrderForm, setRenderOrderForm] = useState(false)
-  const { getFoodsByTheme } = useContext(trembaoAppContext)
+  const { getFoodsByTheme, foodTypes } = useContext(trembaoAppContext)
 
   useEffect(() => {
-    socket.on('foodOption-updated', async () => {
-      await getFoodsByTheme()
+    socket.on('foodOption-updated', () => {
+      getFoodsByTheme(foodOptions[0].foodThemeId)
+    })
+    socket.on('foodOption-removed', () => {
+      getFoodsByTheme(foodOptions[0].foodThemeId)
     })
   }, [])
 
@@ -21,11 +23,10 @@ function FoodFormMain ({ foodOptions }) {
   }
 
   useEffect(() => {
-    getAllFoodTypes()
-      .then((types) => {
-        setInitialUncheckedOrder(types)
-      })
-  }, [])
+    if (foodTypes.length > 0) {
+      setInitialUncheckedOrder(foodTypes)
+    }
+  }, [foodOptions])
   const setInitialUncheckedOrder = (types = []) => {
     const initialOrder = types.reduce((acc, type) => {
       acc[type.name] = []
@@ -71,7 +72,7 @@ function FoodFormMain ({ foodOptions }) {
     <>
       <form className="foodForm" onSubmit={displayOrderForm}>
         { Object.keys(order).length > 0 &&
-        foodOptions.map(({ name: type, image, foods }) => {
+        foodOptions.map(({ name: type, image, foods, foodThemeId }) => {
           return (
             <div key={type} className="foodForm__type-container">
               <div className="foodForm__type-heading_container" onClick={() => foodTypeOnClick(type)}>
@@ -86,6 +87,7 @@ function FoodFormMain ({ foodOptions }) {
                   foods={foods}
                   type={type}
                   image={image}
+                  foodThemeId={foodThemeId}
                   isDashboard={false}/>
             </div>
           )
@@ -104,6 +106,7 @@ function FoodFormMain ({ foodOptions }) {
 
 FoodFormMain.propTypes = {
   foodOptions: PropTypes.arrayOf(PropTypes.shape({
+    foodThemeId: PropTypes.number.isRequired,
     image: PropTypes.string,
     foods: PropTypes.arrayOf(
       PropTypes.shape({

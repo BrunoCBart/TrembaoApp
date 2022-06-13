@@ -32,7 +32,7 @@ function FoodFormDashboard ({ foodOptions }) {
 
   return (
     <form className="foodForm">
-      {foodOptions.map(({ name: type, image, foods }) => {
+      {foodOptions.map(({ name: type, image, foods, foodThemeId }) => {
         return (
           <div key={type} className="foodForm__type-container">
             <div className="foodForm__type-heading_container" onClick={() => foodTypeOnClick(type)}>
@@ -47,6 +47,7 @@ function FoodFormDashboard ({ foodOptions }) {
                 foods={foods}
                 type={type}
                 image={image}
+                foodThemeId={foodThemeId}
                 isDashboard={true}
               />
           </div>

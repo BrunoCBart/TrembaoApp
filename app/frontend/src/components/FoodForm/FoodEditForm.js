@@ -63,7 +63,7 @@ function FoodEditForm ({ foodToEdit, setFoodToEdit, setEditingFood }) {
               key={input.name}
               {...input}
               onChange={handleChange}
-              isDashBoard={true}
+              isDashboard={true}
               value={foodToEdit[input.name] || ''}
             />
           )
