@@ -4,6 +4,7 @@ import db from '.'
 class Food extends Model {
   public id: number
   public name: string
+  public price: number
   public foodTypeId: number
   public foodSubTypeId: number
   public onMenu: boolean

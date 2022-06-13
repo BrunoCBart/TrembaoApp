@@ -44,6 +44,8 @@ class FoodService {
                     }
                 ]
             });
+            if (foods.length === 0)
+                return { code: 404, error: 'No themes or types found' };
             return foods.map(this.getAllByThemeMap);
         });
         this.getAllThemes = () => __awaiter(this, void 0, void 0, function* () {
@@ -54,7 +56,7 @@ class FoodService {
             const { name, price, foodType, foodSubType } = food;
             const foodExists = yield Food_1.default.findOne({ where: { name } });
             if (foodExists)
-                throw new Error('409|Food already exists');
+                return { code: 409, error: 'Food already exists' };
             const { foodTypeId, foodSubTypeId } = yield this.doesfoodTypesExist(foodType, foodSubType);
             const newFood = yield Food_1.default.create({ name, price, foodTypeId, foodSubTypeId });
             return newFood;
@@ -81,23 +83,33 @@ class FoodService {
         });
         this.getFoodById = (foodId) => __awaiter(this, void 0, void 0, function* () {
             const food = yield Food_1.default.findOne({ where: { id: foodId } });
+            if (!food)
+                return { code: 404, error: 'Food not found' };
             return food;
         });
         this.update = (id, fields) => __awaiter(this, void 0, void 0, function* () {
             const { name, price, foodType, foodSubType } = fields;
-            const { foodTypeId, foodSubTypeId } = yield this.doesfoodTypesExist(foodType, foodSubType);
+            const { foodTypeId, foodSubTypeId, error, code } = yield this.doesfoodTypesExist(foodType, foodSubType);
+            if (error)
+                return { code, error };
             const formatedFields = { name, price, foodTypeId, foodSubTypeId };
-            const updatedFood = yield Food_1.default.update(formatedFields, { where: { id } });
-            return updatedFood;
+            const food = yield Food_1.default.findOne({ where: { id } });
+            if (!food)
+                return { code: 404, error: 'Food not found' };
+            food.update(formatedFields);
+            return food;
         });
         this.delete = (id) => __awaiter(this, void 0, void 0, function* () {
-            const deletedFood = yield Food_1.default.destroy({ where: { id } });
-            return deletedFood;
+            const food = yield Food_1.default.findOne({ where: { id } });
+            if (!food)
+                return { code: 404, error: 'Food not found' };
+            food.destroy();
+            return food;
         });
         this.updateMenu = (id) => __awaiter(this, void 0, void 0, function* () {
             const food = yield Food_1.default.findByPk(id);
             if (!food)
-                throw new Error('404|Food not found');
+                return { code: 404, error: 'Food not found' };
             food.onMenu = !food.onMenu;
             yield food.save();
             return food;
@@ -110,14 +122,14 @@ class FoodService {
                 foodTypeId = foodTypeExists.id;
             }
             else if (foodType) {
-                throw new Error('404|Food type not found');
+                return { code: 404, error: 'Food type not found' };
             }
             const foodSubTypeExists = yield FoodSubType_1.default.findOne({ where: { name: foodSubType || null } });
             if (foodSubTypeExists) {
                 foodSubTypeId = foodSubTypeExists.id;
             }
             else if (foodSubType) {
-                throw new Error('404|Food sub type not found');
+                return { code: 404, error: 'Food sub type not found' };
             }
             return { foodTypeId, foodSubTypeId };
         });

@@ -1,9 +1,3 @@
-interface IFoodType {
-  id: number;
-  name: string;
-  image?: string;
-}
-
 export interface IFoodUpdate {
   name: string;
   price: number;
@@ -11,4 +5,13 @@ export interface IFoodUpdate {
   foodSubType: string;
 }
 
-export default IFoodType
+interface IFood {
+  id: number;
+  name: string;
+  price: number;
+  foodTypeId: Number;
+  foodSubTypeId: number;
+  onMenu: boolean;
+}
+
+export default IFood

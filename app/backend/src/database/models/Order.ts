@@ -3,6 +3,7 @@ import db from '.'
 
 class Order extends Model {
   public id: number
+  public name: string
   public phone: string
   public districtId: number
   public streetId: number
