@@ -27,17 +27,6 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      foodSubTypeId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'FoodSubTypes',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-        defaultValue: null
-      },
       onMenu: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

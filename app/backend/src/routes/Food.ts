@@ -1,6 +1,5 @@
 import * as express from 'express'
 import FoodController from '../controllers/Food'
-import FoodSubTypeController from '../controllers/FoodSubType'
 import FoodTypeController from '../controllers/FoodType'
 import { createFoodSchema, updateFoodSchema } from '../schemas'
 import validateBody from '../middlewares/validateBody'
@@ -10,8 +9,7 @@ class UserRouter {
 
   constructor (
     protected foodController = new FoodController(),
-    protected foodTypeController = new FoodTypeController(),
-    protected foodSubTypeController = new FoodSubTypeController()
+    protected foodTypeController = new FoodTypeController()
   ) {
     this.routes()
   }
@@ -20,7 +18,6 @@ class UserRouter {
     this.router.get('/themes', this.foodController.getAllThemes)
     this.router.get('/themes/:id', this.foodController.getAllByTheme)
     this.router.get('/', this.foodController.getAllFoods)
-    this.router.get('/subTypes', this.foodSubTypeController.getAll)
     this.router.get('/types', this.foodTypeController.getAll)
     this.router.get('/types/:id', this.foodTypeController.getTypesByTheme)
     this.router.post('/', validateBody(createFoodSchema), this.foodController.create)

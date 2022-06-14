@@ -1,60 +1,63 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useContext } from 'react'
 import FormButton from '../FormButton'
 import FormInput from '../FormInput'
-import CloseMark from '../svgs/CloseMark'
 import '../../Css/form.css'
 import { editFood } from '../../api/trembao'
+import close from '../../images/svgs/close.svg'
+import trembaoAppContext from '../../context/TrembaoAppContext'
 
 const inputs = [
   {
     name: 'name',
     label: 'Alimento:',
     placeholder: 'Digite o nome do alimento',
-    type: 'text'
+    type: 'text',
+    pattern: '^[a-zA-Z]{3,}$',
+    required: true,
+    errorMessage: 'Nome precisa ter mais de 2 caracteres'
   },
   {
     name: 'price',
     label: 'Preço:',
     placeholder: 'Digite o preço do alimento',
-    type: 'text'
-  },
-  {
-    name: 'foodType',
-    label: 'Tipo:',
-    placeholder: 'Digite o tipo do alimento',
-    type: 'text'
-  },
-  {
-    name: 'foodSubType',
-    label: 'Subtipo:',
-    placeholder: 'Digite o subtipo do alimento',
-    type: 'text'
+    type: 'text',
+    pattern: '^[0-9]{1,3}$',
+    required: true,
+    errorMessage: 'Preço precisa ter no máximo 3 digitos'
   }
+
 ]
 
-function FoodEditForm ({ foodToEdit, setFoodToEdit, setEditingFood }) {
+function FoodEditForm ({ foodToEdit }) {
+  const { setFoodToEdit } = useContext(trembaoAppContext)
   const closeEditForm = () => {
-    setEditingFood(false)
+    setFoodToEdit(null)
   }
 
   const editFoodOption = async (e) => {
     e.preventDefault()
-    const { id, price, name, foodType, foodSubType } = foodToEdit
-    await editFood(id, { price: Number(price), name, foodType, foodSubType })
+    const { id, price, name } = foodToEdit
+    const food = await editFood(id, { price: Number(price), name })
+    console.log(food)
+    if ('error' in food) return
+    setFoodToEdit(null)
   }
   const handleChange = (e) => {
     const { name, value } = e.target
     setFoodToEdit({ ...foodToEdit, [name]: value })
   }
   return (
-    <div className="foodEditForm-1">
-      <div className='foodEditForm-1__container'>
-      <header className='foodEditForm-1__heading-container'>
+    <form className="foodEditForm form">
+      <div className='foodEditForm__container'>
+      <header className='foodEditForm__heading-container'>
         <h2>{foodToEdit.name}</h2>
-        <CloseMark className="foodEditForm-1__close-btn foodForm-type__close-btn"
-        onClick={closeEditForm}
-        fill="white"
+        <img
+          role="button"
+          src={close}
+          alt="Create Food button"
+          className="foodEditForm__close-btn foodForm-type__close-btn .form__close-btn"
+          onClick={closeEditForm}
         />
       </header>
         {inputs.map((input) => {
@@ -64,7 +67,7 @@ function FoodEditForm ({ foodToEdit, setFoodToEdit, setEditingFood }) {
               {...input}
               onChange={handleChange}
               isDashboard={true}
-              value={foodToEdit[input.name] || ''}
+              value={foodToEdit[input.name]}
             />
           )
         })}
@@ -72,15 +75,12 @@ function FoodEditForm ({ foodToEdit, setFoodToEdit, setEditingFood }) {
           Editar
         </FormButton>
       </div>
-    </div>
+    </form>
   )
 }
 
 FoodEditForm.propTypes = {
-  setEditingFood: PropTypes.func.isRequired,
-  setFoodToEdit: PropTypes.func.isRequired,
   foodToEdit: PropTypes.shape({
-    foodSubType: PropTypes.string,
     foodType: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,

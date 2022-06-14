@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useContext, useState } from 'react'
-import FoodEditForm from './FoodEditForm'
+import React, { useContext } from 'react'
 import fork from '../../images/svgs/fork.svg'
 import pen from '../../images/svgs/pen.svg'
 import trash from '../../images/svgs/trash.svg'
@@ -9,21 +8,18 @@ import { deleteFood } from '../../api/trembao'
 import trembaoAppContext from '../../context/TrembaoAppContext'
 
 function FoodFormCheckbox ({ name, label, isDashboard, food, foodThemeId, ...checkboxProps }) {
-  const [editingFood, setEditingFood] = useState(false)
-  const [foodToEdit, setFoodToEdit] = useState(food)
   const id = isDashboard ? `${name}-input-dashboard` : `${name}-input`
 
-  const { getFoodsByTheme } = useContext(trembaoAppContext)
+  const { setFoodToEdit } = useContext(trembaoAppContext)
 
   const onDeleteButtonClick = (e) => {
     e.preventDefault()
     deleteFood(food.id)
-      .then(() => getFoodsByTheme(foodThemeId))
   }
 
   const onEditButtonClick = (e) => {
     e.preventDefault()
-    setEditingFood(true)
+    setFoodToEdit(food)
   }
 
   const onFoodToolsButtonClick = (e) => {
@@ -80,28 +76,19 @@ function FoodFormCheckbox ({ name, label, isDashboard, food, foodThemeId, ...che
   }
 
   return (
-    <>
-      <div className="foodForm-group">
-        <label htmlFor={id}>
-          <input
-            type="checkbox"
-            name={name}
-            id={id}
+    <div className="foodForm-group">
+      <label htmlFor={id}>
+        <input
+          type="checkbox"
+          name={name}
+          id={id}
 
-            {...checkboxProps}
-            />
-            <span>{label}</span>
-        </label>
-        {isDashboard ? FoodTools() : null}
-      </div>
-      {editingFood && (
-        <FoodEditForm
-        foodToEdit={foodToEdit}
-        setEditingFood={setEditingFood}
-        setFoodToEdit={setFoodToEdit}
-        />
-      )}
-    </>
+          {...checkboxProps}
+          />
+          <span>{label}</span>
+      </label>
+      {isDashboard ? FoodTools() : null}
+    </div>
   )
 }
 

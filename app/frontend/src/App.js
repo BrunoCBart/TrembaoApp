@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Admin from './pages/Admin'
 import Main from './pages/Main'
 import Dashboard from './pages/Dashboard'
+import './Css/form.css'
 // import socket from './socket'
 
 function App () {

@@ -25,10 +25,6 @@ Food.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  foodSubTypeId: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
   onMenu: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,

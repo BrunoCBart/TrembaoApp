@@ -15,7 +15,7 @@ function FoodThemes () {
     <section className='foodTheme-container'>
       <h1>Opções</h1>
       {foodThemes.map((theme) => (
-        <div key={theme.name} className="foodTheme" onClick={() => getFoodsByTheme(theme.id)}>
+        <div role="button" key={theme.name} className="foodTheme" onClick={() => getFoodsByTheme(theme.id)}>
           <h3 className="foodTheme__title">{theme.name}</h3>
           <img className="foodTheme__image" src={theme.image} alt={theme.name} />
         </div>

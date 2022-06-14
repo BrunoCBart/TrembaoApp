@@ -5,9 +5,9 @@ import {
   requestOrder,
   sendOrderToWhatsapp
 } from '../../helpers/orderForm'
-import CloseMark from '../svgs/CloseMark'
 import FormInput from '../FormInput'
 import FormButton from '../FormButton'
+import close from '../../images/svgs/close.svg'
 import '../../Css/form.css'
 
 const inputs = [
@@ -91,7 +91,12 @@ function OrderForm ({ orderIngredients, renderOrderForm }) {
   return (
     <form className="form orderForm" onSubmit={handleOrder}>
       <div className='form__container'>
-        <CloseMark className="form__close-btn orderForm__close-btn" onClick={closeOrderForm}/>
+        <img
+          role="button"
+          src={close}
+          className="form__close-btn orderForm__close-btn"
+          onClick={closeOrderForm}
+        />
         <h2>Insira seus dados</h2>
         {inputs.map((input) => (
           <FormInput

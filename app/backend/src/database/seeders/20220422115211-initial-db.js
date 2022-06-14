@@ -24,15 +24,6 @@ module.exports = {
       { name: 'Bebidas', foodThemeId: 1, image: `${imagePath}bebidas.jpeg` }
     ], {})
 
-    await queryInterface.bulkInsert('FoodSubTypes', [
-      { name: 'Carne Bovina' },
-      { name: 'Carne Suina' },
-      { name: 'Carne de Frango' },
-      { name: 'Linguiça' },
-      { name: 'Ovos' },
-      { name: 'Peixe' }
-    ])
-
     // 1- Itens Gerais / 2- Misturas / 3 - Guranições / 4- Saladas / 5- Bebidas
     // 1- Arroz / 2- Feijão / 3- Carne Bovina / 4- Carne Suina / 5- Carne de Frango / 6- Linguiça / 7- Ovos / 8- Peixe
     await queryInterface.bulkInsert('Foods', [

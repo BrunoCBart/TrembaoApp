@@ -1,6 +1,6 @@
 import FoodService from '../services/Food'
 import { RequestHandler } from 'express'
-import { deleteFoodFromMenu, updateFoodToMenu } from '../sockets/Food'
+import { deleteFoodFromMenu, updateFoodToMenu, updateFood } from '../sockets/Food'
 
 class FoodController {
   constructor (protected foodService = new FoodService()) {}
@@ -26,10 +26,12 @@ class FoodController {
   }
 
   public update: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
-    const { price, name, foodType, foodSubType } = req.body
+    const { price, name } = req.body
     const { id } = req.params
+    const { io }: any = req
     try {
-      const updatedFood = await this.foodService.update(Number(id), { price, name, foodType, foodSubType })
+      const updatedFood = await this.foodService.update(Number(id), { price, name })
+      updateFood(io, updatedFood)
       if ('error' in updatedFood) return res.status(updatedFood.code).json({ error: updatedFood.error })
       return res.status(200).json(updatedFood)
     } catch (err) {
@@ -58,9 +60,9 @@ class FoodController {
   }
 
   public create: RequestHandler = async (req, res, next):Promise<typeof res| void> => {
-    const { name, price, foodType, foodSubType } = req.body
+    const { name, price, foodType } = req.body
     try {
-      const newFood = await this.foodService.create({ name, price, foodType, foodSubType })
+      const newFood = await this.foodService.create({ name, price, foodType })
       if ('error' in newFood) return res.status(newFood.code).json({ error: newFood.error })
       return res.status(200).json(newFood)
     } catch (err) {

@@ -1,8 +1,12 @@
-export interface IFoodUpdate {
+export interface IFoodCreate {
   name: string;
   price: number;
   foodType: string;
-  foodSubType: string;
+}
+
+export interface IFoodUpdate {
+  name: string;
+  price: number;
 }
 
 interface IFood {
@@ -10,7 +14,6 @@ interface IFood {
   name: string;
   price: number;
   foodTypeId: Number;
-  foodSubTypeId: number;
   onMenu: boolean;
 }
 

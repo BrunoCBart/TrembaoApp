@@ -30,7 +30,7 @@
   font-size: 1.1rem;
   font-weight: bold;
   margin-left: 0.8rem;
-  font-family: "libre_baskervillebold";
+  font-family: "libre_baskervillebold", sans-serif;
   text-decoration: none;
   color: var(--red);
   text-align: center;
