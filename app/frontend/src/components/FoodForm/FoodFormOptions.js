@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import FoodFormCheckbox from './FoodFormCheckbox'
-import CloseMark from '../svgs/CloseMark'
+import close from '../../images/svgs/close.svg'
 
 function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, foodThemeId, onCheck }) {
   const closeFoodType = () => {
@@ -14,7 +14,12 @@ function FoodFormOptions ({ foods, type, image, isDashboard, isChecked, foodThem
         <img className="foodForm-type__image" src={image} alt="smt"/>
         <header className="foodForm-type__header">
           <h2 className="foodForm-type__title">{type}</h2>
-          <CloseMark fill="white" className="foodForm-type__close-btn" onClick={closeFoodType}/>
+          <img
+            role="button"
+            src={close}
+            className="foodForm-type__close-btn"
+            onClick={closeFoodType}
+          />
         </header>
             <div className="foodForm-type__foods">
               {foods

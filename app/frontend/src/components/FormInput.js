@@ -11,7 +11,8 @@ function FormInput ({ name, label, placeholder, errorMessage, required, isDashbo
 
   return (
     <div className="form-group">
-      <label htmlFor={id}>{label}<span>{required ? '*' : ''}</span>
+      <label htmlFor={id}>
+        <span className="form-label">{required ? `${label}*` : label}</span>
         <input
           name={name}
           onBlur={handleFocus}

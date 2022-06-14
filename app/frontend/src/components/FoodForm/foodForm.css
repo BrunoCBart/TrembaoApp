@@ -1,6 +1,6 @@
 /* ----------- FoodForm ------------- */
 
-.main2 {
+.main {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -192,30 +192,36 @@
 }
 
 /* ----------- FoodFormEditForm ------------- */
-.foodEditForm-1 {
+.foodEditForm {
   position: absolute;
   width: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  max-width: 500px;
   padding: 0.7rem;
   background-color: var(--red);
   z-index: 99;
 }
 
-.foodEditForm-1__heading-container {
+.foodEditForm__heading-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-block: 0.8rem;
 }
 
-.foodEditForm-1 input {
+.foodEditForm .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.foodEditForm input {
   width: 100%;
   padding: 0.5rem;
   outline: none;
   border: none;
   border-radius: 0.2rem;
+  margin-top: 0.5rem;
 }
 
 /* ----------- FoodThemes ------------- */

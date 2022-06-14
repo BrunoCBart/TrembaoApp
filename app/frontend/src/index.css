@@ -55,6 +55,11 @@ body {
   --green: #22d478;
 }
 
+button {
+  background: none;
+  border: none;
+}
+
 .btn {
   width: 100%;
   padding: 1rem;

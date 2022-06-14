@@ -10,7 +10,7 @@ function Main () {
   return (
     <>
       <Header />
-      <section className="main2">
+      <section className="main">
         {themeIsSelected
           ? <FoodFormMain foodOptions={foodOptions} />
           : <FoodThemes/>}

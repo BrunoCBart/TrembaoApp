@@ -24,7 +24,7 @@ export const checkFood = (id) => (
 
 export const editFood = (id, food) => (
   axios.put(`${FOODS_URL}/${id}`, food))
-  .catch(() => console.log(food))
+  .catch((err) => ({ error: err.message }))
 
 export const deleteFood = (id) => (
   axios.delete(`${FOODS_URL}/${id}`))

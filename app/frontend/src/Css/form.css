@@ -4,28 +4,26 @@
   width: 100%;
   max-width: 500px;
   background-color: var(--red);
-  padding: 1rem;
+  padding: 0.7rem;
   border-radius: 0.5rem;
-  z-index: 1;
 }
 
 .form__container {
   position: relative;
 }
 
-.form--active {
-  display: block;
-}
-
 .form .form-group label {
   font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
 .form .form-group label input {
   width: 100%;
-  margin-top: 0.3rem;
+  padding: 0.5rem;
   outline: none;
   border: none;
+  border-radius: 0.2rem;
+  margin-top: 0.5rem;
 }
 
 .form .form-group .error-msg {
@@ -44,11 +42,10 @@
   top: 0;
   right: 0;
   font-size: 1.2rem;
+  width: 30px;
   cursor: pointer;
-  width: 25px;
-  color: black;
 }
 
-.form__close-btn path {
-  fill: var(--white);
+.form__close-btn:hover {
+  transform: scale(1.2);
 }
