@@ -8,7 +8,9 @@ exports.createFoodSchema = joi.object({
         'string.empty': '400|Name can\'t be empty',
         'any.required': '400|Name is required'
     }),
-    price: joi.number().messages({
+    price: joi.number().min(0).max(100).messages({
+        'number.min': '400|Price should be a number between 0 and 100',
+        'number.max': '400|Price should be a number between 0 and 100',
         'number.base': '400|Price should be a number',
         'number.empty': '400|Price can\'t be empty'
     }),

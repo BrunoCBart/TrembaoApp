@@ -1,8 +1,7 @@
 import Food from '../database/models/Food'
-import FoodSubType from '../database/models/FoodSubType'
 import FoodTheme from '../database/models/FoodTheme'
 import FoodType from '../database/models/FoodType'
-import IFood, { IFoodUpdate } from '../interfaces/Food'
+import IFood, { IFoodCreate, IFoodUpdate } from '../interfaces/Food'
 
 interface ServiceError {
   error: string
@@ -20,8 +19,6 @@ class FoodService {
           price: food.price,
           foodType: food.foodType.name,
           foodTypeId: food.foodTypeId,
-          foodSubType: food.foodSubType === null ? null : food.foodSubType.name,
-          foodSubTypeId: food.foodSubTypeId,
           onMenu: food.onMenu
         }
       })
@@ -38,7 +35,6 @@ class FoodService {
           model: Food,
           as: 'foods',
           include: [
-            { model: FoodSubType, as: 'foodSubType' },
             { model: FoodType, as: 'foodType' }
           ]
         }
@@ -53,15 +49,15 @@ class FoodService {
     return themes
   }
 
-  public create = async (food: IFoodUpdate) => {
-    const { name, price, foodType, foodSubType } = food
+  public create = async (food: IFoodCreate) => {
+    const { name, price, foodType } = food
 
     const foodExists: Food | null = await Food.findOne({ where: { name } })
     if (foodExists) return { code: 409, error: 'Food already exists' }
 
-    const { foodTypeId, foodSubTypeId } = await this.doesfoodTypesExist(foodType, foodSubType)
+    const foodTypeId = await this.doesfoodTypesExist(foodType)
 
-    const newFood: Food = await Food.create({ name, price, foodTypeId, foodSubTypeId })
+    const newFood: Food = await Food.create({ name, price, foodTypeId })
     return newFood
   }
 
@@ -71,9 +67,7 @@ class FoodService {
     price: food.price,
     checked: food.checked,
     foodType: food['foodType.name'],
-    foodTypeId: food['foodType.id'],
-    foodSubType: food['foodSubType.name'],
-    foodSubTypeId: food['foodSubType.id']
+    foodTypeId: food['foodType.id']
   })
 
   public getAllFoods = async () => {
@@ -81,8 +75,7 @@ class FoodService {
       {
         raw: true,
         include: [
-          { model: FoodType, as: 'foodType' },
-          { model: FoodSubType, as: 'foodSubType' }
+          { model: FoodType, as: 'foodType' }
         ]
       })
 
@@ -95,15 +88,23 @@ class FoodService {
     return food
   }
 
+  private formatUpdatedFood = ({ dataValues: food }: any) => ({
+    ...food,
+    foodType: food.foodType.name
+  })
+
   public update = async (id: number, fields: IFoodUpdate): Promise<IFood | ServiceError> => {
-    const { name, price, foodType, foodSubType } = fields
-    const { foodTypeId, foodSubTypeId, error, code } = await this.doesfoodTypesExist(foodType, foodSubType)
-    if (error) return { code, error }
-    const formatedFields = { name, price, foodTypeId, foodSubTypeId }
-    const food: Food | null = await Food.findOne({ where: { id } })
+    const { name, price } = fields
+    const food: Food | null = await Food.findOne({
+      where: { id },
+      include: [
+        { model: FoodType, as: 'foodType' }
+      ]
+    })
     if (!food) return { code: 404, error: 'Food not found' }
-    food.update(formatedFields)
-    return food
+    food.update({ name, price })
+    const updatedFood = this.formatUpdatedFood(food)
+    return updatedFood
   }
 
   public delete = async (id: number): Promise<IFood | ServiceError> => {
@@ -121,27 +122,10 @@ class FoodService {
     return food
   }
 
-  private doesfoodTypesExist = async (foodType: string, foodSubType: string) => {
-    let foodTypeId: number | undefined
-    let foodSubTypeId: number | undefined
-
+  private doesfoodTypesExist = async (foodType: string) => {
     const foodTypeExists = await FoodType.findOne({ where: { name: foodType || null } })
-
-    if (foodTypeExists) {
-      foodTypeId = foodTypeExists.id
-    } else if (foodType) {
-      return { code: 404, error: 'Food type not found' }
-    }
-
-    const foodSubTypeExists = await FoodSubType.findOne({ where: { name: foodSubType || null } })
-
-    if (foodSubTypeExists) {
-      foodSubTypeId = foodSubTypeExists.id
-    } else if (foodSubType) {
-      return { code: 404, error: 'Food sub type not found' }
-    }
-
-    return { foodTypeId, foodSubTypeId }
+    if (!foodTypeExists) return { code: 404, error: 'Food type not found' }
+    return foodTypeExists.id
   }
 }
 

@@ -50,27 +50,29 @@ class OrderService {
             const ordersResolved = yield Promise.all(mappedOrders);
             return ordersResolved.map(this.mapOrdersFoods);
         });
-        this.createOrder = ({ name, phone, district, street, foods, number }) => __awaiter(this, void 0, void 0, function* () {
+        this.createOrder = (order) => __awaiter(this, void 0, void 0, function* () {
             let districtId;
             let streetId;
-            const dbDistrict = yield District_1.default.findOne({ where: { name: district } });
+            const dbDistrict = yield District_1.default.findOne({ where: { name: order.district } });
             if (!dbDistrict) {
-                const { dataValues: { id } } = yield District_1.default.create({ name: district });
+                const { dataValues: { id } } = yield District_1.default.create({ name: order.district });
                 districtId = id;
             }
             else {
                 districtId = dbDistrict.dataValues.id;
             }
-            const dbStreet = yield Street_1.default.findOne({ where: { name: street } });
+            const dbStreet = yield Street_1.default.findOne({ where: { name: order.street } });
             if (!dbStreet) {
-                const { dataValues: { id } } = yield Street_1.default.create({ name: street, districtId });
+                const { dataValues: { id } } = yield Street_1.default.create({ name: order.street, districtId });
                 streetId = id;
             }
             else {
                 streetId = dbStreet.dataValues.id;
             }
-            const order = yield Order_1.default.create({ name, phone, districtId, streetId, foods, number });
-            return order;
+            const { street, district } = order, currentOrder = __rest(order, ["street", "district"]);
+            const orderWithAdressIds = Object.assign(Object.assign({}, currentOrder), { streetId, districtId });
+            const newOrder = yield Order_1.default.create(orderWithAdressIds);
+            return newOrder;
         });
     }
 }

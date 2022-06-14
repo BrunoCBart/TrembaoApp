@@ -36,10 +36,12 @@ class FoodController {
             }
         });
         this.update = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const { price, name, foodType, foodSubType } = req.body;
+            const { price, name } = req.body;
             const { id } = req.params;
+            const { io } = req;
             try {
-                const updatedFood = yield this.foodService.update(Number(id), { price, name, foodType, foodSubType });
+                const updatedFood = yield this.foodService.update(Number(id), { price, name });
+                (0, Food_2.updateFood)(io, updatedFood);
                 if ('error' in updatedFood)
                     return res.status(updatedFood.code).json({ error: updatedFood.error });
                 return res.status(200).json(updatedFood);
@@ -70,9 +72,9 @@ class FoodController {
             }
         });
         this.create = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const { name, price, foodType, foodSubType } = req.body;
+            const { name, price, foodType } = req.body;
             try {
-                const newFood = yield this.foodService.create({ name, price, foodType, foodSubType });
+                const newFood = yield this.foodService.create({ name, price, foodType });
                 if ('error' in newFood)
                     return res.status(newFood.code).json({ error: newFood.error });
                 return res.status(200).json(newFood);
