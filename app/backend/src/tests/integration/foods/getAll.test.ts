@@ -14,8 +14,6 @@ describe('GET /foods', () => {
       expect(food).to.have.property('price')
       expect(food).to.have.property('foodType')
       expect(food).to.have.property('foodTypeId')
-      expect(food).to.have.property('foodSubType')
-      expect(food).to.have.property('foodSubTypeId')
     })
   })
 })

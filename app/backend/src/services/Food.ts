@@ -1,7 +1,7 @@
 import Food from '../database/models/Food'
 import FoodTheme from '../database/models/FoodTheme'
 import FoodType from '../database/models/FoodType'
-import IFood, { IFoodCreate, IFoodUpdate } from '../interfaces/Food'
+import { IFood, IFoodCreate, IFoodUpdate, FoodsByTheme, IIFood } from '../interfaces/Food'
 
 interface ServiceError {
   error: string
@@ -25,7 +25,7 @@ class FoodService {
     }
   }
 
-  public getAllByTheme = async (foodThemeId: number): Promise<FoodType[] | ServiceError > => {
+  public getAllByTheme = async (foodThemeId: number): Promise<FoodsByTheme[] | ServiceError > => {
     const foods: FoodType[] = await FoodType.findAll({
       where: { foodThemeId },
       include: [
@@ -41,7 +41,8 @@ class FoodService {
       ]
     })
     if (foods.length === 0) return { code: 404, error: 'No themes or types found' }
-    return foods.map(this.getAllByThemeMap)
+    const mappedFoods: FoodsByTheme[] = foods.map(this.getAllByThemeMap)
+    return mappedFoods
   }
 
   public getAllThemes = async (): Promise<FoodTheme[]> => {
@@ -82,7 +83,7 @@ class FoodService {
     return foods.map(this.allFoodsMap)
   }
 
-  public getFoodById = async (foodId: number): Promise<IFood | ServiceError> => {
+  public getFoodById = async (foodId: number): Promise<IIFood | ServiceError> => {
     const food: Food | null = await Food.findOne({ where: { id: foodId } })
     if (!food) return { code: 404, error: 'Food not found' }
     return food
@@ -107,14 +108,14 @@ class FoodService {
     return updatedFood
   }
 
-  public delete = async (id: number): Promise<IFood | ServiceError> => {
+  public delete = async (id: number): Promise<IIFood | ServiceError> => {
     const food: Food | null = await Food.findOne({ where: { id } })
     if (!food) return { code: 404, error: 'Food not found' }
     food.destroy()
     return food
   }
 
-  public updateMenu = async (id: number): Promise<IFood | ServiceError> => {
+  public updateMenu = async (id: number): Promise<IIFood | ServiceError> => {
     const food: Food | null = await Food.findByPk(id)
     if (!food) return { code: 404, error: 'Food not found' }
     food.onMenu = !food.onMenu

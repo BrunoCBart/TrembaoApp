@@ -80,7 +80,7 @@ class FoodService {
                 return { code: 404, error: 'Food not found' };
             return food;
         });
-        this.formatUpdatedFood = ({ dataValues: food }) => (Object.assign(Object.assign({}, food), { foodType: food.foodType.name, foodSubType: food.foodSubType ? food.foodSubType.name : null }));
+        this.formatUpdatedFood = ({ dataValues: food }) => (Object.assign(Object.assign({}, food), { foodType: food.foodType.name }));
         this.update = (id, fields) => __awaiter(this, void 0, void 0, function* () {
             const { name, price } = fields;
             const food = yield Food_1.default.findOne({
