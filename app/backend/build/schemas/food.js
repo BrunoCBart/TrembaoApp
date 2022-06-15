@@ -4,39 +4,32 @@ exports.updateFoodSchema = exports.createFoodSchema = void 0;
 const joi = require("joi");
 exports.createFoodSchema = joi.object({
     name: joi.string().required().messages({
-        'string.base': '400|Name should be a string',
-        'string.empty': '400|Name can\'t be empty',
-        'any.required': '400|Name is required'
+        'string.base': '400|name should be a string',
+        'string.empty': '400|name can\'t be empty',
+        'any.required': '400|name is required'
     }),
     price: joi.number().min(0).max(100).messages({
-        'number.min': '400|Price should be a number between 0 and 100',
-        'number.max': '400|Price should be a number between 0 and 100',
-        'number.base': '400|Price should be a number',
-        'number.empty': '400|Price can\'t be empty'
+        'number.min': '400|price should be a number between 0 and 100',
+        'number.max': '400|price should be a number between 0 and 100',
+        'number.base': '400|price should be a number',
+        'number.empty': '400|price can\'t be empty'
     }),
     foodType: joi.string().required().messages({
-        'string.base': '400|Food type should be a string',
-        'string.empty': '400|Food type can\'t be empty',
-        'any.required': '400|Food type is required'
-    }),
-    foodSubType: joi.string().messages({
-        'string.base': '400|Food subtype should be a string',
-        'string.empty': '400|Food subtype can\'t be empty'
+        'string.base': '400|foodType should be a string',
+        'string.empty': '400|foodType can\'t be empty',
+        'any.required': '400|foodType is required'
     })
 });
 exports.updateFoodSchema = joi.object({
-    name: joi.string().messages({
-        'string.base': '400|Name should be a string',
-        'string.empty': '400|Name can\'t be empty'
+    name: joi.string().required().messages({
+        'string.base': '400|name should be a string',
+        'string.empty': '400|name can\'t be empty',
+        'any.required': '400|name is required'
     }),
-    price: joi.number().messages({
-        'number.base': '400|Price should be a number',
-        'number.empty': '400|Price can\'t be empty'
-    }),
-    foodType: joi.string().messages({
-        'string.base': '400|Food type should be a string',
-        'string.empty': '400|Food type can\'t be empty'
-    }),
-    foodSubType: joi.string().allow(null, '')
+    price: joi.number().required().messages({
+        'number.base': '400|price should be a number',
+        'number.empty': '400|price can\'t be empty',
+        'any.required': '400|price is required'
+    })
 });
 //# sourceMappingURL=food.js.map
